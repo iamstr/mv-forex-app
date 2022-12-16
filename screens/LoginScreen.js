@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Text, View } from 'react-native';
 
-const App = () => {
+export default function LoginScreen ()  {
   const [jwt, setJWT] = useState(null); // JWT state
 
   const login = () => {
@@ -33,18 +33,18 @@ const App = () => {
       .then(response => response.json())
       .then(data => {
         // Handle the response data
+        navigation.navigate('Home')
       });
   };
 
   return (
     <View>
       {jwt ? (
-        <>
-          <Text>Welcome, user!</Text>
-          <Button title="Get Protected Data" onPress={getProtectedData} />
-        </>
+        getProtectedData()
       ) : (
+        <View>
         <Button title="Login" onPress={login} />
+        </View>
       )}
     </View>
   );
