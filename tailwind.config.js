@@ -1,13 +1,8 @@
-
 module.exports = {
-   mode: 'jit',
-  content: [
-    './screens/**/*.{js,jsx}',
-    './screens/*.{js,jsx}',
-],
+  content: [],
   theme: {
     extend: {},
   },
   plugins: [],
-  corePlugins: require('tailwind-rn/unsupported-core-plugins')
+  corePlugins: require('tailwind-rn/unsupported-core-plugins'),
 }
