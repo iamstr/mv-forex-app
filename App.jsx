@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import LoginScreen from "./screens/LoginScreen"
 
-import LoginScreen from './screens/LoginScreen.js';
+import LoginScreen from './screens/LoginScreen';
+import ForgotScreen from './screens/ForgotScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -13,9 +14,21 @@ export default function App() {
 
       <Stack.Navigator initialRouteName="Signin">
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{
+            title: 'MV FOREX EXCHANGE',
+            headerStyle: {
+              backgroundColor: '#4BFB9D',
+            },
+            headerTintColor: '#026E34',
+          }} />
         {/* <Stack.Screen name="Signout" component={SignoutScreen} /> */}
-        {/* <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} /> */}
+         <Stack.Screen name="Forgot" component={ForgotScreen} options={{
+          title: 'Forgot Password',
+          headerStyle: {
+            backgroundColor: '#4BFB9D',
+          },
+          headerTintColor: '#026E34',
+        }}/> 
       </Stack.Navigator>
     </NavigationContainer>
   );
