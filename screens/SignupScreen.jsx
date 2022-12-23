@@ -60,41 +60,44 @@ export default function LoginScreen() {
         >
           <SafeAreaView>
             <View style={styles.container}>
-              <Text style={styles.welcome}>Welcome Back</Text>
-              <Text style={styles.label}>Email or Username</Text>
-              <TextInput style={styles.input} />
-              <Text style={styles.label}>Password</Text>
+              <Text style={styles.welcome}>Let's get started</Text>
+              <Text style={styles.label}>What is your full name?</Text>
+              <TextInput style={styles.input}  placeholder="John Doe"/>
+              <Text style={styles.label} >What is your email address</Text>
               <TextInput
                 style={styles.input}
-                placeholder="useless placeholder"
-                keyboardType="numeric"
+                placeholder="johndoe@mail.com"
+               
+              />
+              <Text style={styles.label} >What is your mobile number</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="johndoe@mail.com"
+               
+              />
+              <Text style={styles.label} >Set your password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="*********"
+               
+              />
+              <Text style={styles.label} >Confirm your password</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="*********"
+               
               />
 
-              <TouchableOpacity
-                title="Login"
-                onPress={() => { navigation.navigate('Forgot'); }}
-                style={styles.forgot}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.forgotText}>Forgot password?</Text>
-              </TouchableOpacity>
-
+             
               <TouchableOpacity
                 title="Login"
                 onPress={login}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
-                <Text style={styles.loginText}>Login</Text>
+                <Text style={styles.loginText}>Continue</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                title="Login"
-                onPress={() => { navigation.navigate('Signup'); }}
-                style={styles.transparentButton}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.loginText}>Create a new account</Text>
-              </TouchableOpacity>
+            
             </View>
           </SafeAreaView>
         </ImageBackground>
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 60,
+    marginTop: 30,
     shadowColor: _themeColor.primary,
     shadowOffset: {
       width: 0,
@@ -129,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: _themeColor.white,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    marginTop: 100,
+    marginTop: -40,
     paddingBottom: 300,
     paddingTop: 50,
   },
@@ -155,12 +158,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   label: {
-    color: _themeColor.darkGray,
+    color: _themeColor.green,
     fontFamily: 'Karla-Regular',
     marginLeft: 12,
     marginRight: 12,
     paddingLeft: 10,
     paddingRight: 10,
+    fontSize:18
   },
   loginText: {
     color: _themeColor.secondary,
@@ -183,9 +187,10 @@ const styles = StyleSheet.create({
   },
   welcome: {
     color: _themeColor.secondary,
-    fontFamily: 'Karla-Regular',
-    fontSize: 18,
+    fontFamily: 'Karla-Medium',
+    fontSize: 20,
     margin: 12,
     padding: 10,
+    marginBottom:15
   },
 });

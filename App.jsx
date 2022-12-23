@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoginScreen from './screens/LoginScreen';
 import ForgotScreen from './screens/ForgotScreen';
+import SignupScreen from './screens/SignupScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -21,11 +22,18 @@ export default function App() {
             },
             headerTintColor: '#026E34',
           }} />
-        {/* <Stack.Screen name="Signout" component={SignoutScreen} /> */}
+      
          <Stack.Screen name="Forgot" component={ForgotScreen} options={{
           title: 'Forgot Password',
           headerStyle: {
             backgroundColor: '#4BFB9D',
+          },
+          headerTintColor: '#026E34',
+        }}/> 
+         <Stack.Screen name="Signup" component={SignupScreen} options={{
+          title: '',
+          headerStyle: {
+            backgroundColor: '#fff',
           },
           headerTintColor: '#026E34',
         }}/> 
