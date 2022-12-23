@@ -54,53 +54,26 @@ export default function LoginScreen() {
       {jwt ? (
         getProtectedData()
       ) : (
-        <ImageBackground
-          source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
-          style={styles.backgroundImage}
-        >
-          <SafeAreaView>
+        
+          <SafeAreaView style={{backgroundColor:_themeColor.white,height:'100%'}}>
             <View style={styles.container}>
-              <Text style={styles.welcome}>Let's get started</Text>
-              <Text style={styles.label}>What is your full name?</Text>
-              <TextInput style={styles.input}  placeholder="John Doe"/>
-              <Text style={styles.label} >What is your email address</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="johndoe@mail.com"
-               
-              />
-              <Text style={styles.label} >What is your mobile number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="johndoe@mail.com"
-               
-              />
-              <Text style={styles.label} >Set your password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="*********"
-               
-              />
-              <Text style={styles.label} >Confirm your password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="*********"
-               
-              />
-
+              <Text style={styles.welcome}>Let's verify  your identity</Text>
+              <Text style={styles.label}>Choose the document you have</Text>
+             
+              
              
               <TouchableOpacity
                 title="Login"
-                onPress={() => { navigation.navigate('Verify'); }}
+                onPress={login}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
-                <Text style={styles.loginText}>Create account</Text>
+                <Text style={styles.loginText}>Continue</Text>
               </TouchableOpacity>
             
             </View>
           </SafeAreaView>
-        </ImageBackground>
+        
       )}
     </View>
   );
@@ -109,24 +82,24 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   backgroundImage: { height: '100%', position: 'relative', width: '100%' },
   button: {
-    backgroundColor: _themeColor.primary,
+    backgroundColor: _themeColor.white,
 
     borderRadius: 25,
     elevation: 12,
-    height: 50,
+    height: 90,
     justifyContent: 'center',
-    marginLeft: 40,
-    marginRight: 40,
-    marginTop: 30,
-    shadowColor: _themeColor.primary,
+    marginLeft: 10,
+    marginRight: 30,
+    marginTop: 100,
+    shadowColor: _themeColor.gray,
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 12,
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
 
-    width: '80%',
+    width: '95%',
   },
   container: {
     backgroundColor: _themeColor.white,

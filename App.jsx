@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import ForgotScreen from './screens/ForgotScreen';
 import SignupScreen from './screens/SignupScreen';
+import VerifyScreen from './screens/VerifyScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -27,14 +28,30 @@ export default function App() {
           title: 'Forgot Password',
           headerStyle: {
             backgroundColor: '#4BFB9D',
+            
           },
           headerTintColor: '#026E34',
         }}/> 
          <Stack.Screen name="Signup" component={SignupScreen} options={{
           title: '',
           headerStyle: {
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
+            elevation: 0, // remove shadow on Android
+            shadowOpacity: 0, // remove shadow on iOS
+            
           },
+          headerShadowVisible: false,
+          headerTintColor: '#026E34',
+        }}/> 
+         <Stack.Screen name="Verify" component={VerifyScreen} options={{
+          title: '',
+          headerStyle: {
+            backgroundColor: 'transparent',
+            elevation: 0, // remove shadow on Android
+            shadowOpacity: 0, // remove shadow on iOS
+            
+          },
+          headerShadowVisible: false,
           headerTintColor: '#026E34',
         }}/> 
       </Stack.Navigator>
