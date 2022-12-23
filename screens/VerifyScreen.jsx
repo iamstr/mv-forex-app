@@ -95,7 +95,7 @@ export default function LoginScreen() {
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
-                <Text style={styles.loginText}>Create account</Text>
+                <Text style={styles.loginText}>Continue</Text>
               </TouchableOpacity>
             
             </View>
