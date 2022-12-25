@@ -5,7 +5,7 @@ import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import Chevron from '../assets/icons/Path.svg';
+import Attach from '../assets/icons/Icon material-attach-file.svg';
 import _themeColor from '../colorScheme.json';
 
 export default function LoginScreen() {
@@ -52,36 +52,18 @@ export default function LoginScreen() {
         <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
           <View style={styles.container}>
             <Text style={styles.welcome}>Let's verify your identity</Text>
-            <Text style={styles.label}>Choose the document you have</Text>
-
-            <TouchableOpacity
-              title="Login"
-              onPress={login}
-              style={styles.button}
-              underlayColor={_themeColor.primary}
-            >
-              <Image style={styles.document} source={require('../assets/other/passport.png')} />
-              <Text style={styles.loginText}>Passport</Text>
-
-              <SvgXml width="50" height="20" xml={Chevron} />
-            </TouchableOpacity>
+            <Text style={styles.label}>Upload the front side of your national ID</Text>
+            <Image source={require('../assets/other/card.png')} style={styles.idImage} />
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('Upload');
+                navigation.navigate('Signup');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
             >
-              <Image
-                width={25}
-                height={50}
-                style={styles.document}
-                source={require('../assets/other/id-card.png')}
-              />
-              <Text style={styles.loginText}>National ID card</Text>
-
-              <SvgXml width="50" height="20" xml={Chevron} />
+              <SvgXml width="50" height="20" xml={Attach} />
+              <Text style={styles.loginText}>Passport</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -93,12 +75,12 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: _themeColor.white,
+    backgroundColor: _themeColor.primary,
     borderRadius: 25,
     elevation: 12,
     flexDirection: 'row',
     height: 90,
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginLeft: 10,
     marginRight: 30,
     marginTop: 50,
@@ -124,6 +106,11 @@ const styles = StyleSheet.create({
   },
   document: {},
 
+  idImage: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   label: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
@@ -134,6 +121,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
+
   loginText: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Bold',

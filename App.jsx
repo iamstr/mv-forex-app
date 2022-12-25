@@ -1,59 +1,85 @@
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
 // import LoginScreen from "./screens/LoginScreen"
 
-import LoginScreen from './screens/LoginScreen';
 import ForgotScreen from './screens/ForgotScreen';
+import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import UploadScreen from './screens/UploadScreen';
 import VerifyScreen from './screens/VerifyScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-
     <NavigationContainer>
-
       <Stack.Navigator initialRouteName="Signin">
         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        <Stack.Screen name="Login" component={LoginScreen} options={{
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
             title: 'MV FOREX EXCHANGE',
             headerStyle: {
               backgroundColor: '#4BFB9D',
             },
             headerTintColor: '#026E34',
-          }} />
-      
-         <Stack.Screen name="Forgot" component={ForgotScreen} options={{
-          title: 'Forgot Password',
-          headerStyle: {
-            backgroundColor: '#4BFB9D',
-            
-          },
-          headerTintColor: '#026E34',
-        }}/> 
-         <Stack.Screen name="Signup" component={SignupScreen} options={{
-          title: '',
-          headerStyle: {
-            backgroundColor: 'transparent',
-            elevation: 0, // remove shadow on Android
-            shadowOpacity: 0, // remove shadow on iOS
-            
-          },
-          headerShadowVisible: false,
-          headerTintColor: '#026E34',
-        }}/> 
-         <Stack.Screen name="Verify" component={VerifyScreen} options={{
-          title: '',
-          headerStyle: {
-            backgroundColor: 'transparent',
-            elevation: 0, // remove shadow on Android
-            shadowOpacity: 0, // remove shadow on iOS
-            
-          },
-          headerShadowVisible: false,
-          headerTintColor: '#026E34',
-        }}/> 
+          }}
+        />
+
+        <Stack.Screen
+          name="Forgot"
+          component={ForgotScreen}
+          options={{
+            title: 'Forgot Password',
+            headerStyle: {
+              backgroundColor: '#4BFB9D',
+            },
+            headerTintColor: '#026E34',
+          }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+          }}
+        />
+        <Stack.Screen
+          name="Verify"
+          component={VerifyScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+          }}
+        />
+        <Stack.Screen
+          name="Upload"
+          component={UploadScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
