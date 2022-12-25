@@ -15,10 +15,9 @@ import { useFonts } from 'expo-font';
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/Karla-Regular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/Karla-Medium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/Karla-Bold.ttf')
-  });
+    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
+    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
+    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),  });
   const login = () => {
     // Send a login request to the Node.js server
     fetch('https://example.com/login', {

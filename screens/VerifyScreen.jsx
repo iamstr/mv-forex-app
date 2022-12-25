@@ -63,7 +63,7 @@ export default function LoginScreen() {
               <Image style={styles.document} source={require('../assets/other/passport.png')} />
               <Text style={styles.loginText}>Passport</Text>
 
-              <SvgXml width="50" height="20" xml={Chevron} />
+              { /*<SvgXml width="50" height="20" xml={Chevron} />*/}
             </TouchableOpacity>
             <TouchableOpacity
               title="Login"
@@ -81,7 +81,7 @@ export default function LoginScreen() {
               />
               <Text style={styles.loginText}>National ID card</Text>
 
-              <SvgXml width="50" height="20" xml={Chevron} />
+             { /*<SvgXml width="50" height="20" xml={Chevron} />*/}
             </TouchableOpacity>
           </View>
         </SafeAreaView>

@@ -1,22 +1,31 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useState } from 'react';
+import { useState,useCallback } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
   StyleSheet, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
-
+import * as SplashScreen from 'expo-splash-screen'
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/Karla-Regular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/Karla-Medium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/Karla-Bold.ttf'),
+    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
+    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
+    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
   const navigation = useNavigation();
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
   const login = () => {
     // Send a login request to the Node.js server
     fetch('https://example.com/login', {

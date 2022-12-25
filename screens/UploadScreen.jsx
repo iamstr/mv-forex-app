@@ -1,17 +1,39 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
-import { SvgXml } from 'react-native-svg';
-import Attach from '../assets/icons/Icon material-attach-file.svg';
 import _themeColor from '../colorScheme.json';
 
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
-
+  const [fontsLoaded] = useFonts({
+    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
+    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
+    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
+  });
   const navigation = useNavigation();
+  // ...rest of the import statements remain unchanged
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const pickImageAsync = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // console.log(result.uri);
+      setSelectedImage(result.uri);
+    } else {
+      alert('You did not select any image.');
+    }
+  };
+
   const login = () => {
     // Send a login request to the Node.js server
     fetch('https://example.com/login', {
@@ -53,18 +75,27 @@ export default function LoginScreen() {
           <View style={styles.container}>
             <Text style={styles.welcome}>Let's verify your identity</Text>
             <Text style={styles.label}>Upload the front side of your national ID</Text>
-            <Image source={require('../assets/other/card.png')} style={styles.idImage} />
-            <TouchableOpacity
-              title="Login"
-              onPress={() => {
-                navigation.navigate('Signup');
-              }}
-              style={styles.button}
-              underlayColor={_themeColor.primary}
-            >
-              <SvgXml width="50" height="20" xml={Attach} />
-              <Text style={styles.loginText}>Passport</Text>
-            </TouchableOpacity>
+            <View style={styles.document}>
+              <Image
+                source={
+                  selectedImage !== null
+                    ? { uri: selectedImage }
+                    : require('../assets/other/card.png')
+                }
+                style={styles.idImage}
+              />
+              <TouchableOpacity
+                title="Login"
+                onPress={pickImageAsync}
+                style={styles.button}
+                underlayColor={_themeColor.primary}
+              >
+                {/**
+            <SvgXml width="50" height="20" xml={Attach} />
+            */}
+                <Text style={styles.loginText}>Upload</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </SafeAreaView>
       )}
@@ -79,10 +110,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     elevation: 12,
     flexDirection: 'row',
-    height: 90,
+    height: 50,
     justifyContent: 'space-evenly',
-    marginLeft: 10,
-    marginRight: 30,
+    // marginLeft: 10,
+    // marginRight: 30,
     marginTop: 50,
     paddingHorizontal: 20,
     shadowColor: _themeColor.gray,
@@ -104,12 +135,12 @@ const styles = StyleSheet.create({
     paddingBottom: 300,
     paddingTop: 50,
   },
-  document: {},
+  document: {
+    alignItems: 'center',
+  },
 
   idImage: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    marginTop: 70,
   },
   label: {
     color: _themeColor.green,

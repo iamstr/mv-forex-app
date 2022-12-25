@@ -5,16 +5,20 @@ import { useState } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
-  StyleSheet, Text, TextInput, TouchableOpacity, View
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
 
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/Karla-Regular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/Karla-Medium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/Karla-Bold.ttf'),
+    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
+    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
+    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
   const navigation = useNavigation();
   const login = () => {
@@ -62,42 +66,26 @@ export default function LoginScreen() {
             <View style={styles.container}>
               <Text style={styles.welcome}>Let's get started</Text>
               <Text style={styles.label}>What is your full name?</Text>
-              <TextInput style={styles.input}  placeholder="John Doe"/>
-              <Text style={styles.label} >What is your email address</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="johndoe@mail.com"
-               
-              />
-              <Text style={styles.label} >What is your mobile number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="johndoe@mail.com"
-               
-              />
-              <Text style={styles.label} >Set your password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="*********"
-               
-              />
-              <Text style={styles.label} >Confirm your password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="*********"
-               
-              />
+              <TextInput style={styles.input} placeholder="John Doe" />
+              <Text style={styles.label}>What is your email address</Text>
+              <TextInput style={styles.input} placeholder="johndoe@mail.com" />
+              <Text style={styles.label}>What is your mobile number</Text>
+              <TextInput style={styles.input} placeholder="johndoe@mail.com" />
+              <Text style={styles.label}>Set your password</Text>
+              <TextInput style={styles.input} placeholder="*********" />
+              <Text style={styles.label}>Confirm your password</Text>
+              <TextInput style={styles.input} placeholder="*********" />
 
-             
               <TouchableOpacity
                 title="Login"
-                onPress={() => { navigation.navigate('Verify'); }}
+                onPress={() => {
+                  navigation.navigate('Verify');
+                }}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
                 <Text style={styles.loginText}>Create account</Text>
               </TouchableOpacity>
-            
             </View>
           </SafeAreaView>
         </ImageBackground>
@@ -160,18 +148,17 @@ const styles = StyleSheet.create({
   label: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
+    fontSize: 18,
     marginLeft: 12,
     marginRight: 12,
     paddingLeft: 10,
     paddingRight: 10,
-    fontSize:18
   },
   loginText: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Bold',
     fontSize: 18,
     textAlign: 'center',
-
   },
   transparentButton: {
     backgroundColor: _themeColor.white,
@@ -190,8 +177,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Medium',
     fontSize: 20,
     margin: 12,
+    marginBottom: 15,
+    marginTop: 0,
     padding: 10,
-    marginBottom:15,
-    marginTop:0
   },
 });
