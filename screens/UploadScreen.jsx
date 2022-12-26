@@ -6,6 +6,7 @@ import { useState } from 'react';
 import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
+import Attach from '../assets/icons/Icon material-attach-file.svg';
 import _themeColor from '../colorScheme.json';
 
 export default function LoginScreen() {
@@ -21,14 +22,17 @@ export default function LoginScreen() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const pickImageAsync = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (!result.canceled) {
-      // console.log(result.uri);
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this app to access your photos!");
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync();
+
+    if (!result.cancelled) {
       setSelectedImage(result.uri);
+      console.log(selectedImage);
     } else {
       alert('You did not select any image.');
     }
@@ -76,23 +80,20 @@ export default function LoginScreen() {
             <Text style={styles.welcome}>Let's verify your identity</Text>
             <Text style={styles.label}>Upload the front side of your national ID</Text>
             <View style={styles.document}>
-              <Image
-                source={
-                  selectedImage !== null
-                    ? { uri: selectedImage }
-                    : require('../assets/other/card.png')
-                }
-                style={styles.idImage}
-              />
+              {selectedImage !== null ? (
+                <Image source={{ uri: selectedImage }} style={styles.idImage} />
+              ) : (
+                <Image source={require('../assets/other/card.png')} style={styles.idImage} />
+              )}
+
               <TouchableOpacity
                 title="Login"
                 onPress={pickImageAsync}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
-                {/**
-            <SvgXml width="50" height="20" xml={Attach} />
-            */}
+                <Attach height={18} width={18} />
+
                 <Text style={styles.loginText}>Upload</Text>
               </TouchableOpacity>
             </View>
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     elevation: 12,
     flexDirection: 'row',
     height: 50,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     // marginLeft: 10,
     // marginRight: 30,
     marginTop: 50,
@@ -157,6 +158,7 @@ const styles = StyleSheet.create({
     color: _themeColor.secondary,
     fontFamily: 'Karla-Bold',
     fontSize: 18,
+    marginLeft: 30,
     textAlign: 'center',
   },
 

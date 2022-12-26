@@ -4,7 +4,6 @@ import { useState } from 'react';
 import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
-import { SvgXml } from 'react-native-svg';
 import Chevron from '../assets/icons/Path.svg';
 import _themeColor from '../colorScheme.json';
 
@@ -63,7 +62,7 @@ export default function LoginScreen() {
               <Image style={styles.document} source={require('../assets/other/passport.png')} />
               <Text style={styles.loginText}>Passport</Text>
 
-              { /*<SvgXml width="50" height="20" xml={Chevron} />*/}
+              <Chevron />
             </TouchableOpacity>
             <TouchableOpacity
               title="Login"
@@ -81,7 +80,7 @@ export default function LoginScreen() {
               />
               <Text style={styles.loginText}>National ID card</Text>
 
-             { /*<SvgXml width="50" height="20" xml={Chevron} />*/}
+              <Chevron />
             </TouchableOpacity>
           </View>
         </SafeAreaView>
