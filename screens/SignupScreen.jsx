@@ -3,17 +3,19 @@ import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import {
-  ImageBackground,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
 
-export default function LoginScreen() {
+export default function SignupScreen() {
+  const { height } = useWindowDimensions();
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
@@ -58,44 +60,43 @@ export default function LoginScreen() {
       {jwt ? (
         getProtectedData()
       ) : (
-        <ImageBackground
-          source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
-          style={styles.backgroundImage}
-        >
-          <SafeAreaView>
-            <View style={styles.container}>
-              <Text style={styles.welcome}>Let's get started</Text>
-              <Text style={styles.label}>What is your full name?</Text>
-              <TextInput style={styles.input} placeholder="John Doe" />
-              <Text style={styles.label}>What is your email address</Text>
-              <TextInput style={styles.input} placeholder="johndoe@mail.com" />
-              <Text style={styles.label}>What is your mobile number</Text>
-              <TextInput style={styles.input} placeholder="johndoe@mail.com" />
-              <Text style={styles.label}>Set your password</Text>
-              <TextInput style={styles.input} placeholder="*********" />
-              <Text style={styles.label}>Confirm your password</Text>
-              <TextInput style={styles.input} placeholder="*********" />
+        <View style={(styles.backgroundImage, height)}>
+          <ScrollView style={styles.scrollView}>
+            <SafeAreaView>
+              <View style={styles.container}>
+                <Text style={styles.welcome}>Let's get started</Text>
+                <Text style={styles.label}>What is your full name?</Text>
+                <TextInput style={styles.input} placeholder="John Doe" />
+                <Text style={styles.label}>What is your email address</Text>
+                <TextInput style={styles.input} placeholder="johndoe@mail.com" />
+                <Text style={styles.label}>What is your mobile number</Text>
+                <TextInput style={styles.input} placeholder="johndoe@mail.com" />
+                <Text style={styles.label}>Set your password</Text>
+                <TextInput style={styles.input} placeholder="*********" />
+                <Text style={styles.label}>Confirm your password</Text>
+                <TextInput style={styles.input} placeholder="*********" />
 
-              <TouchableOpacity
-                title="Login"
-                onPress={() => {
-                  navigation.navigate('Verify');
-                }}
-                style={styles.button}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.loginText}>Create account</Text>
-              </TouchableOpacity>
-            </View>
-          </SafeAreaView>
-        </ImageBackground>
+                <TouchableOpacity
+                  title="Login"
+                  onPress={() => {
+                    navigation.navigate('Verify');
+                  }}
+                  style={styles.button}
+                  underlayColor={_themeColor.primary}
+                >
+                  <Text style={styles.loginText}>Create account</Text>
+                </TouchableOpacity>
+              </View>
+            </SafeAreaView>
+          </ScrollView>
+        </View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: { height: '100%', position: 'relative', width: '100%' },
+  backgroundImage: { position: 'relative', width: '100%' },
   button: {
     backgroundColor: _themeColor.primary,
 
@@ -159,6 +160,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Bold',
     fontSize: 18,
     textAlign: 'center',
+  },
+  scrollView: {
+    backgroundColor: 'transparent',
+    height: '100%',
   },
   transparentButton: {
     backgroundColor: _themeColor.white,

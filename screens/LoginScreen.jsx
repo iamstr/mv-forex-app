@@ -1,14 +1,20 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useState,useCallback } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback, useState } from 'react';
 import {
   ImageBackground,
   SafeAreaView,
-  StyleSheet, Text, TextInput, TouchableOpacity, View
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
-import * as SplashScreen from 'expo-splash-screen'
+
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
@@ -67,45 +73,51 @@ export default function LoginScreen() {
           source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
           style={styles.backgroundImage}
         >
-          <SafeAreaView>
-            <View style={styles.container}>
-              <Text style={styles.welcome}>Welcome Back</Text>
-              <Text style={styles.label}>Email or Username</Text>
-              <TextInput style={styles.input} />
-              <Text style={styles.label}>Password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="useless placeholder"
-                keyboardType="numeric"
-              />
+          <ScrollView style={styles.scrollView}>
+            <SafeAreaView>
+              <View style={styles.container}>
+                <Text style={styles.welcome}>Welcome Back</Text>
+                <Text style={styles.label}>Email or Username</Text>
+                <TextInput style={styles.input} />
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="useless placeholder"
+                  keyboardType="numeric"
+                />
 
-              <TouchableOpacity
-                title="Login"
-                onPress={() => { navigation.navigate('Forgot'); }}
-                style={styles.forgot}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.forgotText}>Forgot password?</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  title="Login"
+                  onPress={() => {
+                    navigation.navigate('Forgot');
+                  }}
+                  style={styles.forgot}
+                  underlayColor={_themeColor.primary}
+                >
+                  <Text style={styles.forgotText}>Forgot password?</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                title="Login"
-                onPress={login}
-                style={styles.button}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.loginText}>Login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                title="Login"
-                onPress={() => { navigation.navigate('Signup'); }}
-                style={styles.transparentButton}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.loginText}>Create a new account</Text>
-              </TouchableOpacity>
-            </View>
-          </SafeAreaView>
+                <TouchableOpacity
+                  title="Login"
+                  onPress={login}
+                  style={styles.button}
+                  underlayColor={_themeColor.primary}
+                >
+                  <Text style={styles.loginText}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  title="Login"
+                  onPress={() => {
+                    navigation.navigate('Signup');
+                  }}
+                  style={styles.transparentButton}
+                  underlayColor={_themeColor.primary}
+                >
+                  <Text style={styles.loginText}>Create a new account</Text>
+                </TouchableOpacity>
+              </View>
+            </SafeAreaView>
+          </ScrollView>
         </ImageBackground>
       )}
     </View>
@@ -176,7 +188,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Bold',
     fontSize: 18,
     textAlign: 'center',
-
   },
   transparentButton: {
     backgroundColor: _themeColor.white,
