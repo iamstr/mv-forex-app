@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import ForgotScreen from './screens/ForgotScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import TermScreen from './screens/TermScreen';
 import UploadScreen from './screens/UploadScreen';
 import VerifyScreen from './screens/VerifyScreen';
 
@@ -42,7 +43,7 @@ export default function App() {
           name="Signup"
           component={SignupScreen}
           options={{
-            title: '',
+            title: null,
             headerStyle: {
               backgroundColor: 'transparent',
               elevation: 0, // remove shadow on Android
@@ -71,6 +72,20 @@ export default function App() {
           component={UploadScreen}
           options={{
             title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+          }}
+        />
+        <Stack.Screen
+          name="Terms"
+          component={TermScreen}
+          options={{
+            title: 'Our Policies',
             headerStyle: {
               backgroundColor: 'transparent',
               elevation: 0, // remove shadow on Android
