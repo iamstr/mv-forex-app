@@ -28,11 +28,14 @@ export default function LoginScreen() {
       alert("You've refused to allow this app to access your photos!");
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync();
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
 
-    if (!result.cancelled) {
-      setSelectedImage(result.uri);
-      console.log(selectedImage);
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      console.log(result.assets[0].uri);
     } else {
       alert('You did not select any image.');
     }
@@ -141,8 +144,12 @@ const styles = StyleSheet.create({
   },
 
   idImage: {
-    marginTop: 70,
+    borderRadius: 18,
+    height: 350,
+    // marginTop: 70,
+    width: 320,
   },
+
   label: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
@@ -161,7 +168,6 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     textAlign: 'center',
   },
-
   welcome: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Medium',
