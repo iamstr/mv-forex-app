@@ -79,7 +79,7 @@ export default function SignupScreen() {
                 <TouchableOpacity
                   title="Login"
                   onPress={() => {
-                    navigation.navigate('Verify');
+                    navigation.navigate('Terms');
                   }}
                   style={styles.button}
                   underlayColor={_themeColor.primary}
