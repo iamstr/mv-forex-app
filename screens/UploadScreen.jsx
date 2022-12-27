@@ -6,6 +6,7 @@ import { useState } from 'react';
 import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
+import Upload from '../assets/icons/Camera.svg';
 import Attach from '../assets/icons/Icon material-attach-file.svg';
 import _themeColor from '../colorScheme.json';
 
@@ -84,20 +85,27 @@ export default function LoginScreen() {
             <Text style={styles.label}>Upload the front side of your national ID</Text>
             <View style={styles.document}>
               {selectedImage !== null ? (
-                <Image source={{ uri: selectedImage }} style={styles.idImage} />
+                <TouchableOpacity onPress={pickImageAsync}>
+                  <Image source={{ uri: selectedImage }} style={styles.idImage} />
+                </TouchableOpacity>
               ) : (
-                <Image source={require('../assets/other/card.png')} style={styles.idImage} />
+                <TouchableOpacity onPress={pickImageAsync} style={styles.uploadImage}>
+                  <Upload />
+                  <Text style={styles.uploadText}>Tap here to upload your image</Text>
+                </TouchableOpacity>
               )}
 
               <TouchableOpacity
                 title="Login"
-                onPress={pickImageAsync}
+                onPress={() => {
+                  navigation.navigate('ConfirmAccount');
+                }}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
                 <Attach height={18} width={18} />
 
-                <Text style={styles.loginText}>Upload</Text>
+                <Text style={styles.loginText}>Complete </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -149,7 +157,6 @@ const styles = StyleSheet.create({
     // marginTop: 70,
     width: 320,
   },
-
   label: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
@@ -160,13 +167,35 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-
   loginText: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Bold',
     fontSize: 18,
     marginLeft: 30,
     textAlign: 'center',
+  },
+
+  uploadImage: {
+    alignItems: 'center',
+    borderColor: _themeColor.gray,
+    borderRadius: 2,
+    borderStyle: 'dashed',
+    borderWidth: 2,
+    height: 350,
+    justifyContent: 'center',
+    // marginTop: 70,
+    width: 320,
+  },
+
+  uploadText: {
+    color: _themeColor.green,
+    fontFamily: 'Karla-Regular',
+    fontSize: 18,
+    marginLeft: 12,
+    marginRight: 12,
+    marginTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   welcome: {
     color: _themeColor.secondary,
