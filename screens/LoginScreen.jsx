@@ -73,9 +73,9 @@ export default function LoginScreen() {
           source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
           style={styles.backgroundImage}
         >
-          <ScrollView style={styles.scrollView}>
-            <SafeAreaView>
-              <View style={styles.container}>
+          <SafeAreaView>
+            <View style={styles.container}>
+              <ScrollView style={styles.scrollView}>
                 <Text style={styles.welcome}>Welcome Back</Text>
                 <Text style={styles.label}>Email or Username</Text>
                 <TextInput style={styles.input} />
@@ -115,9 +115,9 @@ export default function LoginScreen() {
                 >
                   <Text style={styles.loginText}>Create a new account</Text>
                 </TouchableOpacity>
-              </View>
-            </SafeAreaView>
-          </ScrollView>
+              </ScrollView>
+            </View>
+          </SafeAreaView>
         </ImageBackground>
       )}
     </View>
@@ -150,9 +150,10 @@ const styles = StyleSheet.create({
     backgroundColor: _themeColor.white,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    marginTop: 100,
-    paddingBottom: 300,
-    paddingTop: 50,
+    height: '100%',
+    marginTop: 80,
+    // paddingBottom: 300,
+    // paddingTop: 50,
   },
   forgot: {
     backgroundColor: _themeColor.white,
@@ -189,6 +190,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  scrollView: {
+    height: 2000,
+    paddingBottom: 30,
+  },
   transparentButton: {
     backgroundColor: _themeColor.white,
     borderColor: _themeColor.primary,
@@ -207,5 +212,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     margin: 12,
     padding: 10,
+    paddingTop: 20,
   },
 });
