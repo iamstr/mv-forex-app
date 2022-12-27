@@ -67,8 +67,7 @@ export default function TermScreen() {
         </ScrollView>
         <LinearGradient
           // Background Linear Gradient
-          colors={['##FFFFFF', '#f3fef8']}
-          end={{ x: 0.5, y: 1 }}
+          colors={['transparent', 'rgba(255,255,255,0.4)', 'rgba(255,255,255,.8)']}
           style={styles.buttonBackground}
         >
           <TouchableOpacity style={styles.transparentButton}>
@@ -80,7 +79,7 @@ export default function TermScreen() {
               navigation.navigate('Verify');
             }}
           >
-            <Text style={styles.loginText}>Accept</Text>
+            <Text style={styles.loginText}>Agree Terms</Text>
           </TouchableOpacity>
         </LinearGradient>
       </View>
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
   },
   buttonBackground: {
     alignItems: 'center',
+    backgroundColor: _themeColor.white,
     bottom: 0,
     // height: 100,
     left: 0,
@@ -119,17 +119,17 @@ const styles = StyleSheet.create({
   },
 
   container: {
+    alignItems: 'center',
     backgroundColor: _themeColor.white,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     height: 2000, // Increase the height of the container
+    justifyContent: 'center',
     // paddingBottom: 300,
     paddingTop: 0,
     position: 'relative',
   },
   danger: {
-    color: '#DC0000',
+    color: _themeColor.danger,
     fontFamily: 'Karla-Bold',
     fontSize: 18,
     textAlign: 'center',
