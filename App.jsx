@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
 // import LoginScreen from "./screens/LoginScreen"
 
 import ForgotScreen from './screens/ForgotScreen';
@@ -93,6 +94,21 @@ export default function App() {
             },
             headerShadowVisible: false,
             headerTintColor: '#026E34',
+          }}
+        />
+        <Stack.Screen
+          name="ConfirmAccount"
+          component={ConfirmAccountScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+            headerBackVisible: false,
           }}
         />
       </Stack.Navigator>
