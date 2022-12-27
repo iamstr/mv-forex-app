@@ -64,7 +64,7 @@ export default function SignupScreen() {
           <ScrollView style={styles.scrollView}>
             <SafeAreaView>
               <View style={styles.container}>
-                <Text style={styles.welcome}>Let's get started</Text>
+                <View style={styles.welcome} />
                 <Text style={styles.label}>What is your full name?</Text>
                 <TextInput style={styles.input} placeholder="John Doe" />
                 <Text style={styles.label}>What is your email address</Text>
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Medium',
     fontSize: 20,
     margin: 12,
-    marginBottom: 15,
+    marginBottom: 10,
     marginTop: 0,
     padding: 10,
   },
