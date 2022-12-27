@@ -43,7 +43,7 @@ export default function App() {
           name="Signup"
           component={SignupScreen}
           options={{
-            title: null,
+            title: "Let's get started",
             headerStyle: {
               backgroundColor: 'transparent',
               elevation: 0, // remove shadow on Android
