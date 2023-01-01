@@ -30,7 +30,7 @@ export default function ConfirmAcoountScreen() {
           <TouchableOpacity
             title="Login"
             onPress={() => {
-              alert('done');
+              navigation.navigate('OTP');
             }}
             style={styles.button}
             underlayColor={_themeColor.primary}
