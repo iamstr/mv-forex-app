@@ -6,6 +6,7 @@ import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
 
 import ForgotScreen from './screens/ForgotScreen';
 import LoginScreen from './screens/LoginScreen';
+import OTPScreen from './screens/OTPScreen';
 import SignupScreen from './screens/SignupScreen';
 import TermScreen from './screens/TermScreen';
 import UploadScreen from './screens/UploadScreen';
@@ -99,6 +100,21 @@ export default function App() {
         <Stack.Screen
           name="ConfirmAccount"
           component={ConfirmAccountScreen}
+          options={{
+            title: '',
+            headerStyle: {
+              backgroundColor: 'transparent',
+              elevation: 0, // remove shadow on Android
+              shadowOpacity: 0, // remove shadow on iOS
+            },
+            headerShadowVisible: false,
+            headerTintColor: '#026E34',
+            headerBackVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="OTP"
+          component={OTPScreen}
           options={{
             title: '',
             headerStyle: {
