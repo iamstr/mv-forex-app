@@ -37,7 +37,7 @@ function OTPScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                Navigation.navigate('OTP');
+                navigation.navigate('Home');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
