@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { Video } from 'expo-av';
 import { useRef, useState } from 'react';
 import Exchanger from '../assets/icons/Group 2686.svg';
@@ -32,16 +31,6 @@ export default function HomeScreen() {
   const inputRef = useRef();
   return (
     <View style={styles.document}>
-      <View
-        style={[
-          styles.rowBetween,
-          { backgroundColor: _themeColor.primary, paddingHorizontal: 15, paddingBottom: 15 },
-        ]}
-      >
-        <Ionicons name="notifications" size={28} color={_themeColor.darkGray} />
-        <Text style={styles.name}>Hello Joe Doe</Text>
-        <Ionicons name="log-out" size={32} color={_themeColor.darkGray} />
-      </View>
       <View style={styles.container}>
         <ScrollView>
           <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
@@ -245,7 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  document: { backgroundColor: _themeColor.primary, flex: 1 },
+  document: { backgroundColor: _themeColor.white, flex: 1 },
   exchange: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Medium',
@@ -261,6 +250,21 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     textAlign: 'center',
     textTransform: 'uppercase',
+  },
+  header: {
+    backgroundColor: _themeColor.white,
+    borderBottomColor: _themeColor.gray,
+    borderBottomWidth: 0.5,
+    paddingBottom: 15,
+    paddingHorizontal: 15,
+    shadowColor: '#ccc',
+
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 28,
   },
   input: {
     borderColor: _themeColor.gray,
