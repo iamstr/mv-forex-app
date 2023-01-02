@@ -35,12 +35,12 @@ export default function HomeScreen() {
       <View
         style={[
           styles.rowBetween,
-          { backgroundColor: _themeColor.primary, paddingHorizontal: 15, paddingBottom: 10 },
+          { backgroundColor: _themeColor.primary, paddingHorizontal: 15, paddingBottom: 15 },
         ]}
       >
-        <Ionicons name="notifications" size={28} color={_themeColor.green} />
+        <Ionicons name="notifications" size={28} color={_themeColor.darkGray} />
         <Text style={styles.name}>Hello Joe Doe</Text>
-        <Ionicons name="log-out" size={32} color={_themeColor.green} />
+        <Ionicons name="log-out" size={32} color={_themeColor.darkGray} />
       </View>
       <View style={styles.container}>
         <ScrollView>
@@ -106,6 +106,7 @@ export default function HomeScreen() {
               isLooping
               shouldPlay
             />
+
             <Text style={styles.exchange}>Transaction History empty</Text>
             <TouchableOpacity
               title="Login"
@@ -117,6 +118,45 @@ export default function HomeScreen() {
             >
               <Text style={styles.loginText}>Go to Home Screen</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.transaction}>
+            <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
+              <Text style={styles.transactionHeader}> Transaction History</Text>
+              <Pressable>
+                <Text style={styles.transactionHeaderButton}>View All </Text>
+              </Pressable>
+            </View>
+            <View style={[styles.transactionCard, styles.rowBetween]}>
+              <View style={styles.rowBetween}>
+                <Image source={Kenya} style={styles.transactionImg} />
+                <View style={styles.transactionDetail}>
+                  <Text style={styles.transactionName}>John Huq</Text>
+                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
+                </View>
+              </View>
+              <Text style={styles.transactionAmount}>Kes 2,000</Text>
+            </View>
+            <View style={[styles.transactionCard, styles.rowBetween]}>
+              <View style={styles.rowBetween}>
+                <Image source={Kenya} style={styles.transactionImg} />
+                <View style={styles.transactionDetail}>
+                  <Text style={styles.transactionName}>John Huq</Text>
+                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
+                </View>
+              </View>
+              <Text style={styles.transactionAmount}>Kes 2,000</Text>
+            </View>
+            <View style={[styles.transactionCard, styles.rowBetween]}>
+              <View style={styles.rowBetween}>
+                <Image source={Kenya} style={styles.transactionImg} />
+                <View style={styles.transactionDetail}>
+                  <Text style={styles.transactionName}>John Huq</Text>
+                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
+                </View>
+              </View>
+              <Text style={styles.transactionAmount}>Kes 2,000</Text>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -158,7 +198,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: _themeColor.white,
-    borderRadius: 5,
+    borderRadius: 10,
     elevation: 13,
     marginHorizontal: 15,
     marginVertical: 30,
@@ -253,6 +293,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 15,
     textAlign: 'center',
+  },
+  transaction: { marginHorizontal: 15, marginVertical: 35 },
+  transactionAmount: { fontFamily: 'Karla-Regular', fontSize: 16 },
+  transactionCard: {
+    backgroundColor: _themeColor.white,
+    borderRadius: 20,
+    elevation: 13,
+    marginTop: 10,
+    padding: 20,
+
+    shadowColor: '#ccc',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+
+    shadowRadius: 28,
+  },
+  transactionDate: { color: _themeColor.darkGray, fontFamily: 'Karla-Regular', fontSize: 13 },
+
+  transactionDetail: { paddingLeft: 17 },
+  transactionHeader: { fontFamily: 'Karla-Regular', fontSize: 15 },
+  transactionHeaderButton: {
+    fontFamily: 'Karla-Regular',
+    fontSize: 15,
+    textDecorationLine: 'underline',
+  },
+  transactionHeaderContainer: { marginBottom: 20 },
+  transactionImg: { borderRadius: '50%', height: 42, width: 42 },
+  transactionName: {
+    fontFamily: 'Karla-Regular',
+    fontSize: 16,
+    paddingBottom: 5,
+    textTransform: 'uppercase',
   },
   video: {
     borderRadius: 18,
