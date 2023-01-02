@@ -134,7 +134,7 @@ export default function App() {
           options={{
             title: '',
             headerStyle: {
-              backgroundColor: 'transparent',
+              backgroundColor: '#4BFB9D',
               elevation: 0, // remove shadow on Android
               shadowOpacity: 0, // remove shadow on iOS
             },
