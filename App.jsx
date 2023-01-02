@@ -1,11 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import CustomTab from './CustomTab';
 import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
 // import LoginScreen from "./screens/LoginScreen"
 
 import ForgotScreen from './screens/ForgotScreen';
-import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import OTPScreen from './screens/OTPScreen';
 import SignupScreen from './screens/SignupScreen';
@@ -130,11 +130,11 @@ export default function App() {
         />
         <Stack.Screen
           name="Home"
-          component={HomeScreen}
+          component={CustomTab}
           options={{
             title: '',
             headerStyle: {
-              backgroundColor: '#4BFB9D',
+              backgroundColor: 'transparent',
               elevation: 0, // remove shadow on Android
               shadowOpacity: 0, // remove shadow on iOS
             },
