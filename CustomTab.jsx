@@ -51,7 +51,7 @@ export default function CustomTab() {
         headerRight: () => (
           <Ionicons
             name="notifications"
-            size={28}
+            size={26}
             color={_themeColor.darkGray}
             style={styles.headerRight}
           />
@@ -59,7 +59,7 @@ export default function CustomTab() {
         headerLeft: () => (
           <Ionicons
             name="log-out"
-            size={32}
+            size={26}
             color={_themeColor.darkGray}
             style={styles.headerLeft}
           />
