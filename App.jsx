@@ -141,6 +141,7 @@ export default function App() {
             headerShadowVisible: false,
             headerTintColor: '#026E34',
             headerBackVisible: false,
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
