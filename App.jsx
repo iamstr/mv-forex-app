@@ -30,7 +30,6 @@ export default function App() {
             headerTintColor: '#026E34',
           }}
         />
-
         <Stack.Screen
           name="Forgot"
           component={ForgotScreen}
@@ -42,92 +41,94 @@ export default function App() {
             headerTintColor: '#026E34',
           }}
         />
-        <Stack.Screen
-          name="Signup"
-          component={SignupScreen}
-          options={{
-            title: "Let's get started",
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Screen
-          name="Verify"
-          component={VerifyScreen}
-          options={{
-            title: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Screen
-          name="Upload"
-          component={UploadScreen}
-          options={{
-            title: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Screen
-          name="Terms"
-          component={TermScreen}
-          options={{
-            title: 'Our Policies',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Screen
-          name="ConfirmAccount"
-          component={ConfirmAccountScreen}
-          options={{
-            title: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-            headerBackVisible: false,
-          }}
-        />
-        <Stack.Screen
-          name="OTP"
-          component={OTPScreen}
-          options={{
-            title: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-            headerBackVisible: false,
-          }}
-        />
+        <Stack.Group>
+          <Stack.Screen
+            name="Signup"
+            component={SignupScreen}
+            options={{
+              title: "Let's get started",
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+            }}
+          />
+          <Stack.Screen
+            name="Verify"
+            component={VerifyScreen}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+            }}
+          />
+          <Stack.Screen
+            name="Upload"
+            component={UploadScreen}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+            }}
+          />
+          <Stack.Screen
+            name="Terms"
+            component={TermScreen}
+            options={{
+              title: 'Our Policies',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+            }}
+          />
+          <Stack.Screen
+            name="ConfirmAccount"
+            component={ConfirmAccountScreen}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="OTP"
+            component={OTPScreen}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+              headerBackVisible: false,
+            }}
+          />
+        </Stack.Group>
         <Stack.Screen
           name="Home"
           component={CustomTab}
