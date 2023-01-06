@@ -7,6 +7,7 @@ import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
 
 import ForgotScreen from './screens/ForgotScreen';
 import LoginScreen from './screens/LoginScreen';
+import NotificationScreen from './screens/NotificationScreen';
 import OTPScreen from './screens/OTPScreen';
 import SignupScreen from './screens/SignupScreen';
 import TermScreen from './screens/TermScreen';
@@ -129,22 +130,40 @@ export default function App() {
             }}
           />
         </Stack.Group>
-        <Stack.Screen
-          name="Home"
-          component={CustomTab}
-          options={{
-            title: '',
-            headerStyle: {
-              backgroundColor: 'transparent',
-              elevation: 0, // remove shadow on Android
-              shadowOpacity: 0, // remove shadow on iOS
-            },
-            headerShadowVisible: false,
-            headerTintColor: '#026E34',
-            headerBackVisible: false,
-            headerShown: false,
-          }}
-        />
+        <Stack.Group>
+          <Stack.Screen
+            name="Home"
+            component={CustomTab}
+            options={{
+              title: '',
+              headerStyle: {
+                backgroundColor: 'transparent',
+                elevation: 0, // remove shadow on Android
+                shadowOpacity: 0, // remove shadow on iOS
+              },
+              headerShadowVisible: false,
+              headerTintColor: '#026E34',
+              headerBackVisible: false,
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Group
+            screenOptions={{
+              presentation: 'modal',
+              title: 'Notification Area',
+              headerStyle: { display: 'none', fontSize: 20 },
+            }}
+          >
+            <Stack.Screen
+              name="NotificationModal"
+              component={NotificationScreen}
+              option={{
+                headerStyle: { display: 'none', fontSize: 20 },
+              }}
+            />
+          </Stack.Group>
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
