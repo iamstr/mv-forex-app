@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="53" height="54" viewBox="0 0 53 54">
+  <defs>
+    <filter id="Oval" x="0" y="0" width="53" height="54" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#7c8cba" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Icons_Check-input" data-name="Icons/Check-input" transform="translate(18 18)">
+    <g transform="matrix(1, 0, 0, 1, -18, -18)" filter="url(#Oval)">
+      <ellipse id="Oval-2" data-name="Oval" cx="8.5" cy="9" rx="8.5" ry="9" transform="translate(18 18)" fill="#4bfb9d"/>
+    </g>
+    <circle id="Oval-3" data-name="Oval" cx="9" cy="9" r="9" fill="#fb1717"/>
+    <path id="Icon_ionic-ios-close" data-name="Icon ionic-ios-close" d="M15.6,14.533l3.214-3.214a.753.753,0,1,0-1.065-1.065l-3.214,3.214-3.214-3.214a.753.753,0,1,0-1.065,1.065l3.214,3.214-3.214,3.214a.753.753,0,0,0,1.065,1.065L14.532,15.6l3.214,3.214a.753.753,0,1,0,1.065-1.065Z" transform="translate(-5.531 -5.533)" fill="#fff"/>
+  </g>
+</svg>
