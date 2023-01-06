@@ -1,7 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from './colorScheme.json';
 import ExchangeScreen from './screens/ExchangeScreen';
@@ -13,6 +14,7 @@ import TransactionScreen from './screens/TransactionScreen';
 const Tab = createBottomTabNavigator();
 
 export default function CustomTab() {
+  const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('./assets/fonts/Karla/KarlaMedium.ttf'),
@@ -49,20 +51,28 @@ export default function CustomTab() {
         },
         headerTitle: () => <Text style={styles.name}>Hello Joe Doe</Text>,
         headerRight: () => (
-          <Ionicons
-            name="notifications"
-            size={26}
-            color={_themeColor.darkGray}
-            style={styles.headerRight}
-          />
+          <Pressable
+            onPress={() => {
+              navigation.navigate('NotificationModal');
+            }}
+          >
+            <Ionicons
+              name="notifications"
+              size={26}
+              color={_themeColor.darkGray}
+              style={styles.headerRight}
+            />
+          </Pressable>
         ),
         headerLeft: () => (
-          <Ionicons
-            name="log-out"
-            size={26}
-            color={_themeColor.darkGray}
-            style={styles.headerLeft}
-          />
+          <Pressable>
+            <Ionicons
+              name="log-out"
+              size={26}
+              color={_themeColor.darkGray}
+              style={styles.headerLeft}
+            />
+          </Pressable>
         ),
       })}
       tabBarPosition="bottom"
