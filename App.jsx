@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import CustomTab from './CustomTab';
 import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
 // import LoginScreen from "./screens/LoginScreen"
-
 import ForgotScreen from './screens/ForgotScreen';
 import LoginScreen from './screens/LoginScreen';
 import NotificationScreen from './screens/NotificationScreen';
@@ -17,155 +17,157 @@ import VerifyScreen from './screens/VerifyScreen';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Signin">
-        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            title: 'MV FOREX EXCHANGE',
-            headerStyle: {
-              backgroundColor: '#4BFB9D',
-            },
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Screen
-          name="Forgot"
-          component={ForgotScreen}
-          options={{
-            title: 'Forgot Password',
-            headerStyle: {
-              backgroundColor: '#4BFB9D',
-            },
-            headerTintColor: '#026E34',
-          }}
-        />
-        <Stack.Group>
+    <RootSiblingParent>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Signin">
+          {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
           <Stack.Screen
-            name="Signup"
-            component={SignupScreen}
+            name="Login"
+            component={LoginScreen}
             options={{
-              title: "Let's get started",
+              title: 'MV FOREX EXCHANGE',
               headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
+                backgroundColor: '#4BFB9D',
               },
-              headerShadowVisible: false,
               headerTintColor: '#026E34',
             }}
           />
           <Stack.Screen
-            name="Verify"
-            component={VerifyScreen}
+            name="Forgot"
+            component={ForgotScreen}
             options={{
-              title: '',
+              title: 'Forgot Password',
               headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
+                backgroundColor: '#4BFB9D',
               },
-              headerShadowVisible: false,
               headerTintColor: '#026E34',
             }}
           />
-          <Stack.Screen
-            name="Upload"
-            component={UploadScreen}
-            options={{
-              title: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
-              },
-              headerShadowVisible: false,
-              headerTintColor: '#026E34',
-            }}
-          />
-          <Stack.Screen
-            name="Terms"
-            component={TermScreen}
-            options={{
-              title: 'Our Policies',
-              headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
-              },
-              headerShadowVisible: false,
-              headerTintColor: '#026E34',
-            }}
-          />
-          <Stack.Screen
-            name="ConfirmAccount"
-            component={ConfirmAccountScreen}
-            options={{
-              title: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
-              },
-              headerShadowVisible: false,
-              headerTintColor: '#026E34',
-              headerBackVisible: false,
-            }}
-          />
-          <Stack.Screen
-            name="OTP"
-            component={OTPScreen}
-            options={{
-              title: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
-              },
-              headerShadowVisible: false,
-              headerTintColor: '#026E34',
-              headerBackVisible: false,
-            }}
-          />
-        </Stack.Group>
-        <Stack.Group>
-          <Stack.Screen
-            name="Home"
-            component={CustomTab}
-            options={{
-              title: '',
-              headerStyle: {
-                backgroundColor: 'transparent',
-                elevation: 0, // remove shadow on Android
-                shadowOpacity: 0, // remove shadow on iOS
-              },
-              headerShadowVisible: false,
-              headerTintColor: '#026E34',
-              headerBackVisible: false,
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Group
-            screenOptions={{
-              presentation: 'modal',
-              title: 'Notification Area',
-              headerStyle: { display: 'none', fontSize: 20 },
-            }}
-          >
+          <Stack.Group>
             <Stack.Screen
-              name="NotificationModal"
-              component={NotificationScreen}
-              option={{
-                headerStyle: { display: 'none', fontSize: 20 },
+              name="Signup"
+              component={SignupScreen}
+              options={{
+                title: "Let's get started",
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+              }}
+            />
+            <Stack.Screen
+              name="Verify"
+              component={VerifyScreen}
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+              }}
+            />
+            <Stack.Screen
+              name="Upload"
+              component={UploadScreen}
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+              }}
+            />
+            <Stack.Screen
+              name="Terms"
+              component={TermScreen}
+              options={{
+                title: 'Our Policies',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+              }}
+            />
+            <Stack.Screen
+              name="ConfirmAccount"
+              component={ConfirmAccountScreen}
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="OTP"
+              component={OTPScreen}
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerBackVisible: false,
               }}
             />
           </Stack.Group>
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Group>
+            <Stack.Screen
+              name="Home"
+              component={CustomTab}
+              options={{
+                title: '',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  elevation: 0, // remove shadow on Android
+                  shadowOpacity: 0, // remove shadow on iOS
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerBackVisible: false,
+                headerShown: false,
+              }}
+            />
+
+            <Stack.Group
+              screenOptions={{
+                presentation: 'modal',
+                title: 'Notification Area',
+                headerStyle: { display: 'none', fontSize: 20 },
+              }}
+            >
+              <Stack.Screen
+                name="NotificationModal"
+                component={NotificationScreen}
+                option={{
+                  headerStyle: { display: 'none', fontSize: 20 },
+                }}
+              />
+            </Stack.Group>
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </RootSiblingParent>
   );
 }
 
