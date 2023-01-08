@@ -1,8 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import {
+  Alert, Pressable, StyleSheet, Text,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from './colorScheme.json';
 import ExchangeScreen from './screens/ExchangeScreen';
@@ -59,19 +61,33 @@ export default function CustomTab() {
             <Ionicons
               name="notifications"
               size={26}
-              color={_themeColor.darkGray}
+              color={_themeColor.green}
               style={styles.headerRight}
             />
           </Pressable>
         ),
         headerLeft: () => (
-          <Pressable>
-            <Ionicons
-              name="log-out"
-              size={26}
-              color={_themeColor.darkGray}
-              style={styles.headerLeft}
-            />
+          <Pressable
+            onPress={() => {
+              Alert.alert(
+                'Discard changes?',
+                'You have unsaved changes. Are you sure to discard them and leave the screen?',
+                [
+                  { text: "Don't leave", style: 'cancel', onPress: () => {} },
+                  {
+                    text: 'Discard',
+                    style: 'destructive',
+                    // If the user confirmed, then we dispatch the action we blocked earlier
+                    // This will continue the action that had triggered the removal of the screen
+                    onPress: () => {
+                      navigation.dispatch(StackActions.popToTop());
+                    },
+                  },
+                ],
+              );
+            }}
+          >
+            <Ionicons name="log-out" size={26} color={_themeColor.dark} style={styles.headerLeft} />
           </Pressable>
         ),
       })}
@@ -114,6 +130,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
 
-  name: { color: _themeColor.green, fontFamily: 'Karla-Medium', fontSize: 20 },
+  name: { color: _themeColor.secondary, fontFamily: 'Karla-Medium', fontSize: 18 },
   rowBetween: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
 });
