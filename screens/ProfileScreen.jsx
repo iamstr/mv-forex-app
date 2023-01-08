@@ -94,6 +94,7 @@ export default function ProfileScreen() {
                 ) : (
                   <TextInput
                     style={styles.input}
+                    value={item.value}
                     onChangeText={(text) => {
                       dispatch({
                         type: 'added',
