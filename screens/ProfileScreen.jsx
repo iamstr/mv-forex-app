@@ -17,21 +17,6 @@ const items = [
 
 const textFieldDataReducer = (state, action) => {
   switch (action.type) {
-    case 'update_email': {
-      return {
-        value: action.value,
-      };
-    }
-    case 'update_phone': {
-      return {
-        value: action.value,
-      };
-    }
-    case 'update_password': {
-      return {
-        value: action.value,
-      };
-    }
     case 'added': {
       return [
         ...state.filter((item) => item.label !== action.label),
