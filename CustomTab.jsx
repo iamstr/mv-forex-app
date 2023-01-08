@@ -93,6 +93,8 @@ export default function CustomTab() {
       })}
       tabBarPosition="bottom"
     >
+      <Tab.Screen name="Transaction" component={TransactionScreen} />
+
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -100,10 +102,9 @@ export default function CustomTab() {
           // Add a placeholder button without the `onPress` to avoid flicker
         })}
       />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Exchange" component={ExchangeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Help" component={HelpScreen} />
-      <Tab.Screen name="Transaction" component={TransactionScreen} />
     </Tab.Navigator>
   );
 }
