@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import {
   SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
@@ -37,7 +37,10 @@ function OTPScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('Home');
+                // navigation.navigate('Home');
+                navigation.dispatch((state) => CommonActions.reset({
+                  routes: [{ name: 'Home' }],
+                }));
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
