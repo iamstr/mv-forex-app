@@ -4,7 +4,15 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { useState } from 'react';
 import {
-  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Alert,
+  Animated,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Chevron from '../assets/icons/Path.svg';
 import Bank from '../assets/other/bank_channel.png';
@@ -21,8 +29,41 @@ const _linkOpener = (link) => {
 };
 export default function ChannelScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
+  const [initialRotation, setInitialRotation] = useState(0);
+  const [currentRotation, setCurrentRotation] = useState(new Animated.Value(0));
 
+  const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
+  const [rotateAnimation2, setRotateAnimation2] = useState(new Animated.Value(0));
+  const [rotateAnimationValue, setRotateAnimationValue] = useState(1);
+  const [rotateAnimationValue2, setRotateAnimationValue2] = useState(1);
   const navigation = useNavigation();
+
+  const handleAnimation = (animated, value, setValue) => {
+    Animated.timing(animated, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start(() => {
+      animated.setValue(value);
+    });
+    Alert.alert(`value is ${value}`);
+    if (value === 1) {
+      setValue(0);
+    } else {
+      setValue(1);
+    }
+  };
+
+  const interpolateRotating = rotateAnimation2.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '90deg'],
+  });
+
+  const rotateData = rotateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '90deg'],
+  });
+
   const login = () => {
     // Send a login request to the Node.js server
     fetch('https://example.com/login', {
@@ -56,7 +97,7 @@ export default function ChannelScreen() {
   };
 
   return (
-    <View>
+    <Pressable>
       {jwt ? (
         getProtectedData()
       ) : (
@@ -71,24 +112,32 @@ export default function ChannelScreen() {
               </Text>
               <TouchableOpacity
                 title="Login"
-                onPress={_webChatHandlerAsync}
+                onPress={async () => handleAnimation(rotateAnimation2, rotateAnimationValue2, setRotateAnimationValue2)}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
-                <View
-                  style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
+                <View style={styles.row}>
                   <Image width={25} height={50} style={styles.document} source={Phone} />
                   <View style={{ alignItems: 'flex-start' }}>
                     <Text style={styles.loginText}>Mobile Money Transfer</Text>
                   </View>
                 </View>
-
-                <Chevron />
+                <Animated.View style={{ transform: [{ rotate: interpolateRotating }] }}>
+                  <Chevron />
+                </Animated.View>
               </TouchableOpacity>
+              <View style={styles.card}>
+                <Text style={styles.cardHeader}>Choose deposit channel</Text>
+                <Pressable onPress={() => Alert.alert('press')} style={styles.dropdownButton}>
+                  <Text style={styles.dropdownText}>Send Money </Text>
+                </Pressable>
+                <Pressable onPress={() => Alert.alert('press')} style={styles.dropdownButton}>
+                  <Text style={styles.dropdownText}>Lipa na Mpesa paybill </Text>
+                </Pressable>
+              </View>
               <TouchableOpacity
                 title="Login"
-                onPress={_webChatHandlerAsync}
+                onPress={async () => handleAnimation(rotateAnimation, rotateAnimationValue, setRotateAnimationValue)}
                 style={styles.button}
                 underlayColor={_themeColor.primary}
               >
@@ -100,14 +149,15 @@ export default function ChannelScreen() {
                     <Text style={styles.loginText}> Bank Transfer</Text>
                   </View>
                 </View>
-
-                <Chevron />
+                <Animated.View style={{ transform: [{ rotate: rotateData }] }}>
+                  <Chevron />
+                </Animated.View>
               </TouchableOpacity>
             </ScrollView>
           </View>
         </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 
@@ -124,6 +174,7 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginTop: 40,
     paddingHorizontal: 20,
+    position: 'relative',
     shadowColor: _themeColor.gray,
     shadowOffset: {
       width: 0,
@@ -131,9 +182,30 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
-
     width: '95%',
   },
+  card: {
+    backgroundColor: _themeColor.white,
+    borderRadius: 25,
+    bottom: 0,
+    elevation: 12,
+    height: 250,
+    marginLeft: 10,
+    marginRight: 30,
+    marginTop: 40,
+    paddingHorizontal: 20,
+    position: 'absolute',
+    shadowColor: _themeColor.gray,
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    width: '95%',
+    zIndex: 1,
+  },
+  cardHeader: { fontFamily: 'Karla-Medium', fontSize: 18, paddingVertical: 20 },
   chevron: {},
   container: {
     backgroundColor: _themeColor.white,
@@ -144,7 +216,17 @@ const styles = StyleSheet.create({
     // paddingBottom: 300,
   },
   document: {},
-
+  dropdownButton: {
+    alignItems: 'flex-start',
+    marginBottom: 20,
+    textAlign: 'left',
+  },
+  dropdownText: {
+    color: _themeColor.secondary,
+    fontFamily: 'Karla-Medium',
+    fontSize: 16,
+    textAlign: 'center',
+  },
   label: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
@@ -163,6 +245,7 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     textAlign: 'center',
   },
+  row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center' },
   subText: {
     color: _themeColor.darkGray,
     fontFamily: 'Karla-Regular',
@@ -171,7 +254,6 @@ const styles = StyleSheet.create({
     paddingTop: 7,
     textAlign: 'center',
   },
-
   welcome: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Medium',
