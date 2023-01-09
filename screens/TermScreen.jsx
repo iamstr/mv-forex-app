@@ -20,49 +20,44 @@ export default function TermScreen() {
           <Text style={styles.header}>One last thing</Text>
           <Text style={styles.sub}>Terms of Use</Text>
           <Text style={styles.text}>
-            Welcome to our MV forex exchange app! These terms of use (the "Terms") govern your use
-            of our app and the services we provide through it (the "Services"). By accessing or
+            Welcome to MV Global Currency Xchange App! These terms of use (the "Terms") govern your
+            use of our app and the services we provide through it (the "Services"). By accessing or
             using our Services, you agree to be bound by these Terms. If you do not agree to these
             Terms, do not use our Services. Scope of Services Our Services allow you to buy and sell
-            foreign currency and other financial instruments.
+            foreign currency and other financial instruments. You are responsible for understanding
+            the risks associated with trading in foreign currency and other financial instruments,
+            and you should consult with a financial advisor before making any trades. We do not
+            provide financial advice, and our Services should not be relied upon as such. Account
+            Registration To use our Services, you must create an account and provide certain
+            personal and financial information.
           </Text>
           <Text style={styles.text}>
-            You are responsible for understanding the risks associated with trading in foreign
-            currency and other financial instruments, and you should consult with a financial
-            advisor before making any trades. We do not provide financial advice, and our Services
-            should not be relied upon as such. Account Registration To use our Services, you must
-            create an account and provide certain personal and financial information. You agree to
-            provide accurate and complete information when creating your account and to update your
-            information as necessary to keep it accurate and complete.
+            You agree to provide accurate and complete information when creating your account and to
+            update your information as necessary to keep it accurate and complete. You are solely
+            responsible for the activity that occurs on your account, and you must keep your account
+            login information secure. User Conduct You agree to use our Services only for lawful
+            purposes and in compliance with all applicable laws and regulations. You may not use our
+            Services to engage in any illegal or fraudulent activity. You may not use our Services
+            to transmit any viruses, malware, or other harmful code. You may not use our Services to
+            send unsolicited messages or spam. You may not use our Services to engage in any
+            activity that is discriminatory, harassing, or otherwise inappropriate. Intellectual
+            Property Our Services and the content and materials provided through them, including but
+            not limited to text, graphics, logos, images, and software, are the property of MV
+            GLOBAL XCHANGE and are protected by intellectual property laws.
           </Text>
-          <Text style={styles.text}>
-            You are solely responsible for the activity that occurs on your account, and you must
-            keep your account login information secure. User Conduct You agree to use our Services
-            only for lawful purposes and in compliance with all applicable laws and regulations. You
-            may not use our Services to engage in any illegal or fraudulent activity. You may not
-            use our Services to transmit any viruses, malware, or other harmful code. You may not
-            use our Services to send unsolicited messages or spam.
-          </Text>
-          <Text style={styles.text}>
-            You may not use our Services to engage in any activity that is discriminatory,
-            harassing, or otherwise inappropriate. Intellectual Property Our Services and the
-            content and materials provided through them, including but not limited to text,
-            graphics, logos, images, and software, are the property of MV FOREX EXCHANGE and are
-            protected by intellectual property laws. You may not use our content or materials for
-            any purpose other than as expressly permitted by these Terms. Disclaimer of Warranties
-            OUR SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE," AND WE MAKE NO WARRANTIES, EXPRESS
-            OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-            FITNESS FOR A PARTICULAR PURPOSE. WE DO NOT WARRANT THAT OUR SERVICES WILL BE
-            UNINTERRUPTED OR ERROR-FREE. Limitation of Liability WE SHALL NOT BE LIABLE FOR ANY
-            LOSSES OR DAMAGES THAT ARE NOT REASONABLY FORESEEABLE. IN NO EVENT SHALL WE BE LIABLE
-            FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT
-            LIMITED TO LOST PROFITS, LOSS OF DATA, OR LOSS OF BUSINESS OPPORTUNITIES. Termination We
-            reserve the right to terminate your access to our Services at any time, for any reason,
-            and without notice. Governing Law These Terms shall be governed by and construed in
-            accordance with the laws of the State of [State], without giving effect to any
-            principles of conflicts of law. Dispute Resolution Any disputes arising out of or
-            related to these Terms or our Services shall be resolved through binding arbitration in
-            accordance with the rules of the American Arbitration Association.
+          <Text style={[styles.text, { marginBottom: 200 }]}>
+            You may not use our content or materials for any purpose other than as expressly
+            permitted by these Terms. Disclaimer of Warranties OUR SERVICES ARE PROVIDED "AS IS" AND
+            "AS AVAILABLE," AND WE MAKE NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+            TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. WE DO
+            NOT WARRANT THAT OUR SERVICES WILL BE UNINTERRUPTED OR ERROR-FREE. Limitation of
+            Liability WE SHALL NOT BE LIABLE FOR ANY LOSSES OR DAMAGES THAT ARE NOT REASONABLY
+            FORESEEABLE. IN NO EVENT SHALL WE BE LIABLE FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL,
+            OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOST PROFITS, LOSS OF DATA, OR LOSS OF
+            BUSINESS OPPORTUNITIES. Termination We reserve the right to terminate your access to our
+            Services at any time, for any reason, and without notice. Governing Law These Terms
+            shall be governed by and construed in accordance with the laws of Kenya, without giving
+            effect to any principles of conflicts of law.
           </Text>
         </ScrollView>
         <LinearGradient
@@ -141,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 12,
     marginBottom: 15,
-    marginTop: 0,
+    marginTop: 30,
     padding: 10,
   },
   loginText: {
@@ -150,7 +145,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
-  scrollView: { flex: 1, height: '100%', paddingVertical: 40 },
+  scrollView: {
+    flex: 1,
+    height: 2000,
+    // paddingVertical: 40
+  },
 
   sub: {
     color: _themeColor.green,
@@ -169,6 +168,7 @@ const styles = StyleSheet.create({
     height: '100%',
     lineHeight: 36,
 
+    marginBottom: 20,
     marginLeft: 12,
     paddingLeft: 10,
     paddingTop: 20,
