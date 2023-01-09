@@ -69,22 +69,18 @@ export default function CustomTab() {
         headerLeft: () => (
           <Pressable
             onPress={() => {
-              Alert.alert(
-                'Discard changes?',
-                'You have unsaved changes. Are you sure to discard them and leave the screen?',
-                [
-                  { text: "Don't leave", style: 'cancel', onPress: () => {} },
-                  {
-                    text: 'Discard',
-                    style: 'destructive',
-                    // If the user confirmed, then we dispatch the action we blocked earlier
-                    // This will continue the action that had triggered the removal of the screen
-                    onPress: () => {
-                      navigation.dispatch(StackActions.popToTop());
-                    },
+              Alert.alert('Logout?', 'You are about to signout?', [
+                { text: 'Cancel', style: 'cancel', onPress: () => {} },
+                {
+                  text: 'Signout',
+                  style: 'destructive',
+                  // If the user confirmed, then we dispatch the action we blocked earlier
+                  // This will continue the action that had triggered the removal of the screen
+                  onPress: () => {
+                    navigation.dispatch(StackActions.popToTop());
                   },
-                ],
-              );
+                },
+              ]);
             }}
           >
             <Ionicons name="log-out" size={26} color={_themeColor.dark} style={styles.headerLeft} />
