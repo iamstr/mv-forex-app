@@ -29,22 +29,54 @@ export default function DepositScreen() {
               the reciepent
               {' '}
             </Text>
-            <DropDown
-              image={Phone}
-              label="Mobile money transfer"
-              dropdown={[
-                { label: 'Send Money', value: 708693536 },
-                { label: 'Lipa na mpesa', value: 890911 },
-              ]}
-            />
-            <DropDown
-              image={Bank}
-              label="Bank Transfer"
-              dropdown={[
-                { label: 'FCB', value: 708693536 },
-                { label: 'Gulf Bank', value: 890911 },
-              ]}
-            />
+            <View
+              style={{
+                paddingTop: 150,
+                // paddingHorizontal: 20,
+                position: 'relative',
+              }}
+            >
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  paddingBottom: 20,
+                  paddingTop: 20,
+                  zIndex: 2,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <DropDown
+                  image={Phone}
+                  label="Mobile money transfer"
+                  dropdown={[
+                    { label: 'Send Money', value: 708693536, type: 'mobile' },
+                    { label: 'Lipa na mpesa', value: 890911, type: 'lipa na mpesa' },
+                  ]}
+                  Zindex={3}
+                />
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: -100,
+                  zIndex: 1,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <DropDown
+                  image={Bank}
+                  label="Bank Transfer"
+                  dropdown={[
+                    { label: 'FCB', value: 708693536, type: 'bank' },
+                    { label: 'Gulf Bank', value: 890911, type: 'bank' },
+                  ]}
+                  Zindex={2}
+                />
+              </View>
+            </View>
           </ScrollView>
         </View>
       </View>
@@ -57,6 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: _themeColor.white,
     borderRadius: 25,
+    bottom: 0,
     elevation: 12,
     flexDirection: 'row',
     height: 90,
@@ -66,6 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingHorizontal: 20,
     position: 'relative',
+    right: 0,
     shadowColor: _themeColor.gray,
     shadowOffset: {
       width: 0,
@@ -79,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: _themeColor.white,
     borderRadius: 25,
     bottom: 0,
-    elevation: 12,
+    elevation: 15,
     height: 250,
     marginLeft: 10,
     marginRight: 30,
@@ -99,11 +133,12 @@ const styles = StyleSheet.create({
   cardHeader: { fontFamily: 'Karla-Medium', fontSize: 18, paddingVertical: 20 },
   chevron: {},
   container: {
+    alignItems: 'center',
     backgroundColor: _themeColor.white,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     flex: 1,
-    height: '100%',
+    height: 1000,
     // paddingBottom: 300,
   },
   document: {},
@@ -123,7 +158,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Regular',
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 50,
+    marginBottom: 30,
     marginLeft: 12,
     marginRight: 12,
     paddingLeft: 10,
