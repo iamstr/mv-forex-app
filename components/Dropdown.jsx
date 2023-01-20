@@ -2,14 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-  Alert,
-  Animated,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+  Animated, Image, Pressable, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Chevron from '../assets/icons/Path.svg';
 import _themeColor from '../colorScheme.json';
@@ -19,16 +12,15 @@ import _themeColor from '../colorScheme.json';
  ** {label,value}
  * @returns
  */
-
-export default function DropDown({ image, label, dropdown }) {
+export default function DropDown({
+  image, label, dropdown, Zindex,
+}) {
   const [initialRotation, setInitialRotation] = useState(0);
   const [currentRotation, setCurrentRotation] = useState(new Animated.Value(0));
-
   const [rotateAnimation, setRotateAnimation] = useState(new Animated.Value(0));
   const [show, setShow] = useState(false);
   const [rotateAnimationValue, setRotateAnimationValue] = useState(1);
   const navigation = useNavigation();
-
   const handleAnimation = (animated, value, setValue) => {
     Animated.timing(animated, {
       toValue: 1,
@@ -37,7 +29,7 @@ export default function DropDown({ image, label, dropdown }) {
     }).start(() => {
       animated.setValue(value);
     });
-    Alert.alert(`value is ${value}`);
+    // Alert.alert(`value is ${value}`);
     setShow(true);
     if (value === 1) {
       setValue(0);
@@ -62,12 +54,13 @@ export default function DropDown({ image, label, dropdown }) {
           setShow(false);
         }
       }}
+      style={{ paddingBottom: 5 }}
     >
       <TouchableOpacity
-        title="Login"
-        onPress={async () => handleAnimation(rotateAnimation, rotateAnimationValue, setRotateAnimationValue)}
+        onPress={async () => {
+          handleAnimation(rotateAnimation, rotateAnimationValue, setRotateAnimationValue);
+        }}
         style={styles.button}
-        underlayColor={_themeColor.primary}
       >
         <View style={styles.row}>
           <Image width={25} height={50} style={styles.document} source={image} />
@@ -80,10 +73,14 @@ export default function DropDown({ image, label, dropdown }) {
         </Animated.View>
       </TouchableOpacity>
       {show && (
-        <View style={styles.card}>
+        <View style={{ ...styles.card, zIndex: Zindex }}>
           <Text style={styles.cardHeader}>Choose deposit channel</Text>
-          {dropdown.map((item) => (
-            <Pressable onPress={() => Alert.alert(item.label)} style={styles.dropdownButton}>
+          {dropdown.map((item, index) => (
+            <Pressable
+              onPress={() => navigation.navigate('ConfirmDeposit', { label: item.label, type: item.type })}
+              style={styles.dropdownButton}
+              key={Math.random()}
+            >
               <Text style={styles.dropdownText}>
                 {item.label}
                 {' '}
@@ -105,9 +102,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 90,
     justifyContent: 'space-between',
+    // marginBottom: 100,
     marginLeft: 10,
-    marginRight: 30,
-    marginTop: 40,
+    marginRight: 15,
     paddingHorizontal: 20,
     position: 'relative',
     shadowColor: _themeColor.gray,
@@ -117,16 +114,15 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
-    width: '95%',
+    // width: '90%',
   },
   card: {
     backgroundColor: _themeColor.white,
     borderRadius: 25,
-    bottom: 0,
     elevation: 12,
     height: 250,
     marginLeft: 10,
-    marginRight: 30,
+    // marginRight: 30,
     marginTop: 40,
     paddingHorizontal: 20,
     position: 'absolute',
@@ -137,19 +133,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
+    top: 70,
     width: '95%',
-    zIndex: 1,
+    left: 0,
+    right: 0,
+    zIndex: 5,
   },
   cardHeader: { fontFamily: 'Karla-Medium', fontSize: 18, paddingVertical: 20 },
-  chevron: {},
-  container: {
-    backgroundColor: _themeColor.white,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    flex: 1,
-    height: '100%',
-    // paddingBottom: 300,
-  },
+
   document: {},
   dropdownButton: {
     alignItems: 'flex-start',
@@ -162,17 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  label: {
-    color: _themeColor.green,
-    fontFamily: 'Karla-Regular',
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 50,
-    marginLeft: 12,
-    marginRight: 12,
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
   loginText: {
     color: _themeColor.secondary,
     fontFamily: 'Karla-Medium',
@@ -181,21 +161,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center' },
-  subText: {
-    color: _themeColor.darkGray,
-    fontFamily: 'Karla-Regular',
-    fontSize: 13,
-    paddingLeft: 25,
-    paddingTop: 7,
-    textAlign: 'center',
-  },
-  welcome: {
-    color: _themeColor.secondary,
-    fontFamily: 'Karla-Medium',
-    fontSize: 22,
-    margin: 12,
-    marginBottom: 15,
-    marginTop: 60,
-    padding: 10,
-  },
 });
