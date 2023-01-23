@@ -7,10 +7,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomTab from './CustomTab';
 import ChannelScreen from './screens/ChannelScreen';
 import ConfirmAccountScreen from './screens/ConfirmAccountScreen';
-import DepositScreen from './screens/DepositScreen';
 import TransferScreen from './screens/ConfirmTransferScreen';
+import DepositScreen from './screens/DepositScreen';
+import RecipientScreen from './screens/RecipientScreen';
 // import LoginScreen from "./screens/LoginScreen"
 import _themeColor from './colorScheme.json';
+import ConfirmDepositScreen from './screens/ConfirmDepositScreen';
+import ConfirmTransferScreen from './screens/ConfirmTransferScreen';
+import FinalScreen from './screens/FinalScreen';
 import ForgotScreen from './screens/ForgotScreen';
 import LoginScreen from './screens/LoginScreen';
 import NotificationScreen from './screens/NotificationScreen';
@@ -189,7 +193,7 @@ export default function App() {
             />
             <Stack.Screen
               name="ConfirmDeposit"
-              component={TransferScreen}
+              component={ConfirmDepositScreen}
               options={({ navigation }) => ({
                 title: 'Hello John Doe',
                 headerStyle: {
@@ -199,6 +203,92 @@ export default function App() {
                 },
                 headerShadowVisible: false,
                 headerTintColor: '#026E34',
+                headerRight: () => (
+                  <Pressable
+                    onPress={() => {
+                      navigation.navigate('NotificationModal');
+                    }}
+                  >
+                    <Ionicons
+                      name="notifications"
+                      size={26}
+                      color={_themeColor.secondary}
+                      style={styles.headerRight}
+                    />
+                  </Pressable>
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="Recipient"
+              component={RecipientScreen}
+              options={({ navigation }) => ({
+                title: 'Hello John Doe',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  fontFamily: 'Karla-Bold',
+                  fontSize: 18,
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerRight: () => (
+                  <Pressable
+                    onPress={() => {
+                      navigation.navigate('NotificationModal');
+                    }}
+                  >
+                    <Ionicons
+                      name="notifications"
+                      size={26}
+                      color={_themeColor.secondary}
+                      style={styles.headerRight}
+                    />
+                  </Pressable>
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="ConfirmTransfer"
+              component={ConfirmTransferScreen}
+              options={({ navigation }) => ({
+                title: 'Hello John Doe',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  fontFamily: 'Karla-Bold',
+                  fontSize: 18,
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerRight: () => (
+                  <Pressable
+                    onPress={() => {
+                      navigation.navigate('NotificationModal');
+                    }}
+                  >
+                    <Ionicons
+                      name="notifications"
+                      size={26}
+                      color={_themeColor.secondary}
+                      style={styles.headerRight}
+                    />
+                  </Pressable>
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="Final"
+              component={FinalScreen}
+              options={({ navigation }) => ({
+                title: 'Hello John Doe',
+                headerStyle: {
+                  backgroundColor: 'transparent',
+                  fontFamily: 'Karla-Bold',
+                  fontSize: 18,
+                },
+                headerShadowVisible: false,
+                headerTintColor: '#026E34',
+                headerBackVisible: false,
+                gestureEnabled: false,
                 headerRight: () => (
                   <Pressable
                     onPress={() => {
