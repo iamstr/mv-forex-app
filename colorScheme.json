@@ -8,5 +8,7 @@
   "white": "#fff",
   "danger": "#FF4A4A",
   "lightGreen": "#FAFFFC",
-  "lightGray": "#F2F2F2"
+  "lightGray": "#F2F2F2",
+  "lightRed": "#FFE6E6",
+  "light": "#F2FFF8"
 }
