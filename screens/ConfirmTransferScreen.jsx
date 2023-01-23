@@ -1,138 +1,150 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { useState } from 'react';
 import {
-  Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from 'react-native';
+import Alert from '../assets/icons/Icon feather-alert-circle.svg';
 import _themeColor from '../colorScheme.json';
 
-export default function ConfirmTransferScreen() {
+export default function RecipientScreen() {
+  const { height } = useWindowDimensions();
+  const [jwt, setJWT] = useState(null); // JWT state
+  const [fontsLoaded] = useFonts({
+    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
+    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
+    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
+  });
   const navigation = useNavigation();
+
   return (
-    <Pressable>
-      <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
-        <View style={styles.container}>
-          <ScrollView>
-            <Text style={styles.welcome}>Deposit account</Text>
-            <Text style={styles.label}>
-              Make the deposit to any of the following account and the money would be transferred to
-              the reciepent
-              {' '}
-            </Text>
-            <View style={{ ...styles.card, marginBottom: 10 }}>
-              <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
-              <Text style={styles.instruction}> 2. Go to Lipa na M-PESA</Text>
-              <Text style={styles.instruction}> 3. Go to Buy Goods and Services</Text>
-              <Text style={styles.instruction}>
-                {' '}
-                4. Enter Till number
-                {' '}
-                <Text style={styles.bolder}>123456</Text>
-              </Text>
-              <Text style={styles.instruction}> 5. Enter Amount you wish to send</Text>
-              <Text style={styles.instruction}> 6. Press the button below to Confirm </Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                marginTop: 10,
-              }}
-            >
-              <TouchableOpacity
-                title="Login"
-                onPress={() => {
-                  navigation.navigate('Deposit');
-                }}
-                style={styles.proceed}
-                underlayColor={_themeColor.red}
-              >
-                <Text style={styles.loginText}>Confirm Deposit </Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
+    <View style={styles.backgroundImage}>
+      <ScrollView style={styles.scrollView}>
+        <Text style={styles.welcome}>Confirm Transfer Details</Text>
+        <View style={styles.warn}>
+          <Alert style={styles.warnIcon} />
+          <Text style={styles.warnText}>
+            {' '}
+            Confirm if the details you have provided are correct details of the reciepent and that
+            you have deposit the money to be transferred to the account you have selected
+          </Text>
         </View>
-      </View>
-    </Pressable>
+        <View style={styles.container}>
+          <View style={styles.row}>
+            <Text style={styles.label}>Fullname </Text>
+            <Text style={styles.right}> John Doe</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Phone number </Text>
+            <Text style={styles.right}> 254708123456</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Amount</Text>
+            <Text style={styles.right}> KES 5,000</Text>
+          </View>
+          <TouchableOpacity
+            title="Login"
+            onPress={() => {
+              navigation.navigate('Final');
+            }}
+            style={styles.button}
+            underlayColor={_themeColor.primary}
+          >
+            <Text style={styles.loginText}>Confirm Transfer</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bolder: {
-    color: _themeColor.secondary,
-    fontFamily: 'Karla-Bold',
+  backgroundImage: {
+    backgroundColor: _themeColor.white,
+    height: '100%',
+    position: 'relative',
+    width: '100%',
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: _themeColor.white,
+    backgroundColor: _themeColor.danger,
+
     borderRadius: 25,
-    bottom: 0,
     elevation: 12,
-    flexDirection: 'row',
-    height: 100,
-    justifyContent: 'space-between',
-    marginLeft: 10,
-    marginRight: 30,
-    marginTop: 40,
-    paddingHorizontal: 20,
-    position: 'relative',
-    right: 0,
-    shadowColor: _themeColor.gray,
+    height: 50,
+    justifyContent: 'center',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 50,
+    shadowColor: _themeColor.primary,
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: 6,
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
-    width: '95%',
+
+    width: '80%',
   },
-  card: {
-    backgroundColor: _themeColor.white,
-    borderRadius: 25,
-    elevation: 15,
-    height: 280,
-    marginLeft: 10,
-    marginRight: 30,
-    marginTop: 20,
-    paddingHorizontal: 20,
-    shadowColor: _themeColor.gray,
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    width: '95%',
-    zIndex: 1,
-  },
-  cardHeader: { fontFamily: 'Karla-Medium', fontSize: 18, paddingVertical: 20 },
-  chevron: {},
   container: {
     backgroundColor: _themeColor.white,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    flex: 1,
-    height: 1000,
-    // paddingBottom: 300,
+    paddingTop: 40,
   },
-  document: {},
-  dropdownButton: {
-    alignItems: 'flex-start',
-    marginBottom: 20,
-    textAlign: 'left',
+  forgot: {
+    backgroundColor: _themeColor.white,
+    fontFamily: 'Karla-Regular',
+    margin: 12,
+    padding: 10,
   },
-  dropdownText: {
+  forgotText: {
     color: _themeColor.secondary,
-    fontFamily: 'Karla-Medium',
-    fontSize: 16,
-    textAlign: 'center',
+
+    fontFamily: 'Karla-Regular',
+    fontSize: 18,
   },
-  instruction: {
-    color: _themeColor.darkGray,
-    fontFamily: 'Karla-Bold',
-    fontSize: 17,
-    lineHeight: 24,
-    marginBottom: 20,
+  input: {
+    borderColor: _themeColor.gray,
+    borderRadius: 5,
+    borderWidth: 1,
+    fontFamily: 'Karla-Medium',
+    height: 50,
+    margin: 12,
+    marginBottom: 40,
+    padding: 10,
   },
   label: {
+    color: _themeColor.darkGray,
+    fontFamily: 'Karla-Regular',
+    fontSize: 16,
+    marginLeft: 12,
+    marginRight: 12,
+    // paddingLeft: 10,
+    paddingRight: 10,
+  },
+  loginText: {
+    color: _themeColor.lightRed,
+    fontFamily: 'Karla-Bold',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  right: { textAlign: 'left', width: 130 },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+    marginHorizontal: 12,
+  },
+  scrollView: {
+    backgroundColor: 'transparent',
+    height: '100%',
+  },
+  subHeader: {
     color: _themeColor.green,
     fontFamily: 'Karla-Regular',
     fontSize: 16,
@@ -143,44 +155,40 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  loginText: {
-    color: _themeColor.white,
-    fontFamily: 'Karla-Medium',
-    fontSize: 16,
-    paddingLeft: 25,
-    textAlign: 'center',
-  },
-  proceed: {
-    alignItems: 'center',
-    backgroundColor: _themeColor.danger,
+  transparentButton: {
+    backgroundColor: _themeColor.white,
+    borderColor: _themeColor.primary,
     borderRadius: 25,
-    elevation: 12,
-    flexDirection: 'row',
+    borderWidth: 2,
     height: 50,
     justifyContent: 'center',
-    // marginLeft: 10,
-    // marginRight: 30,
-    marginBottom: 30,
-    marginTop: 10,
-    paddingHorizontal: 20,
-    shadowColor: _themeColor.gray,
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    width: '90%',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 20,
+    width: '80%',
   },
-
-  row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center' },
-  subText: {
-    color: _themeColor.darkGray,
+  warn: {
+    alignItems: 'flex-start',
+    backgroundColor: _themeColor.lightRed,
+    borderRadius: 10,
+    color: _themeColor.secondary,
+    flex: 1,
+    flexDirection: 'row',
+    marginHorizontal: 12,
+    padding: 30,
+  },
+  warnIcon: {
+    paddingTop: 20,
+  },
+  warnText: {
+    color: _themeColor.danger,
     fontFamily: 'Karla-Regular',
-    fontSize: 13,
-    paddingLeft: 25,
-    paddingTop: 7,
-    textAlign: 'center',
+    lineHeight: 20,
+    marginLeft: 15,
+    // fontSize: 22,
+    // margin: 12,
+    // marginTop: 40,
+    // padding: 10,
   },
   welcome: {
     color: _themeColor.secondary,
