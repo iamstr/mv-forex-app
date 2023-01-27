@@ -3,8 +3,13 @@
     "module": "ES6",
     "jsx": "preserve",
     "checkJs": true,
-    "baseUrl": "."
+    "baseUrl": "./",
+    "paths": {
+      "hooks/*": ["hooks/*"],
+      "screens/*": ["screens/*"],
+      "contexts/*": ["contexts/*"],
+      "colorScheme": ["colorScheme.json"]
+    }
   },
-  "include": ["./**/*"],
   "exclude": ["node_modules", "**/node_modules/*"]
 }
