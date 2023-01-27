@@ -2,10 +2,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useState } from 'react';
+import {
+  useCallback, useContext, useEffect, useState,
+} from 'react';
 import {
   ImageBackground,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,39 +15,63 @@ import {
   View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
+import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/userContext';
+import useCredential from '../hooks/useCredentials';
+import useToken from '../hooks/useToken';
 
 export default function LoginScreen() {
+  const { saveToken, isLoggedIn } = useContext(AuthContext);
   const [jwt, setJWT] = useState(null); // JWT state
+  const [username, setUsername] = useState(); // JWT state
+  const [password, setPassword] = useState(); // JWT state
+  const { credential, setCredential, getCredential } = useCredential();
+  const { token, setToken } = useToken();
+  const user = useContext(UserContext);
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
-  const navigation = useNavigation();
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
-  const login = () => {
-    // Send a login request to the Node.js server
-    fetch('https://example.com/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: 'user1',
-        password: 'password123',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Save the JWT locally, such as in the device's local storage
-        saveJWT(data.token);
-        setJWT(data.token);
-      });
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
+  const navigation = useNavigation();
+  useEffect(() => {
+    const setCredentialsFromSecure = async () => {
+      await setUsername(credential?.username);
+      await setPassword(credential?.password);
+    };
+
+    setCredentialsFromSecure();
+  }, [credential]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate('Home');
+    }
+  }, [isLoggedIn]);
+  const login = async () => {
+    // // Send a login request to the Node.js server
+    // fetch('https://example.com/login', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     username: 'user1',
+    //     password: 'password123',
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // Save the JWT locally, such as in the device's local storage
+    //
+    //   });
+    await setCredential({ username, password });
+    saveToken({ username, password });
   };
 
   const getProtectedData = () => {
@@ -65,62 +90,61 @@ export default function LoginScreen() {
   };
 
   return (
-    <View>
-      {jwt ? (
-        getProtectedData()
-      ) : (
-        <ImageBackground
-          source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
-          style={styles.backgroundImage}
-        >
-          <SafeAreaView>
-            <View style={styles.container}>
-              <ScrollView style={styles.scrollView}>
-                <Text style={styles.welcome}>Welcome Back</Text>
-                <Text style={styles.label}>Email or Username</Text>
-                <TextInput style={styles.input} />
-                <Text style={styles.label}>Password</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="useless placeholder"
-                  keyboardType="numeric"
-                />
+    <ImageBackground
+      source={require('../assets/other/pattern_japanese-pattern-3_1_2_0-0_0_1__4bfb9d_ffffff.png')}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollView}>
+          <Text style={styles.welcome}>Welcome Back</Text>
+          <Text style={styles.label}>Email or Username</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="useless placeholder"
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+          />
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="useless placeholder"
+            value={password}
+            secureTextEntry
+            onChangeText={(text) => setPassword(text)}
+          />
 
-                <TouchableOpacity
-                  title="Login"
-                  onPress={() => {
-                    navigation.navigate('Forgot');
-                  }}
-                  style={styles.forgot}
-                  underlayColor={_themeColor.primary}
-                >
-                  <Text style={styles.forgotText}>Forgot password?</Text>
-                </TouchableOpacity>
+          <TouchableOpacity
+            title="Login"
+            onPress={() => {
+              navigation.navigate('Forgot');
+            }}
+            style={styles.forgot}
+            underlayColor={_themeColor.primary}
+          >
+            <Text style={styles.forgotText}>Forgot password?</Text>
+          </TouchableOpacity>
 
-                <TouchableOpacity
-                  title="Login"
-                  onPress={login}
-                  style={styles.button}
-                  underlayColor={_themeColor.primary}
-                >
-                  <Text style={styles.loginText}>Login</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  title="Login"
-                  onPress={() => {
-                    navigation.navigate('Signup');
-                  }}
-                  style={styles.transparentButton}
-                  underlayColor={_themeColor.primary}
-                >
-                  <Text style={styles.loginText}>Create a new account</Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-          </SafeAreaView>
-        </ImageBackground>
-      )}
-    </View>
+          <TouchableOpacity
+            title="Login"
+            onPress={login}
+            style={styles.button}
+            underlayColor={_themeColor.primary}
+          >
+            <Text style={styles.loginText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            title="Login"
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}
+            style={styles.transparentButton}
+            underlayColor={_themeColor.primary}
+          >
+            <Text style={styles.loginText}>Create a new account</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }
 
