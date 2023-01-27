@@ -39,7 +39,7 @@ function OTPScreen() {
               onPress={() => {
                 // navigation.navigate('Home');
                 navigation.dispatch((state) => CommonActions.reset({
-                  routes: [{ name: 'Home' }],
+                  routes: [{ name: 'Login', params: { login: true } }],
                 }));
               }}
               style={styles.button}
