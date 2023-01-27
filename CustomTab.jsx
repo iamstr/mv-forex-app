@@ -1,12 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StackActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { useContext } from 'react';
 import {
   Alert, Pressable, StyleSheet, Text,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from './colorScheme.json';
+import { AuthContext } from './contexts/AuthContext';
 import ExchangeScreen from './screens/ExchangeScreen';
 import HelpScreen from './screens/HelpScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -17,6 +19,7 @@ const Tab = createBottomTabNavigator();
 
 export default function CustomTab() {
   const navigation = useNavigation();
+  const { deleteToken } = useContext(AuthContext);
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('./assets/fonts/Karla/KarlaMedium.ttf'),
@@ -76,8 +79,13 @@ export default function CustomTab() {
                   style: 'destructive',
                   // If the user confirmed, then we dispatch the action we blocked earlier
                   // This will continue the action that had triggered the removal of the screen
-                  onPress: () => {
-                    navigation.dispatch(StackActions.popToTop());
+                  onPress: async () => {
+                    try {
+                      deleteToken();
+                    } catch (e) {
+                      console.log(e);
+                    }
+                    // navigation.dispatch(StackActions.popToTop());
                   },
                 },
               ]);
