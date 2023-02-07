@@ -1,9 +1,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useFonts } from 'expo-font';
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -15,6 +17,7 @@ import {
 
 import { Video } from 'expo-av';
 import { useRef, useState } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
 import Kenya from '../assets/other/icons8-kenya-48.png';
 import Nigeria from '../assets/other/icons8-nigeria-circular-48.png';
@@ -22,34 +25,121 @@ import _themeColor from '../colorScheme.json';
 
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(1);
+  const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
+  const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
+  const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [isFocused, setIsFocused] = useState(false);
+  const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
   const inputRef = useRef();
+  const toggleModalHandler = (hide = null) => {
+    setModalVisible((prevState) => ({
+      hideCurrency: hide,
+      visible: !prevState.visible,
+    }));
+  };
+  const toggleCurrencyHandler = (state, show = null) => {
+    toggleModalHandler(show);
+    setHideCurrency(state);
+    if (modalVisible.hideCurrency === 'to') setCurrencyTo(state);
+    if (modalVisible.hideCurrency === 'from') setCurrencyFrom(state);
+  };
+  const setCurrencyHandler = (state) => {
+    setHideCurrency(state);
+    if (modalVisible.hideCurrency === 'to') setCurrencyTo(state);
+    if (modalVisible.hideCurrency === 'from') setCurrencyFrom(state);
+    toggleModalHandler();
+  };
+  const filtered = [
+    { currencyName: 'KES', currencyFlag: Kenya },
+    { currencyName: 'NGN', currencyFlag: Nigeria },
+  ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
   return (
     <View style={styles.document}>
       <View style={styles.container}>
         <ScrollView>
+          <Modal
+            animationType="slide"
+            visible={modalVisible.visible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              toggleModalHandler();
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <Text style={styles.exchangeModal}>Select Currency</Text>
+                  <Pressable
+                    onPress={() => {
+                      toggleModalHandler();
+                    }}
+                  >
+                    <Ionicons name="close-circle" size={26} color={_themeColor.gray} />
+                  </Pressable>
+                </View>
+                <View style={{ marginTop: 50 }}>
+                  {filtered.map((singleCurrency, index) => (
+                    <Pressable
+                      key={index}
+                      onPress={() => {
+                        setCurrencyHandler(singleCurrency);
+                      }}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        height: 50,
+                        marginBottom: 100,
+                      }}
+                    >
+                      <Image source={singleCurrency.currencyFlag} />
+                      <Text style={[styles.currency, { paddingBottom: 27, paddingLeft: 20 }]}>
+                        {singleCurrency.currencyName}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </Modal>
           <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
             <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={70}>
               <View style={styles.card}>
                 <Text style={styles.today}>Today exchange rate</Text>
                 <Text style={styles.exchange}>1KES = 5.60 NGN</Text>
                 <View style={styles.rowAround}>
-                  <View style={styles.currencyBox}>
+                  <Pressable
+                    style={styles.currencyBox}
+                    onPress={() => {
+                      toggleCurrencyHandler(currencyFrom, 'from');
+                    }}
+                  >
                     <Text style={styles.from}>From</Text>
-                    <Image source={Kenya} />
-                    <Text style={styles.currency}>KES</Text>
-                  </View>
+                    <Image source={currencyFrom.currencyFlag} />
+                    <Text style={styles.currency}>{currencyFrom.currencyName}</Text>
+                  </Pressable>
                   <Exchanger />
-                  <View style={styles.currencyBox}>
+                  <Pressable
+                    style={styles.currencyBox}
+                    onPress={() => {
+                      toggleCurrencyHandler(currencyTo, 'to');
+                    }}
+                  >
                     <Text style={styles.from}>TO</Text>
-                    <Image source={Nigeria} />
-                    <Text style={styles.currency}>NGN</Text>
-                  </View>
+                    <Image source={currencyTo.currencyFlag} />
+                    <Text style={styles.currency}>{currencyTo.currencyName}</Text>
+                  </Pressable>
                 </View>
 
                 {currency.length > 0 && currency != 0 && (
@@ -185,6 +275,13 @@ const styles = StyleSheet.create({
 
     width: '90%',
   },
+
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
   card: {
     backgroundColor: _themeColor.white,
     borderRadius: 10,
@@ -201,6 +298,12 @@ const styles = StyleSheet.create({
 
     shadowRadius: 28,
     // width: '100%',
+  },
+  centeredView: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 22,
   },
   container: {
     backgroundColor: _themeColor.white,
@@ -241,6 +344,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingBottom: 20,
     textAlign: 'center',
+  },
+  exchangeModal: {
+    color: _themeColor.secondary,
+    fontFamily: 'Karla-Medium',
+    fontSize: 18,
+    // paddingBottom: 20,
   },
   from: {
     color: _themeColor.darkGray,
@@ -288,9 +397,37 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
     textAlign: 'center',
   },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalView: {
+    // alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    elevation: 5,
+    flex: 1,
+    height: 100,
+    margin: 20,
+    padding: 35,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    width: '100%',
+  },
   name: { color: _themeColor.green, fontFamily: 'Karla-Medium', fontSize: 24 },
   rowAround: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' },
   rowBetween: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
+  rowBewteenWithoutAlign: { flexDirection: 'row', flex: 1, justifyContent: 'space-between' },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   today: {
     color: _themeColor.gray,
     fontFamily: 'Karla-Bold',
@@ -317,7 +454,6 @@ const styles = StyleSheet.create({
     shadowRadius: 28,
   },
   transactionDate: { color: _themeColor.darkGray, fontFamily: 'Karla-Regular', fontSize: 13 },
-
   transactionDetail: { paddingLeft: 17 },
   transactionHeader: { fontFamily: 'Karla-Regular', fontSize: 15 },
   transactionHeaderButton: {
