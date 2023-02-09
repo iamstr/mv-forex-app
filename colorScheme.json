@@ -10,5 +10,7 @@
   "lightGreen": "#FAFFFC",
   "lightGray": "#F2F2F2",
   "lightRed": "#FFE6E6",
-  "light": "#F2FFF8"
+  "light": "#F2FFF8",
+  "warning": "#FFA07A",
+  "warningText": "#7A2300"
 }
