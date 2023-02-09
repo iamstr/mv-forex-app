@@ -43,7 +43,6 @@ export default function HomeScreen() {
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
       setShowToast(true);
-      Alert.alert('same', currencyFrom.currencyName + currencyTo.currencyName);
     }
     if (currencyFrom.currencyName !== currencyTo.currencyName) setShowToast(false);
   }, [currencyFrom, currencyTo]);
