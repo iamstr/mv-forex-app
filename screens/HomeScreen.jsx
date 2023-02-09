@@ -182,12 +182,13 @@ export default function HomeScreen() {
                     }}
                     keyboardType="numeric"
                     placeholder="Exchange amount"
+                    editable={!showToast}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => {
                       setIsFocused(false);
                     }}
                   />
-                  {currency && (
+                  {currency && !showToast && (
                     <TouchableOpacity
                       title="Login"
                       onPress={() => {
