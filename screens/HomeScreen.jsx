@@ -27,7 +27,7 @@ import Toast from '../components/Toast';
 
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
-  const [currency, setCurrency] = useState(1);
+  const [currency, setCurrency] = useState(100);
   const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
   const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
@@ -171,7 +171,7 @@ export default function HomeScreen() {
                     <Text style={styles.amount}>
                       {parseFloat(currency.toFixed()).toLocaleString()}
                     </Text>
-                    <Text style={styles.convert}>NGN</Text>
+                    <Text style={styles.convert}>{currencyTo.currencyName}</Text>
                   </View>
                 )}
 
