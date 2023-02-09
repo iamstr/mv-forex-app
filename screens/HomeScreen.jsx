@@ -15,6 +15,7 @@ import {
   View,
 } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
 import { useEffect, useRef, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -39,6 +40,7 @@ export default function HomeScreen() {
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
+  const navigation = useNavigation();
   const inputRef = useRef();
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
@@ -191,7 +193,7 @@ export default function HomeScreen() {
                     <TouchableOpacity
                       title="Login"
                       onPress={() => {
-                        navigation.navigate('Home');
+                        navigation.navigate('Deposit');
                       }}
                       style={styles.button}
                       underlayColor={_themeColor.primary}
