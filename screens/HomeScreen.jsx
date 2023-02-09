@@ -164,7 +164,7 @@ export default function HomeScreen() {
                   </Pressable>
                 </View>
 
-                {currency && (
+                {currency && !showToast && (
                   <View style={styles.currencyView}>
                     <Text style={styles.amount}>
                       {parseFloat(currency.toFixed()).toLocaleString()}
