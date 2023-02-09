@@ -16,18 +16,22 @@ import {
 } from 'react-native';
 
 import { Video } from 'expo-av';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
 import Kenya from '../assets/other/icons8-kenya-48.png';
 import Nigeria from '../assets/other/icons8-nigeria-circular-48.png';
 import _themeColor from '../colorScheme.json';
+import Toast from '../components/Toast';
 
+const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(1);
   const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
   const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
+  const [exchangeRate, setExchangeRate] = useState(serverData);
+  const [showToast, setShowToast] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
   const [fontsLoaded] = useFonts({
@@ -36,6 +40,14 @@ export default function HomeScreen() {
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
   const inputRef = useRef();
+  useEffect(() => {
+    if (currencyFrom.currencyName === currencyTo.currencyName) {
+      setShowToast(true);
+      Alert.alert('same', currencyFrom.currencyName + currencyTo.currencyName);
+    }
+    if (currencyFrom.currencyName !== currencyTo.currencyName) setShowToast(false);
+  }, [currencyFrom, currencyTo]);
+
   const toggleModalHandler = (hide = null) => {
     setModalVisible((prevState) => ({
       hideCurrency: hide,
@@ -52,6 +64,7 @@ export default function HomeScreen() {
     setHideCurrency(state);
     if (modalVisible.hideCurrency === 'to') setCurrencyTo(state);
     if (modalVisible.hideCurrency === 'from') setCurrencyFrom(state);
+
     toggleModalHandler();
   };
   const filtered = [
@@ -60,6 +73,7 @@ export default function HomeScreen() {
   ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
   return (
     <View style={styles.document}>
+      <Toast show={showToast} message="This is a warning message" />
       <View style={styles.container}>
         <ScrollView>
           <Modal
@@ -117,7 +131,16 @@ export default function HomeScreen() {
             <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={70}>
               <View style={styles.card}>
                 <Text style={styles.today}>Today exchange rate</Text>
-                <Text style={styles.exchange}>1KES = 5.60 NGN</Text>
+                <Text style={styles.exchange}>
+                  1
+                  {exchangeRate.from}
+                  {' '}
+                  =
+                  {' '}
+                  {exchangeRate.rate}
+                  {' '}
+                  {exchangeRate.to}
+                </Text>
                 <View style={styles.rowAround}>
                   <Pressable
                     style={styles.currencyBox}
@@ -142,9 +165,11 @@ export default function HomeScreen() {
                   </Pressable>
                 </View>
 
-                {currency.length > 0 && currency != 0 && (
+                {currency && (
                   <View style={styles.currencyView}>
-                    <Text style={styles.amount}>{currency}</Text>
+                    <Text style={styles.amount}>
+                      {parseFloat(currency.toFixed()).toLocaleString()}
+                    </Text>
                     <Text style={styles.convert}>NGN</Text>
                   </View>
                 )}
@@ -152,7 +177,9 @@ export default function HomeScreen() {
                 <View style={styles.inputView}>
                   <TextInput
                     style={[styles.input, isFocused && styles.inputFocused]}
-                    onChangeText={(text) => setCurrency(text)}
+                    onChangeText={(text) => {
+                      setCurrency(Number(exchangeRate.rate) * Number(text));
+                    }}
                     keyboardType="numeric"
                     placeholder="Exchange amount"
                     onFocus={() => setIsFocused(true)}
@@ -160,7 +187,7 @@ export default function HomeScreen() {
                       setIsFocused(false);
                     }}
                   />
-                  {currency.length > 0 && currency != 0 && (
+                  {currency && (
                     <TouchableOpacity
                       title="Login"
                       onPress={() => {
