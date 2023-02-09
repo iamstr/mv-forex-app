@@ -73,7 +73,7 @@ export default function HomeScreen() {
   ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
   return (
     <View style={styles.document}>
-      <Toast show={showToast} message="This is a warning message" />
+      <Toast show={showToast} message="you cant exchange the same currency" />
       <View style={styles.container}>
         <ScrollView>
           <Modal
