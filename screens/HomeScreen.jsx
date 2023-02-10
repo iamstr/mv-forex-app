@@ -17,13 +17,16 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
 import Kenya from '../assets/other/icons8-kenya-48.png';
 import Nigeria from '../assets/other/icons8-nigeria-circular-48.png';
 import _themeColor from '../colorScheme.json';
 import Toast from '../components/Toast';
+import { DepositContext } from '../contexts/DepositContext';
 
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
@@ -34,6 +37,7 @@ export default function HomeScreen() {
   const [exchangeRate, setExchangeRate] = useState(serverData);
   const [showToast, setShowToast] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  // const [deposit, updateDeposit] = useParams();
   const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
@@ -42,12 +46,13 @@ export default function HomeScreen() {
   });
   const navigation = useNavigation();
   const inputRef = useRef();
+  const { saveDeposit, deposit } = useContext(DepositContext);
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
       setShowToast(true);
     }
     if (currencyFrom.currencyName !== currencyTo.currencyName) setShowToast(false);
-  }, [currencyFrom, currencyTo]);
+  }, [currencyFrom, currencyTo, deposit]);
 
   const toggleModalHandler = (hide = null) => {
     setModalVisible((prevState) => ({
@@ -55,6 +60,7 @@ export default function HomeScreen() {
       visible: !prevState.visible,
     }));
   };
+
   const toggleCurrencyHandler = (state, show = null) => {
     toggleModalHandler(show);
     setHideCurrency(state);
@@ -204,7 +210,18 @@ export default function HomeScreen() {
                     <TouchableOpacity
                       title="Login"
                       onPress={() => {
-                        navigation.navigate('Deposit');
+                        const value = {
+                          amount: currency,
+                          currency: currencyTo.currencyName,
+                        };
+                        console.log('before saveDeposit ', deposit);
+                        saveDeposit(value);
+                        console.log('after saveDeposit ', deposit);
+                        console.log('hey its deposit ', deposit);
+                        navigation.navigate('Deposit', {
+                          amount: currency,
+                          currency: currencyTo.currencyName,
+                        });
                       }}
                       style={styles.button}
                       underlayColor={_themeColor.primary}
