@@ -68,6 +68,17 @@ export default function HomeScreen() {
 
     toggleModalHandler();
   };
+  const changeHandler = function (text) {
+    if (text === '' || text.length <= 1 || text === 0) {
+      setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(100)));
+      console.log('here is hte currency', currency);
+    } else {
+      console.log('does it change ,the  currency', currency);
+      setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
+    }
+    setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
+  };
+
   const filtered = [
     { currencyName: 'KES', currencyFlag: Kenya },
     { currencyName: 'NGN', currencyFlag: Nigeria },
@@ -166,20 +177,20 @@ export default function HomeScreen() {
                   </Pressable>
                 </View>
 
-                {currency && !showToast && (
+                {!!currency && !showToast ? (
                   <View style={styles.currencyView}>
                     <Text style={styles.amount}>
-                      {parseFloat(currency.toFixed()).toLocaleString()}
+                      {currency ? parseFloat(currency.toFixed()).toLocaleString() : '100'}
                     </Text>
                     <Text style={styles.convert}>{currencyTo.currencyName}</Text>
                   </View>
-                )}
+                ) : null}
 
                 <View style={styles.inputView}>
                   <TextInput
                     style={[styles.input, isFocused && styles.inputFocused]}
                     onChangeText={(text) => {
-                      setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
+                      changeHandler(text);
                     }}
                     keyboardType="numeric"
                     placeholder="Exchange amount"
@@ -189,7 +200,7 @@ export default function HomeScreen() {
                       setIsFocused(false);
                     }}
                   />
-                  {currency && !showToast && (
+                  {!!currency && !showToast && (
                     <TouchableOpacity
                       title="Login"
                       onPress={() => {
