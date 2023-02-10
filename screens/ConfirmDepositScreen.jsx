@@ -1,12 +1,16 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
 import {
   Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
+import { DepositContext } from '../contexts/DepositContext';
 
 export default function ConfirmDepositScreen() {
   const navigation = useNavigation();
+  // const [deposit] = useDeposit();
+  const { deposit } = useContext(DepositContext);
   return (
     <Pressable>
       <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
@@ -26,10 +30,22 @@ export default function ConfirmDepositScreen() {
                 {' '}
                 4. Enter Till number
                 {' '}
-                <Text style={styles.bolder}>123456</Text>
+                <Text style={styles.bolder}>70</Text>
               </Text>
-              <Text style={styles.instruction}> 5. Enter Amount you wish to send</Text>
-              <Text style={styles.instruction}> 6. Press the button below to Confirm </Text>
+              <Text style={styles.instruction}>
+                {' '}
+                5. Enter
+                <Text style={styles.smaller}>{`  ${deposit.from}`}</Text>
+                <Text style={styles.bolder}>{` ${deposit.amount.toLocaleString()}`}</Text>
+                {' '}
+                as the
+                amount
+              </Text>
+              <Text style={styles.instruction}>
+                {' '}
+                6. Press the button below to Confirm the deposit
+                {' '}
+              </Text>
             </View>
             <View
               style={{
@@ -172,8 +188,8 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     width: '90%',
   },
-
   row: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center' },
+  smaller: { fontSize: 12 },
   subText: {
     color: _themeColor.darkGray,
     fontFamily: 'Karla-Regular',
