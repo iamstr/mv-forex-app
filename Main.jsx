@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,7 +30,7 @@ import VerifyScreen from './screens/VerifyScreen';
 const Stack = createNativeStackNavigator();
 export default function Main() {
   // const user = useContext(UserContextProvider);
-  const { isLoggedIn, token } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
@@ -38,9 +38,7 @@ export default function Main() {
     'Karla-Bold': require('./assets/fonts/Karla/KarlaBold.ttf'),
   });
   const user = useContext(UserContext);
-  useEffect(() => {
-    console.log(`token has update:${user.username}`);
-  }, [isLoggedIn]);
+
   return (
     <RootSiblingParent>
       <NavigationContainer>
