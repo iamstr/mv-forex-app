@@ -179,7 +179,7 @@ export default function HomeScreen() {
                   <TextInput
                     style={[styles.input, isFocused && styles.inputFocused]}
                     onChangeText={(text) => {
-                      setCurrency(Number(exchangeRate.rate) * Number(text));
+                      setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
                     }}
                     keyboardType="numeric"
                     placeholder="Exchange amount"
