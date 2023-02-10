@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext({
   token: null,
   isLoggedIn: false,
-  saveToken: () => {},
+  saveToken: (token) => {},
   deleteToken: () => {},
   getToken: () => {},
 });
@@ -14,21 +14,20 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const getToken = async () => {
-      const tokenString = await SecureStore.getItemAsync('token');
+      const tokenString = await SecureStore.getItemAsync('secureTokenString');
       if (tokenString) {
-        const { token } = JSON.parse(tokenString);
-        setToken(token);
+        const { secureTokenString } = JSON.parse(tokenString);
+        setToken(secureTokenString);
         setIsLoggedIn(true);
       }
     };
     getToken();
   }, []);
 
-  const saveToken = async (token) => {
-    await SecureStore.setItemAsync('token', JSON.stringify({ token }));
-    setToken(token);
+  const saveToken = async (tokenName) => {
+    await SecureStore.setItemAsync('token', JSON.stringify({ tokenName }));
+    setToken(tokenName);
     setIsLoggedIn(true);
-    console.log('value of isloggedIn', isLoggedIn);
   };
 
   const deleteToken = async () => {
