@@ -9,14 +9,6 @@ import Phone from '../assets/other/phone_channel.png';
 import _themeColor from '../colorScheme.json';
 import DropDown from '../components/Dropdown';
 
-const _webChatHandlerAsync = async () => {
-  const result = await WebBrowser.openBrowserAsync(
-    'https://tawk.to/chat/5ca0b80d6bba4605280089c0/default',
-  );
-};
-const _linkOpener = (link) => {
-  Linking.openURL(link);
-};
 export default function DepositScreen() {
   return (
     <Pressable>
