@@ -6,8 +6,6 @@ import { UserContextProvider } from './contexts/userContext';
 import Main from './Main';
 
 export default function App() {
-  // const user = useContext(UserContextProvider);
-
   return (
     <AuthProvider>
       <UserContextProvider>
