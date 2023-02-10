@@ -17,9 +17,7 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
-import {
-  useContext, useEffect, useRef, useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
 import Kenya from '../assets/other/icons8-kenya-48.png';
@@ -209,6 +207,8 @@ export default function HomeScreen() {
                         const value = {
                           amount: currency,
                           currency: currencyTo.currencyName,
+                          exchanged: currency,
+                          from: currencyFrom.currencyName,
                         };
                         saveDeposit(value);
                         navigation.navigate('Deposit', {
