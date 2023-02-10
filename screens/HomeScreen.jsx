@@ -37,7 +37,6 @@ export default function HomeScreen() {
   const [exchangeRate, setExchangeRate] = useState(serverData);
   const [showToast, setShowToast] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  // const [deposit, updateDeposit] = useParams();
   const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
@@ -45,7 +44,6 @@ export default function HomeScreen() {
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
   const navigation = useNavigation();
-  const inputRef = useRef();
   const { saveDeposit, deposit } = useContext(DepositContext);
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
@@ -77,9 +75,7 @@ export default function HomeScreen() {
   const changeHandler = function (text) {
     if (text === '' || text.length <= 1 || text === 0) {
       setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(100)));
-      console.log('here is hte currency', currency);
     } else {
-      console.log('does it change ,the  currency', currency);
       setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
     }
     setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
@@ -214,10 +210,7 @@ export default function HomeScreen() {
                           amount: currency,
                           currency: currencyTo.currencyName,
                         };
-                        console.log('before saveDeposit ', deposit);
                         saveDeposit(value);
-                        console.log('after saveDeposit ', deposit);
-                        console.log('hey its deposit ', deposit);
                         navigation.navigate('Deposit', {
                           amount: currency,
                           currency: currencyTo.currencyName,
