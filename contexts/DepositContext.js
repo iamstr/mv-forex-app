@@ -8,6 +8,8 @@ export default function DepositProvider({ children }) {
   const [deposit, setDeposit] = useState({
     amount: 0,
     currency: 'NGN',
+    from: 'KES',
+    exchanged: 0,
   });
   useEffect(() => {
     console.log('The updated deposit value: ', deposit);
