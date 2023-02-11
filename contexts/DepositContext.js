@@ -5,6 +5,8 @@ export const DepositContext = createContext({
   saveDeposit: () => {},
   channel: {},
   saveChannel: () => {},
+  recipient: {},
+  saveRecipient: () => {},
 });
 export default function DepositProvider({ children }) {
   const [deposit, setDeposit] = useState({
@@ -19,6 +21,12 @@ export default function DepositProvider({ children }) {
     type: '',
     value: '',
   });
+  const [recipient, setRecipient] = useState({
+    fullname: 0,
+    mobile: '',
+    channel: '',
+    value: '',
+  });
   useEffect(() => {
     console.log('The updated channel value: ', channel);
   }, [channel]);
@@ -28,6 +36,9 @@ export default function DepositProvider({ children }) {
   const saveChannel = (value) => {
     setChannel(value);
   };
+  const saveRecipient = (value) => {
+    setRecipient(value);
+  };
 
   return (
     <DepositContext.Provider
@@ -36,6 +47,8 @@ export default function DepositProvider({ children }) {
         saveDeposit,
         channel,
         saveChannel,
+        recipient,
+        saveRecipient,
       }}
     >
       {children}
