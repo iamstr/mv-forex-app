@@ -7,11 +7,6 @@ import {
 import Chevron from '../assets/icons/Path.svg';
 import _themeColor from '../colorScheme.json';
 
-/**
- * @param array dropdown
- ** {label,value}
- * @returns
- */
 export default function DropDown({
   image, label, dropdown, Zindex,
 }) {
