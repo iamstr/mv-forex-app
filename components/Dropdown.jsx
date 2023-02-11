@@ -1,11 +1,12 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Animated, Image, Pressable, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Chevron from '../assets/icons/Path.svg';
 import _themeColor from '../colorScheme.json';
+import { DepositContext } from '../contexts/DepositContext';
 
 export default function DropDown({
   image, label, dropdown, Zindex,
@@ -16,6 +17,7 @@ export default function DropDown({
   const [show, setShow] = useState(false);
   const [rotateAnimationValue, setRotateAnimationValue] = useState(1);
   const navigation = useNavigation();
+  const { saveChannel } = useContext(DepositContext);
   const handleAnimation = (animated, value, setValue) => {
     Animated.timing(animated, {
       toValue: 1,
@@ -72,7 +74,10 @@ export default function DropDown({
           <Text style={styles.cardHeader}>Choose deposit channel</Text>
           {dropdown.map((item, index) => (
             <Pressable
-              onPress={() => navigation.navigate('ConfirmDeposit', { label: item.label, type: item.type })}
+              onPress={() => {
+                navigation.navigate('ConfirmDeposit', { info: item });
+                saveChannel(item);
+              }}
               style={styles.dropdownButton}
               key={Math.random()}
             >
