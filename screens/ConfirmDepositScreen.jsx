@@ -1,16 +1,89 @@
 // In the React Native app
-import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useContext, useEffect } from 'react';
 import {
   Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
 import { DepositContext } from '../contexts/DepositContext';
 
+function TextInstructions({ deposit, info, styles }) {
+  return (
+    <View style={{ ...styles.card, marginBottom: 10 }}>
+      {info.type === 'bank' ? (
+        <>
+          <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
+          <Text style={styles.instruction}> 2. Go to Lipa na M-PESA</Text>
+          <Text style={styles.instruction}> 3. Go to Buy Goods and Services</Text>
+          <Text style={styles.instruction}>
+            {' '}
+            4. Enter Till number
+            {' '}
+            <Text style={styles.bolder}>70</Text>
+          </Text>
+        </>
+      ) : info.type === 'mobile' ? (
+        <>
+          <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
+          <Text style={styles.instruction}> 2. Go to Send Money</Text>
+          <Text style={styles.instruction}>
+            {' '}
+            4. Enter
+            {' '}
+            <Text style={styles.bolder}>
+              {' '}
+              {info.value}
+            </Text>
+          </Text>
+        </>
+      ) : info.type === 'lipa na mpesa' ? (
+        <>
+          <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
+          <Text style={styles.instruction}> 2. Go to Lipa na M-PESA</Text>
+          <Text style={styles.instruction}> 3. Go to Buy Goods and Services</Text>
+          <Text style={styles.instruction}>
+            {' '}
+            4. Enter Till number
+            {' '}
+            <Text style={styles.bolder}>
+              {' '}
+              {info.value}
+            </Text>
+          </Text>
+        </>
+      ) : (
+        <>
+          <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
+          <Text style={styles.instruction}> 2. Go to Lipa na M-PESA</Text>
+          <Text style={styles.instruction}> 3. Go to Buy Goods and Services</Text>
+          <Text style={styles.instruction}>
+            {' '}
+            4. Enter Till number
+            {' '}
+            <Text style={styles.bolder}>70</Text>
+          </Text>
+        </>
+      )}
+      <Text style={styles.instruction}>
+        {' '}
+        5. Enter
+        <Text style={styles.smaller}>{`  ${deposit.from}`}</Text>
+        <Text style={styles.bolder}>{` ${deposit.amount.toLocaleString()}`}</Text>
+        {' '}
+        as the amount
+      </Text>
+    </View>
+  );
+}
 export default function ConfirmDepositScreen() {
   const navigation = useNavigation();
-  // const [deposit] = useDeposit();
+  const routes = useRoute();
+  const { info } = routes.params;
   const { deposit } = useContext(DepositContext);
+  useEffect(() => {
+    console.log(info);
+  }, [info]);
+
   return (
     <Pressable>
       <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
@@ -22,31 +95,7 @@ export default function ConfirmDepositScreen() {
               the reciepent
               {' '}
             </Text>
-            <View style={{ ...styles.card, marginBottom: 10 }}>
-              <Text style={styles.instruction}> 1. Go to M-PESA MENU</Text>
-              <Text style={styles.instruction}> 2. Go to Lipa na M-PESA</Text>
-              <Text style={styles.instruction}> 3. Go to Buy Goods and Services</Text>
-              <Text style={styles.instruction}>
-                {' '}
-                4. Enter Till number
-                {' '}
-                <Text style={styles.bolder}>70</Text>
-              </Text>
-              <Text style={styles.instruction}>
-                {' '}
-                5. Enter
-                <Text style={styles.smaller}>{`  ${deposit.from}`}</Text>
-                <Text style={styles.bolder}>{` ${deposit.amount.toLocaleString()}`}</Text>
-                {' '}
-                as the
-                amount
-              </Text>
-              <Text style={styles.instruction}>
-                {' '}
-                6. Press the button below to Confirm the deposit
-                {' '}
-              </Text>
-            </View>
+            <TextInstructions deposit={deposit} info={info} styles={styles} />
             <View
               style={{
                 alignItems: 'center',
