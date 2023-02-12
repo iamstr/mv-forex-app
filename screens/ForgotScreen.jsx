@@ -1,23 +1,19 @@
 // In the React Native app
 import { useState } from 'react';
 import {
-  Button,
   ImageBackground,
   SafeAreaView,
   StyleSheet,
-  TextInput,
-  View,
-  TouchableOpacity,
   Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
-import { useFonts } from 'expo-font';
+
 export default function LoginScreen() {
   const [jwt, setJWT] = useState(null); // JWT state
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),  });
+
   const login = () => {
     // Send a login request to the Node.js server
     fetch('https://example.com/login', {
@@ -61,10 +57,10 @@ export default function LoginScreen() {
         >
           <SafeAreaView>
             <View style={styles.container}>
-            <Text style={styles.welcome}>Enter your email to reset your password</Text>
-            
-            <TextInput style={styles.input} placeholder="joe@mail.com"/>
-           
+              <Text style={styles.welcome}>Enter your email to reset your password</Text>
+
+              <TextInput style={styles.input} placeholder="joe@mail.com" />
+
               <TouchableOpacity
                 title="Login"
                 onPress={login}
@@ -73,7 +69,6 @@ export default function LoginScreen() {
               >
                 <Text style={styles.loginText}>Login</Text>
               </TouchableOpacity>
-             
             </View>
           </SafeAreaView>
         </ImageBackground>
@@ -84,90 +79,86 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   backgroundImage: { height: '100%', position: 'relative', width: '100%' },
-  transparentButton: {
-    backgroundColor: _themeColor.white,
-    borderWidth: 2,
-    borderColor:_themeColor.primary,
-    width: '80%',
-    height:50,
-    marginRight:40,
-    marginLeft:40,
-    borderRadius:25,
-    justifyContent:'center',
-    marginTop:20
-  },
   button: {
     backgroundColor: _themeColor.primary,
-    
-    
-    width: '80%',
-    height:50,
-    marginRight:40,
-    marginLeft:40,
-    marginTop:60,
-    borderRadius:25,
-    justifyContent:'center',
-    shadowColor: _themeColor.primary,
-shadowOffset: {
-	width: 0,
-	height: 6,
-},
-shadowOpacity: 0.37,
-shadowRadius: 7.49,
 
-elevation: 12,
+    borderRadius: 25,
+    elevation: 12,
+    height: 50,
+    justifyContent: 'center',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 60,
+    shadowColor: _themeColor.primary,
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+
+    width: '80%',
   },
-  loginText:{
-    color: _themeColor.secondary,
-    fontSize: 18,
-    fontFamily: 'Karla-Bold',
-    textAlign:'center',
-   
-    
-}
-,
   container: {
     backgroundColor: _themeColor.white,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     marginTop: 150,
-    paddingTop: 50,
     paddingBottom: 300,
+    paddingTop: 50,
   },
   forgot: {
     backgroundColor: _themeColor.white,
+    fontFamily: 'Karla-Regular',
     margin: 12,
     padding: 10,
-    fontFamily: 'Karla-Regular'
   },
   forgotText: {
     color: _themeColor.secondary,
-    
+
     fontFamily: 'Karla-Regular',
-    fontSize:18
+    fontSize: 18,
   },
   input: {
     borderColor: _themeColor.gray,
     borderRadius: 5,
     borderWidth: 1,
+    fontFamily: 'Karla-Medium',
     height: 50,
     margin: 12,
     padding: 10,
-    fontFamily: 'Karla-Medium'
-  },
-  welcome: {
-    color: _themeColor.secondary,
-    padding: 10,
-   margin:12,
-   fontSize:18,
-   fontFamily: 'Karla-Regular'
   },
   label: {
     color: _themeColor.darkGray,
+    fontFamily: 'Karla-Regular',
+    marginLeft: 12,
+    marginRight: 12,
     paddingLeft: 10,
     paddingRight: 10,
-   marginLeft:12,
-   marginRight:12,
-   fontFamily: 'Karla-Regular'
+  },
+  loginText: {
+    color: _themeColor.secondary,
+    fontFamily: 'Karla-Bold',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  transparentButton: {
+    backgroundColor: _themeColor.white,
+    borderColor: _themeColor.primary,
+    borderRadius: 25,
+    borderWidth: 2,
+    height: 50,
+    justifyContent: 'center',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 20,
+    width: '80%',
+  },
+  welcome: {
+    color: _themeColor.secondary,
+    fontFamily: 'Karla-Regular',
+    fontSize: 18,
+    margin: 12,
+    padding: 10,
   },
 });
