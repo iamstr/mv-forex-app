@@ -1,5 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { useFonts } from 'expo-font';
 import {
   Alert,
   Image,
@@ -43,11 +42,7 @@ export default function HomeScreen() {
   const [showToast, setShowToast] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
+
   const navigation = useNavigation();
   const { saveDeposit, deposit } = useContext(DepositContext);
   useEffect(() => {
