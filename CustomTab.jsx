@@ -9,7 +9,6 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from './colorScheme.json';
 import { AuthContext } from './contexts/AuthContext';
-import ExchangeScreen from './screens/ExchangeScreen';
 import HelpScreen from './screens/HelpScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -36,8 +35,6 @@ export default function CustomTab() {
             iconName = focused ? 'home-outline' : 'home-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person-outline' : 'person-outline';
-          } else if (route.name === 'Exchange') {
-            iconName = focused ? 'swap-vertical-outline' : 'swap-vertical-outline';
           } else if (route.name === 'Transaction') {
             iconName = focused ? 'list-outline' : 'list-outline';
           } else if (route.name === 'Help') {
@@ -106,7 +103,7 @@ export default function CustomTab() {
           // Add a placeholder button without the `onPress` to avoid flicker
         })}
       />
-      <Tab.Screen name="Exchange" component={ExchangeScreen} />
+      {/* <Tab.Screen name="Exchange" component={ExchangeScreen} /> */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Help" component={HelpScreen} />
     </Tab.Navigator>
