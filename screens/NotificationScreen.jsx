@@ -1,4 +1,3 @@
-import { useFonts } from 'expo-font';
 import {
   ScrollView, StyleSheet, Text, View,
 } from 'react-native';
@@ -7,11 +6,6 @@ import Success from '../assets/icons/Icons-Check-input-success.svg';
 import _themeColor from '../colorScheme.json';
 
 export default function NotificationScreen() {
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
   return (
     <View style={styles.document}>
       <ScrollView>
