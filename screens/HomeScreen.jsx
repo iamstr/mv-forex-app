@@ -20,16 +20,22 @@ import { Video } from 'expo-av';
 import { useContext, useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
-import Kenya from '../assets/other/icons8-kenya-48.png';
-import Nigeria from '../assets/other/icons8-nigeria-circular-48.png';
+import Canada from '../assets/other/canada.png';
+import Ghana from '../assets/other/ghana.png';
+import Kenya from '../assets/other/kenya.png';
+import Nigeria from '../assets/other/nigeria.png';
+import Uganda from '../assets/other/uganda.png';
+import UAE from '../assets/other/united-arab-emirates.png';
+import UK from '../assets/other/united-kingdom.png';
+import USA from '../assets/other/united-states-of-america.png';
 import _themeColor from '../colorScheme.json';
 import Toast from '../components/Toast';
 import { DepositContext } from '../contexts/DepositContext';
 
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
-  const [currency, setCurrency] = useState(100);
-  const [amount, setAmount] = useState(100);
+  const [currency, setCurrency] = useState(1000);
+  const [amount, setAmount] = useState(1000);
   const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
   const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
@@ -84,6 +90,12 @@ export default function HomeScreen() {
   const filtered = [
     { currencyName: 'KES', currencyFlag: Kenya },
     { currencyName: 'NGN', currencyFlag: Nigeria },
+    { currencyName: 'USD', currencyFlag: USA },
+    { currencyName: 'AED', currencyFlag: UAE },
+    { currencyName: 'GBP', currencyFlag: UK },
+    { currencyName: 'CAR', currencyFlag: Canada },
+    { currencyName: 'UGX', currencyFlag: Uganda },
+    { currencyName: 'GHC', currencyFlag: Ghana },
   ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
   return (
     <View style={styles.document}>
@@ -117,7 +129,14 @@ export default function HomeScreen() {
                     <Ionicons name="close-circle" size={26} color={_themeColor.gray} />
                   </Pressable>
                 </View>
-                <View style={{ marginTop: 50 }}>
+                <View
+                  style={{
+                    marginTop: 50,
+                    flexDirection: 'column',
+
+                    flex: 1,
+                  }}
+                >
                   {filtered.map((singleCurrency, index) => (
                     <Pressable
                       key={index}
@@ -128,11 +147,15 @@ export default function HomeScreen() {
                         flex: 1,
                         flexDirection: 'row',
                         height: 50,
-                        marginBottom: 100,
+                        paddingVertical: 20,
+                        alignItems: 'center',
                       }}
                     >
-                      <Image source={singleCurrency.currencyFlag} />
-                      <Text style={[styles.currency, { paddingBottom: 27, paddingLeft: 20 }]}>
+                      <Image
+                        source={singleCurrency.currencyFlag}
+                        style={{ width: 36, height: 36 }}
+                      />
+                      <Text style={[styles.currency, { paddingVertical: 0, paddingLeft: 20 }]}>
                         {singleCurrency.currencyName}
                       </Text>
                     </Pressable>
@@ -163,7 +186,7 @@ export default function HomeScreen() {
                     }}
                   >
                     <Text style={styles.from}>From</Text>
-                    <Image source={currencyFrom.currencyFlag} />
+                    <Image source={currencyFrom.currencyFlag} style={{ width: 40, height: 40 }} />
                     <Text style={styles.currency}>{currencyFrom.currencyName}</Text>
                   </Pressable>
                   <Exchanger />
@@ -174,7 +197,7 @@ export default function HomeScreen() {
                     }}
                   >
                     <Text style={styles.from}>TO</Text>
-                    <Image source={currencyTo.currencyFlag} />
+                    <Image source={currencyTo.currencyFlag} style={{ width: 40, height: 40 }} />
                     <Text style={styles.currency}>{currencyTo.currencyName}</Text>
                   </Pressable>
                 </View>
@@ -194,6 +217,7 @@ export default function HomeScreen() {
                     onChangeText={(text) => {
                       changeHandler(text);
                     }}
+                    value={amount}
                     keyboardType="numeric"
                     placeholder="Exchange amount"
                     editable={!showToast}
