@@ -1,6 +1,5 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { useContext, useState } from 'react';
 import {
   ScrollView,
@@ -19,11 +18,7 @@ import { DepositContext } from '../contexts/DepositContext';
 export default function RecipientScreen() {
   const { height } = useWindowDimensions();
   const [jwt, setJWT] = useState(null); // JWT state
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
+
   const navigation = useNavigation();
   const { saveRecipient } = useContext(DepositContext);
 
