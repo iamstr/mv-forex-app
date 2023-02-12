@@ -12,11 +12,6 @@ import { DepositContext } from '../contexts/DepositContext';
 export default function RecipientScreen() {
   const { deposit, recipient } = useContext(DepositContext);
 
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
   const navigation = useNavigation();
 
   return (
