@@ -66,8 +66,6 @@ export default function RecipientScreen() {
             setValue={setValue}
             setItems={setItems}
             style={[styles.input, { width: '94%' }]}
-            defaultValue="mobile"
-            listMode="SCROLLVIEW"
             dropDownContainerStyle={{
               borderColor: 'transparent',
               borderWidth: 0,
