@@ -3,7 +3,6 @@ import {
   SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 
-import { useFonts } from 'expo-font';
 import _themeColor from '../colorScheme.json';
 import OTP from '../components/OTP';
 import useShowHideButton from '../hooks/useShowHideButton';
@@ -12,11 +11,6 @@ function OTPScreen() {
   const [isVisible, toggleButton, showButton, hideButton] = useShowHideButton(false);
   const navigation = useNavigation();
 
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
   return (
     <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
       <View style={styles.container}>
