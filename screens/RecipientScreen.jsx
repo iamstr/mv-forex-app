@@ -1,7 +1,7 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -11,6 +11,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Alert from '../assets/icons/alert-circle.svg';
 import _themeColor from '../colorScheme.json';
 
@@ -22,8 +23,16 @@ export default function RecipientScreen() {
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
+  const [selectedChannel, setSelectedChannel] = useState('mobile');
   const navigation = useNavigation();
+  const pickerRef = useRef();
 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('mobile');
+  const [items, setItems] = useState([
+    { label: 'Mobile Transfer', value: 'mobile' },
+    { label: 'Bank Transfer', value: 'bank' },
+  ]);
   return (
     <View style={styles.backgroundImage}>
       <ScrollView style={styles.scrollView}>
@@ -36,10 +45,40 @@ export default function RecipientScreen() {
           </Text>
         </View>
         <View style={styles.container}>
-          <Text style={styles.label}>full name of recipeint</Text>
+          <Text style={styles.label}>Fullname of recipeint</Text>
           <TextInput style={styles.input} placeholder="John Doe" />
-          <Text style={styles.label}> mobile number of recipient</Text>
-          <TextInput style={styles.input} placeholder="254712345678" />
+
+          <Text style={styles.label}> Choose Transfer Channel</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={[styles.input, { width: '94%' }]}
+            defaultValue="mobile"
+            listMode="SCROLLVIEW"
+            dropDownContainerStyle={{
+              borderColor: 'transparent',
+              borderWidth: 0,
+            }}
+            labelStyle={{ color: _themeColor.secondary }}
+          />
+          <Text style={styles.label}>
+            {' '}
+            {value === 'mobile' ? 'Mobile number of recipient' : 'Account name'}
+          </Text>
+          <TextInput
+            style={styles.input}
+            placeholder={value === 'mobile' ? '254712345678' : 'satar'}
+          />
+          {value !== 'mobile' && (
+            <>
+              <Text style={styles.label}> Account Number</Text>
+              <TextInput style={styles.input} placeholder="254712345678" />
+            </>
+          )}
 
           <TouchableOpacity
             title="Login"
