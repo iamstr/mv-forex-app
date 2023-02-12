@@ -1,7 +1,7 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -24,20 +24,13 @@ export default function RecipientScreen() {
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
-  const [selectedChannel, setSelectedChannel] = useState('mobile');
   const navigation = useNavigation();
   const { saveRecipient } = useContext(DepositContext);
-  const pickerRef = useRef();
-  // const [channel, setChannel] = useState(false);
+
   const [recipient, setRecipient] = useState(false);
   const [account, setAccount] = useState(false);
   const [number, setNumber] = useState(false);
   const [accountName, setAccountName] = useState(false);
-  // recipient: 0,
-  //   channel: '',
-  //   number: '',
-  //   account: '',
-  //   accountName: '',
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('mobile');
