@@ -22,10 +22,11 @@ export default function DepositProvider({ children }) {
     value: '',
   });
   const [recipient, setRecipient] = useState({
-    fullname: 0,
-    mobile: '',
+    recipient: 0,
     channel: '',
-    value: '',
+    number: '',
+    account: '',
+    accountName: '',
   });
   useEffect(() => {
     console.log('The updated channel value: ', channel);
