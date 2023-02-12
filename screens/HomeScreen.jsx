@@ -29,6 +29,7 @@ import { DepositContext } from '../contexts/DepositContext';
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(100);
+  const [amount, setAmount] = useState(100);
   const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
   const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
@@ -77,6 +78,7 @@ export default function HomeScreen() {
       setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
     }
     setCurrency(Math.floor(parseFloat(exchangeRate.rate) * parseFloat(text)));
+    setAmount(Math.floor(parseFloat(text)));
   };
 
   const filtered = [
@@ -205,7 +207,7 @@ export default function HomeScreen() {
                       title="Login"
                       onPress={() => {
                         const value = {
-                          amount: currency,
+                          amount,
                           currency: currencyTo.currencyName,
                           exchanged: currency,
                           from: currencyFrom.currencyName,
