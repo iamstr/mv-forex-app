@@ -1,23 +1,17 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
+  ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Alert from '../assets/icons/Icon feather-alert-circle.svg';
 import _themeColor from '../colorScheme.json';
 import { DepositContext } from '../contexts/DepositContext';
 
 export default function RecipientScreen() {
-  const { deposit, channel, recipient } = useContext(DepositContext);
-  const { height } = useWindowDimensions();
-  const [jwt, setJWT] = useState(null); // JWT state
+  const { deposit, recipient } = useContext(DepositContext);
+
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
@@ -52,25 +46,7 @@ export default function RecipientScreen() {
               {`${recipient.channel.charAt(0).toUpperCase() + recipient.channel.slice(1)} transfer`}
             </Text>
           </View>
-          {/* // const [deposit, setDeposit] = useState({
-//   amount: 0,
-//   currency: 'NGN',
-//   from: 'KES',
-//   exchanged: 0,
-// });
-// const [channel, setChannel] = useState({
-//   account: 0,
-//   label: '',
-//   type: '',
-//   value: '',
-// });
-// const [recipient, setRecipient] = useState({
-//   recipient: 0,
-//   channel: '',
-//   number: '',
-//   account: '',
-//   accountName: '',
-// }); */}
+
           {recipient.number && (
             <View style={styles.row}>
               <Text style={styles.label}>Phone number </Text>
