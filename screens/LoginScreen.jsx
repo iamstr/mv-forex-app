@@ -1,10 +1,6 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import {
-  useCallback, useContext, useEffect, useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -28,20 +24,7 @@ export default function LoginScreen() {
   const { credential, setCredential, getCredential } = useCredential();
   const { token, setToken } = useToken();
   const user = useContext(UserContext);
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
 
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
   const navigation = useNavigation();
   useEffect(() => {
     const setCredentialsFromSecure = async () => {
