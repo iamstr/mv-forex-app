@@ -1,7 +1,7 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -12,8 +12,10 @@ import {
 } from 'react-native';
 import Alert from '../assets/icons/Icon feather-alert-circle.svg';
 import _themeColor from '../colorScheme.json';
+import { DepositContext } from '../contexts/DepositContext';
 
 export default function RecipientScreen() {
+  const { deposit, channel, recipient } = useContext(DepositContext);
   const { height } = useWindowDimensions();
   const [jwt, setJWT] = useState(null); // JWT state
   const [fontsLoaded] = useFonts({
@@ -38,15 +40,82 @@ export default function RecipientScreen() {
         <View style={styles.container}>
           <View style={styles.row}>
             <Text style={styles.label}>Fullname </Text>
-            <Text style={styles.right}> John Doe</Text>
+            <Text style={styles.right}>
+              {' '}
+              {recipient.recipient}
+            </Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Phone number </Text>
-            <Text style={styles.right}> 254708123456</Text>
+            <Text style={styles.label}>Transfer channel </Text>
+            <Text style={styles.right}>
+              {' '}
+              {`${recipient.channel.charAt(0).toUpperCase() + recipient.channel.slice(1)} transfer`}
+            </Text>
+          </View>
+          {/* // const [deposit, setDeposit] = useState({
+//   amount: 0,
+//   currency: 'NGN',
+//   from: 'KES',
+//   exchanged: 0,
+// });
+// const [channel, setChannel] = useState({
+//   account: 0,
+//   label: '',
+//   type: '',
+//   value: '',
+// });
+// const [recipient, setRecipient] = useState({
+//   recipient: 0,
+//   channel: '',
+//   number: '',
+//   account: '',
+//   accountName: '',
+// }); */}
+          {recipient.number && (
+            <View style={styles.row}>
+              <Text style={styles.label}>Phone number </Text>
+              <Text style={styles.right}>
+                {' '}
+                {recipient.number}
+              </Text>
+            </View>
+          )}
+          {recipient.accountName && (
+            <View style={styles.row}>
+              <Text style={styles.label}>Account name </Text>
+              <Text style={styles.right}>
+                {' '}
+                {recipient.accountName}
+              </Text>
+            </View>
+          )}
+          {recipient.account && (
+            <View style={styles.row}>
+              <Text style={styles.label}>Account number </Text>
+              <Text style={styles.right}>
+                {' '}
+                {recipient.account}
+              </Text>
+            </View>
+          )}
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Amount </Text>
+            <Text style={styles.right}>
+              {' '}
+              {deposit.amount.toLocaleString()}
+              {' '}
+              {deposit.from}
+            </Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.label}>Amount</Text>
-            <Text style={styles.right}> KES 5,000</Text>
+            <Text style={styles.label}>Exchanged Amount</Text>
+            <Text style={styles.right}>
+              {' '}
+              {deposit.exchanged.toLocaleString()}
+              {' '}
+              {deposit.currency}
+            </Text>
           </View>
           <TouchableOpacity
             title="Login"
