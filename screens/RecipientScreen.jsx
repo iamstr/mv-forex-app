@@ -1,7 +1,7 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import Alert from '../assets/icons/alert-circle.svg';
 import _themeColor from '../colorScheme.json';
+import { DepositContext } from '../contexts/DepositContext';
 
 export default function RecipientScreen() {
   const { height } = useWindowDimensions();
@@ -25,7 +26,18 @@ export default function RecipientScreen() {
   });
   const [selectedChannel, setSelectedChannel] = useState('mobile');
   const navigation = useNavigation();
+  const { saveRecipient } = useContext(DepositContext);
   const pickerRef = useRef();
+  // const [channel, setChannel] = useState(false);
+  const [recipient, setRecipient] = useState(false);
+  const [account, setAccount] = useState(false);
+  const [number, setNumber] = useState(false);
+  const [accountName, setAccountName] = useState(false);
+  // recipient: 0,
+  //   channel: '',
+  //   number: '',
+  //   account: '',
+  //   accountName: '',
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('mobile');
@@ -46,7 +58,11 @@ export default function RecipientScreen() {
         </View>
         <View style={styles.container}>
           <Text style={styles.label}>Fullname of recipeint</Text>
-          <TextInput style={styles.input} placeholder="John Doe" />
+          <TextInput
+            style={styles.input}
+            placeholder="John Doe"
+            onChangeText={(text) => setRecipient(text)}
+          />
 
           <Text style={styles.label}> Choose Transfer Channel</Text>
           <DropDownPicker
@@ -69,20 +85,59 @@ export default function RecipientScreen() {
             {' '}
             {value === 'mobile' ? 'Mobile number of recipient' : 'Account name'}
           </Text>
-          <TextInput
-            style={styles.input}
-            placeholder={value === 'mobile' ? '254712345678' : 'satar'}
-          />
+          {value === 'bank' ? (
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => {
+                setNumber(null);
+                setAccountName(text);
+              }}
+              placeholder="your account name satar"
+              value={accountName}
+            />
+          ) : (
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => {
+                setNumber(text);
+                setAccount(null);
+                setAccountName(null);
+              }}
+              placeholder="254712345678"
+              value={number}
+            />
+          )}
+
           {value !== 'mobile' && (
             <>
               <Text style={styles.label}> Account Number</Text>
-              <TextInput style={styles.input} placeholder="254712345678" />
+              <TextInput
+                style={styles.input}
+                placeholder="254712345678"
+                onChangeText={(text) => {
+                  setAccount(text);
+                }}
+              />
             </>
           )}
 
           <TouchableOpacity
             title="Login"
             onPress={() => {
+              console.log('printing...', {
+                recipient,
+                number,
+                account,
+                accountName,
+                channel: value,
+              });
+              saveRecipient({
+                recipient,
+                number,
+                account,
+                accountName,
+                channel: value,
+              });
               navigation.navigate('ConfirmTransfer');
             }}
             style={styles.button}
