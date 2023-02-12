@@ -1,6 +1,5 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { useState } from 'react';
 import {
   SafeAreaView,
@@ -17,11 +16,7 @@ import _themeColor from '../colorScheme.json';
 export default function SignupScreen() {
   const { height } = useWindowDimensions();
   const [jwt, setJWT] = useState(null); // JWT state
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
+
   const navigation = useNavigation();
   const login = () => {
     // Send a login request to the Node.js server
