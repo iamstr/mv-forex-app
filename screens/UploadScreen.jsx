@@ -3,10 +3,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import {
-  Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
+  Image, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Upload from '../assets/icons/Camera.svg';
-import Attach from '../assets/icons/Icon material-attach-file.svg';
 import _themeColor from '../colorScheme.json';
 
 export default function LoginScreen() {
@@ -44,38 +43,46 @@ export default function LoginScreen() {
   };
 
   return (
-    <View>
-      <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Let's verify your identity</Text>
-          <Text style={styles.label}>Upload the front side of your national ID</Text>
-          <View style={styles.document}>
-            {selectedImage !== null ? (
-              <TouchableOpacity onPress={pickImageAsync}>
-                <Image source={{ uri: selectedImage }} style={styles.idImage} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={pickImageAsync} style={styles.uploadImage}>
-                <Upload />
-                <Text style={styles.uploadText}>Tap here to upload your image</Text>
-              </TouchableOpacity>
-            )}
-
+    <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Let's verify your identity</Text>
+        <Text style={styles.label}>
+          Upload the front side of your
+          {' '}
+          {type[0].toUpperCase() + type.slice(1)}
+        </Text>
+        <View style={styles.document}>
+          {selectedImage !== null ? (
+            <TouchableOpacity onPress={pickImageAsync}>
+              <Image source={{ uri: selectedImage }} style={styles.idImage} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={pickImageAsync} style={styles.uploadImage}>
+              <Upload />
+              <Text style={styles.uploadText}>Tap here to upload your image</Text>
+            </TouchableOpacity>
+          )}
+          {selectedImage && (
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('ConfirmAccount');
+                if (type === 'passport') {
+                  navigation.navigate('ConfirmAccount');
+                } else {
+                  navigation.navigate('IDBack');
+                }
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
             >
-              <Attach height={18} width={18} />
-
-              <Text style={styles.loginText}>Complete </Text>
+              <Text style={styles.loginText}>
+                {type === 'passport' ? 'complete signup' : 'Upload backside of ID'}
+                {' '}
+              </Text>
             </TouchableOpacity>
-          </View>
+          )}
         </View>
-      </SafeAreaView>
+      </View>
     </View>
   );
 }
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
     color: _themeColor.secondary,
     fontFamily: 'Karla-Bold',
     fontSize: 18,
-    marginLeft: 30,
+    // marginLeft: 30,
     textAlign: 'center',
   },
 
