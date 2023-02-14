@@ -4,10 +4,9 @@ import Constants from 'expo-constants';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {
-  useCallback, useContext, useEffect, useMemo, useState,
+  useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
-import { AuthContext } from '../contexts/AuthContext';
 // Instruct SplashScreen not to hide yet, we want to do this manually
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -19,16 +18,9 @@ export default function CustomSplashScreen({ children }) {
     'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
     'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
   });
-  const { isLoggedIn } = useContext(AuthContext);
-  // const navigation = useNavigation();
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
-      if (isLoggedIn) {
-        navigation.navigate('Home');
-      } else {
-        navigation.navigate('Login');
-      }
     } else {
       return null;
     }
