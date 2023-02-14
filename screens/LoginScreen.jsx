@@ -14,15 +14,13 @@ import _themeColor from '../colorScheme.json';
 import { AuthContext } from '../contexts/AuthContext';
 import { UserContext } from '../contexts/userContext';
 import useCredential from '../hooks/useCredentials';
-import useToken from '../hooks/useToken';
 
 export default function LoginScreen() {
-  const { saveToken, isLoggedIn } = useContext(AuthContext);
+  const { saveToken, isLoggedIn, token } = useContext(AuthContext);
   const [jwt, setJWT] = useState(null); // JWT state
   const [username, setUsername] = useState(); // JWT state
   const [password, setPassword] = useState(); // JWT state
   const { credential, setCredential, getCredential } = useCredential();
-  const { token, setToken } = useToken();
   const user = useContext(UserContext);
 
   const navigation = useNavigation();
@@ -35,10 +33,10 @@ export default function LoginScreen() {
     setCredentialsFromSecure();
   }, [credential]);
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token) {
       navigation.navigate('Home');
     }
-  }, [isLoggedIn]);
+  }, [token]);
   const login = async () => {
     // // Send a login request to the Node.js server
     // fetch('https://example.com/login', {
