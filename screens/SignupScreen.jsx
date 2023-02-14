@@ -1,6 +1,6 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from '../colorScheme.json';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignupScreen() {
   const { height } = useWindowDimensions();
@@ -21,7 +22,7 @@ export default function SignupScreen() {
   const [password, setPassword] = useState(null); // JWT state
   const [confirmPassword, setConfirmPassword] = useState(null); // JWT state
   const navigation = useNavigation();
-
+  const { saveSignup } = useContext(AuthContext);
   return (
     <View>
       <View style={(styles.backgroundImage, height)}>
@@ -80,7 +81,13 @@ export default function SignupScreen() {
                 title="Login"
                 onPress={() => {
                   if (password === confirmPassword) {
-                    navigation.navigate('Terms');
+                    // navigation.navigate('Terms');
+                    saveSignup({
+                      fullname,
+                      email,
+                      mobile,
+                      password,
+                    });
                   }
                 }}
                 style={styles.button}
