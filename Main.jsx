@@ -19,6 +19,7 @@ import ConfirmDepositScreen from './screens/ConfirmDepositScreen';
 import ConfirmTransferScreen from './screens/ConfirmTransferScreen';
 import FinalScreen from './screens/FinalScreen';
 import ForgotScreen from './screens/ForgotScreen';
+import IDBackScreen from './screens/IDBackScreen';
 import LoginScreen from './screens/LoginScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import OTPScreen from './screens/OTPScreen';
@@ -113,6 +114,22 @@ export default function Main() {
                       },
                       headerShadowVisible: false,
                       headerTintColor: '#026E34',
+                      headerBackTitle: 'Choose Document',
+                    }}
+                  />
+                  <Stack.Screen
+                    name="IDBack"
+                    component={IDBackScreen}
+                    options={{
+                      title: '',
+                      headerStyle: {
+                        backgroundColor: 'transparent',
+                        elevation: 0, // remove shadow on Android
+                        shadowOpacity: 0, // remove shadow on iOS
+                      },
+                      headerShadowVisible: false,
+                      headerTintColor: '#026E34',
+                      headerBackTitle: 'Choose different ID Front',
                     }}
                   />
                   <Stack.Screen
