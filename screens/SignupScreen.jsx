@@ -81,13 +81,13 @@ export default function SignupScreen() {
                 title="Login"
                 onPress={() => {
                   if (password === confirmPassword) {
-                    // navigation.navigate('Terms');
                     saveSignup({
                       fullname,
                       email,
                       mobile,
                       password,
                     });
+                    navigation.navigate('Terms');
                   }
                 }}
                 style={styles.button}
