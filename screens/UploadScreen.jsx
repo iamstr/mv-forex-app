@@ -1,7 +1,7 @@
 // In the React Native app
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
@@ -16,6 +16,12 @@ export default function LoginScreen() {
   // ...rest of the import statements remain unchanged
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const route = useRoute();
+  const { type } = route.params;
+
+  useEffect(() => {
+    console.log(type);
+  }, []);
 
   const pickImageAsync = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -37,75 +43,39 @@ export default function LoginScreen() {
     }
   };
 
-  const login = () => {
-    // Send a login request to the Node.js server
-    fetch('https://example.com/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: 'user1',
-        password: 'password123',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Save the JWT locally, such as in the device's local storage
-        saveJWT(data.token);
-        setJWT(data.token);
-      });
-  };
-
-  const getProtectedData = () => {
-    // Make a request to the protected route on the Node.js server
-    const jwt = getJWT(); // Retrieve the JWT from local storage
-    fetch('https://example.com/protected-route', {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data
-        navigation.navigate('Home');
-      });
-  };
-
   return (
     <View>
-      {jwt ? (
-        getProtectedData()
-      ) : (
-        <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
-          <View style={styles.container}>
-            <Text style={styles.welcome}>Let's verify your identity</Text>
-            <Text style={styles.label}>Upload the front side of your national ID</Text>
-            <View style={styles.document}>
-              {selectedImage !== null ? (
-                <TouchableOpacity onPress={pickImageAsync}>
-                  <Image source={{ uri: selectedImage }} style={styles.idImage} />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={pickImageAsync} style={styles.uploadImage}>
-                  <Upload />
-                  <Text style={styles.uploadText}>Tap here to upload your image</Text>
-                </TouchableOpacity>
-              )}
-
-              <TouchableOpacity
-                title="Login"
-                onPress={() => {
-                  navigation.navigate('ConfirmAccount');
-                }}
-                style={styles.button}
-                underlayColor={_themeColor.primary}
-              >
-                <Attach height={18} width={18} />
-
-                <Text style={styles.loginText}>Complete </Text>
+      <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
+        <View style={styles.container}>
+          <Text style={styles.welcome}>Let's verify your identity</Text>
+          <Text style={styles.label}>Upload the front side of your national ID</Text>
+          <View style={styles.document}>
+            {selectedImage !== null ? (
+              <TouchableOpacity onPress={pickImageAsync}>
+                <Image source={{ uri: selectedImage }} style={styles.idImage} />
               </TouchableOpacity>
-            </View>
+            ) : (
+              <TouchableOpacity onPress={pickImageAsync} style={styles.uploadImage}>
+                <Upload />
+                <Text style={styles.uploadText}>Tap here to upload your image</Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              title="Login"
+              onPress={() => {
+                navigation.navigate('ConfirmAccount');
+              }}
+              style={styles.button}
+              underlayColor={_themeColor.primary}
+            >
+              <Attach height={18} width={18} />
+
+              <Text style={styles.loginText}>Complete </Text>
+            </TouchableOpacity>
           </View>
-        </SafeAreaView>
-      )}
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
