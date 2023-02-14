@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-  Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
+  Image, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Chevron from '../assets/icons/Path.svg';
 import _themeColor from '../colorScheme.json';
@@ -44,49 +44,43 @@ export default function LoginScreen() {
   };
 
   return (
-    <View>
-      {jwt ? (
-        getProtectedData()
-      ) : (
-        <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
-          <View style={styles.container}>
-            <Text style={styles.welcome}>Let's verify your identity</Text>
-            <Text style={styles.label}>Choose the document you have</Text>
+    <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Let's verify your identity</Text>
+        <Text style={styles.label}>Choose the document you have</Text>
 
-            <TouchableOpacity
-              title="Login"
-              onPress={() => {
-                navigation.navigate('Upload', { type: 'passport' });
-              }}
-              style={styles.button}
-              underlayColor={_themeColor.primary}
-            >
-              <Image style={styles.document} source={require('../assets/other/passport.png')} />
-              <Text style={styles.loginText}>Passport</Text>
+        <TouchableOpacity
+          title="Login"
+          onPress={() => {
+            navigation.navigate('Upload', { type: 'passport' });
+          }}
+          style={styles.button}
+          underlayColor={_themeColor.primary}
+        >
+          <Image style={styles.document} source={require('../assets/other/passport.png')} />
+          <Text style={styles.loginText}>Passport</Text>
 
-              <Chevron />
-            </TouchableOpacity>
-            <TouchableOpacity
-              title="Login"
-              onPress={() => {
-                navigation.navigate('Upload', { type: 'ID' });
-              }}
-              style={styles.button}
-              underlayColor={_themeColor.primary}
-            >
-              <Image
-                width={25}
-                height={50}
-                style={styles.document}
-                source={require('../assets/other/id-card.png')}
-              />
-              <Text style={styles.loginText}>National ID card</Text>
+          <Chevron />
+        </TouchableOpacity>
+        <TouchableOpacity
+          title="Login"
+          onPress={() => {
+            navigation.navigate('Upload', { type: 'national ID' });
+          }}
+          style={styles.button}
+          underlayColor={_themeColor.primary}
+        >
+          <Image
+            width={25}
+            height={50}
+            style={styles.document}
+            source={require('../assets/other/id-card.png')}
+          />
+          <Text style={styles.loginText}>National ID card</Text>
 
-              <Chevron />
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      )}
+          <Chevron />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
