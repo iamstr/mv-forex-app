@@ -2,7 +2,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,12 +10,16 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from '../colorScheme.json';
 
 export default function SignupScreen() {
   const { height } = useWindowDimensions();
-  const [jwt, setJWT] = useState(null); // JWT state
-
+  const [fullname, setFullname] = useState(null); // JWT state
+  const [email, setEmail] = useState(null); // JWT state
+  const [mobile, setMobile] = useState(null); // JWT state
+  const [password, setPassword] = useState(null); // JWT state
+  const [confirmPassword, setConfirmPassword] = useState(null); // JWT state
   const navigation = useNavigation();
   const login = () => {
     // Send a login request to the Node.js server
@@ -52,40 +55,74 @@ export default function SignupScreen() {
 
   return (
     <View>
-      {jwt ? (
-        getProtectedData()
-      ) : (
-        <View style={(styles.backgroundImage, height)}>
-          <ScrollView style={styles.scrollView}>
-            <SafeAreaView>
-              <View style={styles.container}>
-                <View style={styles.welcome} />
-                <Text style={styles.label}>What is your full name?</Text>
-                <TextInput style={styles.input} placeholder="John Doe" />
-                <Text style={styles.label}>What is your email address</Text>
-                <TextInput style={styles.input} placeholder="johndoe@mail.com" />
-                <Text style={styles.label}>What is your mobile number</Text>
-                <TextInput style={styles.input} placeholder="johndoe@mail.com" />
-                <Text style={styles.label}>Set your password</Text>
-                <TextInput style={styles.input} placeholder="*********" />
-                <Text style={styles.label}>Confirm your password</Text>
-                <TextInput style={styles.input} placeholder="*********" />
-
-                <TouchableOpacity
-                  title="Login"
-                  onPress={() => {
-                    navigation.navigate('Terms');
-                  }}
-                  style={styles.button}
-                  underlayColor={_themeColor.primary}
-                >
-                  <Text style={styles.loginText}>Create account</Text>
-                </TouchableOpacity>
+      <View style={(styles.backgroundImage, height)}>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.container}>
+            <View style={styles.welcome} />
+            <Text style={styles.label}>What is your full name?</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="John Doe"
+              onChangeText={(text) => {
+                setFullname(text);
+              }}
+            />
+            <Text style={styles.label}>What is your email address</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="johndoe@mail.com"
+              onChangeText={(text) => setEmail(text)}
+            />
+            <Text style={styles.label}>What is your mobile number</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="johndoe@mail.com"
+              onChangeText={(text) => setMobile(text)}
+            />
+            <Text style={styles.label}>Set your password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="*********"
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+            />
+            <Text style={styles.label}>Confirm your password</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="*********"
+              onChangeText={(text) => {
+                setConfirmPassword(text);
+              }}
+            />
+            {confirmPassword !== password && confirmPassword && password && (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  size={26}
+                  color={_themeColor.danger}
+                  style={styles.error}
+                />
+                <Text style={styles.erroMessage}>The passwords are not same</Text>
               </View>
-            </SafeAreaView>
-          </ScrollView>
-        </View>
-      )}
+            )}
+            {fullname && email && mobile && password && confirmPassword && (
+              <TouchableOpacity
+                title="Login"
+                onPress={() => {
+                  if (password === confirmPassword) {
+                    navigation.navigate('Terms');
+                  }
+                }}
+                style={styles.button}
+                underlayColor={_themeColor.primary}
+              >
+                <Text style={styles.loginText}>Create account</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -119,6 +156,11 @@ const styles = StyleSheet.create({
     marginTop: -40,
     paddingBottom: 300,
     paddingTop: 50,
+  },
+  erroMessage: { color: _themeColor.danger, fontFamily: 'Karla-Medium' },
+  error: {
+    marginHorizontal: 12,
+    paddingHorizontal: 10,
   },
   forgot: {
     backgroundColor: _themeColor.white,
