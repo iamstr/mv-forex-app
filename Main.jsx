@@ -32,7 +32,7 @@ import VerifyScreen from './screens/VerifyScreen';
 const Stack = createNativeStackNavigator();
 export default function Main() {
   // const user = useContext(UserContextProvider);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
@@ -46,7 +46,7 @@ export default function Main() {
       <RootSiblingParent>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
-            {!isLoggedIn ? (
+            {!token ? (
               <>
                 <Stack.Screen
                   name="Login"
