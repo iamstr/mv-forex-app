@@ -55,7 +55,9 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               title="Login"
-              onPress={login}
+              onPress={() => {
+                navigation.navigate('Upload', { type: 'passport' });
+              }}
               style={styles.button}
               underlayColor={_themeColor.primary}
             >
@@ -67,7 +69,7 @@ export default function LoginScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('Upload');
+                navigation.navigate('Upload', { type: 'ID' });
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
