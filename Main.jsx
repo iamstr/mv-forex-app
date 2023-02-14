@@ -159,6 +159,7 @@ export default function Main() {
                       headerShadowVisible: false,
                       headerTintColor: '#026E34',
                       headerBackVisible: false,
+                      gestureEnabled: false,
                     }}
                   />
                   <Stack.Screen
