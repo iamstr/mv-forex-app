@@ -7,10 +7,20 @@ export const AuthContext = createContext({
   saveToken: (token) => {},
   deleteToken: () => {},
   getToken: () => {},
+  saveSignup: () => {},
+  signup: {},
 });
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [signup, setSignup] = useState({
+    fullname: '',
+    email: '',
+    mobile: '',
+    password: '',
+    terms: '',
+    document: { type: '', back: '', front: '' },
+  });
 
   useEffect(() => {
     const getToken = async () => {
@@ -29,6 +39,10 @@ export default function AuthProvider({ children }) {
     setToken(tokenName);
     setIsLoggedIn(true);
   };
+  const saveSignup = async (info) => {
+    setSignup(info);
+    setIsLoggedIn(true);
+  };
 
   const deleteToken = async () => {
     await SecureStore.deleteItemAsync('token');
@@ -43,6 +57,8 @@ export default function AuthProvider({ children }) {
         isLoggedIn,
         saveToken,
         deleteToken,
+        saveSignup,
+        signup,
       }}
     >
       {children}
