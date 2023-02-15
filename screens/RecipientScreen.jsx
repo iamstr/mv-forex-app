@@ -1,7 +1,6 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -11,19 +10,29 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Alert from '../assets/icons/alert-circle.svg';
 import _themeColor from '../colorScheme.json';
+import { DepositContext } from '../contexts/DepositContext';
 
 export default function RecipientScreen() {
   const { height } = useWindowDimensions();
   const [jwt, setJWT] = useState(null); // JWT state
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
-  const navigation = useNavigation();
 
+  const navigation = useNavigation();
+  const { saveRecipient } = useContext(DepositContext);
+
+  const [recipient, setRecipient] = useState(false);
+  const [account, setAccount] = useState(false);
+  const [number, setNumber] = useState(false);
+  const [accountName, setAccountName] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('mobile');
+  const [items, setItems] = useState([
+    { label: 'Mobile Transfer', value: 'mobile' },
+    { label: 'Bank Transfer', value: 'bank' },
+  ]);
   return (
     <View style={styles.backgroundImage}>
       <ScrollView style={styles.scrollView}>
@@ -36,14 +45,85 @@ export default function RecipientScreen() {
           </Text>
         </View>
         <View style={styles.container}>
-          <Text style={styles.label}>full name of recipeint</Text>
-          <TextInput style={styles.input} placeholder="John Doe" />
-          <Text style={styles.label}> mobile number of recipient</Text>
-          <TextInput style={styles.input} placeholder="254712345678" />
+          <Text style={styles.label}>Fullname of recipeint</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="John Doe"
+            onChangeText={(text) => setRecipient(text)}
+          />
+
+          <Text style={styles.label}> Choose Transfer Channel</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            style={[styles.input, { width: '94%' }]}
+            dropDownContainerStyle={{
+              borderColor: 'transparent',
+              borderWidth: 0,
+            }}
+            labelStyle={{ color: _themeColor.secondary }}
+          />
+          <Text style={styles.label}>
+            {' '}
+            {value === 'mobile' ? 'Mobile number of recipient' : 'Account name'}
+          </Text>
+          {value === 'bank' ? (
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => {
+                setNumber(null);
+                setAccountName(text);
+              }}
+              placeholder="your account name satar"
+              value={accountName}
+            />
+          ) : (
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => {
+                setNumber(text);
+                setAccount(null);
+                setAccountName(null);
+              }}
+              placeholder="254712345678"
+              value={number}
+            />
+          )}
+
+          {value !== 'mobile' && (
+            <>
+              <Text style={styles.label}> Account Number</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="254712345678"
+                onChangeText={(text) => {
+                  setAccount(text);
+                }}
+              />
+            </>
+          )}
 
           <TouchableOpacity
             title="Login"
             onPress={() => {
+              console.log('printing...', {
+                recipient,
+                number,
+                account,
+                accountName,
+                channel: value,
+              });
+              saveRecipient({
+                recipient,
+                number,
+                account,
+                accountName,
+                channel: value,
+              });
               navigation.navigate('ConfirmTransfer');
             }}
             style={styles.button}

@@ -1,6 +1,4 @@
 // In the React Native app
-import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
 import {
   Pressable, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
@@ -9,14 +7,6 @@ import Phone from '../assets/other/phone_channel.png';
 import _themeColor from '../colorScheme.json';
 import DropDown from '../components/Dropdown';
 
-const _webChatHandlerAsync = async () => {
-  const result = await WebBrowser.openBrowserAsync(
-    'https://tawk.to/chat/5ca0b80d6bba4605280089c0/default',
-  );
-};
-const _linkOpener = (link) => {
-  Linking.openURL(link);
-};
 export default function DepositScreen() {
   return (
     <Pressable>
@@ -25,8 +15,8 @@ export default function DepositScreen() {
           <ScrollView>
             <Text style={styles.welcome}>Deposit account</Text>
             <Text style={styles.label}>
-              Make the deposit to any of the following account and the money would be transferred to
-              the reciepent
+              Make the deposit to any of the our accounts and the money would be transferred to the
+              reciepent
               {' '}
             </Text>
             <View
@@ -51,8 +41,24 @@ export default function DepositScreen() {
                   image={Phone}
                   label="Mobile money transfer"
                   dropdown={[
-                    { label: 'Send Money', value: 708693536, type: 'mobile' },
-                    { label: 'Lipa na mpesa', value: 890911, type: 'lipa na mpesa' },
+                    {
+                      label: 'MV Forex 1',
+                      value: '0794281600',
+                      type: 'mobile',
+                      account: '',
+                    },
+                    {
+                      label: 'MV Forex 2',
+                      value: '0799834111',
+                      type: 'mobile',
+                      account: '',
+                    },
+                    {
+                      label: 'Lipa na mpesa',
+                      value: 890911,
+                      type: 'lipa na mpesa',
+                      account: '',
+                    },
                   ]}
                   Zindex={3}
                 />
@@ -70,8 +76,18 @@ export default function DepositScreen() {
                   image={Bank}
                   label="Bank Transfer"
                   dropdown={[
-                    { label: 'FCB', value: 708693536, type: 'bank' },
-                    { label: 'Gulf Bank', value: 890911, type: 'bank' },
+                    {
+                      label: 'GT Bank account 1',
+                      value: '0262238013',
+                      type: 'bank',
+                      account: 'Mark Steve traveling',
+                    },
+                    {
+                      label: 'GT Bank account 2',
+                      value: '0005030973',
+                      type: 'bank',
+                      account: 'AMBALIYU JELILI OPEYEMI',
+                    },
                   ]}
                   Zindex={2}
                 />

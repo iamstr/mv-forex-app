@@ -1,17 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
-import { useFonts } from 'expo-font';
 import {
   SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
 
 export default function ConfirmAcoountScreen() {
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>

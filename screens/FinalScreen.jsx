@@ -7,11 +7,6 @@ import {
 import _themeColor from '../colorScheme.json';
 
 export default function FinalScreen() {
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
   const navigation = useNavigation();
   return (
     <View style={styles.container}>

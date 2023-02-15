@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
 import { useReducer, useState } from 'react';
 import {
   Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
@@ -38,11 +37,6 @@ export default function ProfileScreen() {
   const [toast, setToast] = useState(false);
   const [text, setText] = useState('');
   const [textFieldData, dispatch] = useReducer(textFieldDataReducer, items);
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
 
   const navigation = useNavigation();
 

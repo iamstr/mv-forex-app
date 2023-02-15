@@ -4,31 +4,44 @@ import { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext({
   token: null,
   isLoggedIn: false,
-  saveToken: () => {},
+  saveToken: (token) => {},
   deleteToken: () => {},
   getToken: () => {},
+  saveSignup: () => {},
+  signup: {},
 });
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [signup, setSignup] = useState({
+    fullname: '',
+    email: '',
+    mobile: '',
+    password: '',
+    terms: '',
+    document: { type: '', back: '', front: '' },
+  });
 
   useEffect(() => {
     const getToken = async () => {
-      const tokenString = await SecureStore.getItemAsync('token');
+      const tokenString = await SecureStore.getItemAsync('secureTokenString');
       if (tokenString) {
-        const { token } = JSON.parse(tokenString);
-        setToken(token);
+        const { secureTokenString } = JSON.parse(tokenString);
+        setToken(secureTokenString);
         setIsLoggedIn(true);
       }
     };
     getToken();
   }, []);
 
-  const saveToken = async (token) => {
-    await SecureStore.setItemAsync('token', JSON.stringify({ token }));
-    setToken(token);
+  const saveToken = async (tokenName) => {
+    await SecureStore.setItemAsync('token', JSON.stringify({ tokenName }));
+    setToken(tokenName);
     setIsLoggedIn(true);
-    console.log('value of isloggedIn', isLoggedIn);
+  };
+  const saveSignup = async (info) => {
+    setSignup(info);
+    setIsLoggedIn(true);
   };
 
   const deleteToken = async () => {
@@ -44,6 +57,8 @@ export default function AuthProvider({ children }) {
         isLoggedIn,
         saveToken,
         deleteToken,
+        saveSignup,
+        signup,
       }}
     >
       {children}

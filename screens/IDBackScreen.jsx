@@ -1,5 +1,5 @@
 // In the React Native app
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useContext, useEffect, useState } from 'react';
 import {
@@ -7,15 +7,15 @@ import {
 } from 'react-native';
 import Upload from '../assets/icons/Camera.svg';
 import _themeColor from '../colorScheme.json';
+
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function LoginScreen() {
-  const { saveSignup, signup } = useContext(AuthContext);
   const navigation = useNavigation();
   // ...rest of the import statements remain unchanged
+  const { saveSignup, signup } = useContext(AuthContext);
+
   const [selectedImage, setSelectedImage] = useState(null);
-  const route = useRoute();
-  const { type } = route.params;
 
   const pickImageAsync = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -40,11 +40,7 @@ export default function LoginScreen() {
     <View style={{ backgroundColor: _themeColor.white, height: '100%' }}>
       <View style={styles.container}>
         <Text style={styles.welcome}>Let's verify your identity</Text>
-        <Text style={styles.label}>
-          Upload the front side of your
-          {' '}
-          {type[0].toUpperCase() + type.slice(1)}
-        </Text>
+        <Text style={styles.label}>Upload the back side of your National ID</Text>
         <View style={styles.document}>
           {selectedImage !== null ? (
             <TouchableOpacity onPress={pickImageAsync}>
@@ -60,21 +56,14 @@ export default function LoginScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                saveSignup({ ...signup, document: { type, front: selectedImage } });
+                saveSignup({ ...signup, document: { ...signup.document, back: selectedImage } });
 
-                if (type === 'passport') {
-                  navigation.navigate('ConfirmAccount');
-                } else {
-                  navigation.navigate('IDBack');
-                }
+                navigation.navigate('ConfirmAccount');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
             >
-              <Text style={styles.loginText}>
-                {type === 'passport' ? 'complete signup' : 'Upload backside of ID'}
-                {' '}
-              </Text>
+              <Text style={styles.loginText}>Complete signup</Text>
             </TouchableOpacity>
           )}
         </View>

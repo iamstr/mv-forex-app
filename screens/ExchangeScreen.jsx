@@ -23,11 +23,7 @@ import _themeColor from '../colorScheme.json';
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(1);
   const [isFocused, setIsFocused] = useState(false);
-  const [fontsLoaded] = useFonts({
-    'Karla-Regular': require('../assets/fonts/Karla/KarlaRegular.ttf'),
-    'Karla-Medium': require('../assets/fonts/Karla/KarlaMedium.ttf'),
-    'Karla-Bold': require('../assets/fonts/Karla/KarlaBold.ttf'),
-  });
+
   const inputRef = useRef();
   const navigation = useNavigation();
   return (
