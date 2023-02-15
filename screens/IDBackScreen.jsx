@@ -16,9 +16,7 @@ export default function LoginScreen() {
   const { saveSignup, signup } = useContext(AuthContext);
 
   const [selectedImage, setSelectedImage] = useState(null);
-  useEffect(() => {
-    console.log(signup);
-  }, [selectedImage]);
+
   const pickImageAsync = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -33,7 +31,6 @@ export default function LoginScreen() {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
-      console.log(result.assets[0].uri);
     } else {
       alert('You did not select any image.');
     }
