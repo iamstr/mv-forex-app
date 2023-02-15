@@ -1,26 +1,25 @@
 // In the React Native app
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Image, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Upload from '../assets/icons/Camera.svg';
 import _themeColor from '../colorScheme.json';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function LoginScreen() {
-  const [jwt, setJWT] = useState(null); // JWT state
-
+  const { saveSignup, signup } = useContext(AuthContext);
   const navigation = useNavigation();
   // ...rest of the import statements remain unchanged
-
   const [selectedImage, setSelectedImage] = useState(null);
   const route = useRoute();
   const { type } = route.params;
 
   useEffect(() => {
-    console.log(type);
-  }, []);
+    console.log(signup);
+  }, [selectedImage]);
 
   const pickImageAsync = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,7 +35,7 @@ export default function LoginScreen() {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
-      console.log(result.assets[0].uri);
+      // console.log(result.assets[0].uri);
     } else {
       alert('You did not select any image.');
     }
@@ -66,6 +65,8 @@ export default function LoginScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
+                saveSignup({ ...signup, document: { type, front: selectedImage } });
+
                 if (type === 'passport') {
                   navigation.navigate('ConfirmAccount');
                 } else {
