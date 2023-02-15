@@ -58,7 +58,7 @@ export default function LoginScreen() {
               onPress={() => {
                 saveSignup({ ...signup, document: { ...signup.document, back: selectedImage } });
 
-                // navigation.navigate('ConfirmAccount');
+                navigation.navigate('ConfirmAccount');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
