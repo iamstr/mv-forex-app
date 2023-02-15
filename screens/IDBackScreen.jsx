@@ -1,21 +1,24 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Image, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Upload from '../assets/icons/Camera.svg';
 import _themeColor from '../colorScheme.json';
 
-export default function LoginScreen() {
-  const [jwt, setJWT] = useState(null); // JWT state
+import { AuthContext } from '../contexts/AuthContext';
 
+export default function LoginScreen() {
   const navigation = useNavigation();
   // ...rest of the import statements remain unchanged
+  const { saveSignup, signup } = useContext(AuthContext);
 
   const [selectedImage, setSelectedImage] = useState(null);
-
+  useEffect(() => {
+    console.log(signup);
+  }, [selectedImage]);
   const pickImageAsync = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -56,7 +59,9 @@ export default function LoginScreen() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('ConfirmAccount');
+                saveSignup({ ...signup, document: { ...signup.document, back: selectedImage } });
+
+                // navigation.navigate('ConfirmAccount');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
