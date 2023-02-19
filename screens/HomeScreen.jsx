@@ -19,10 +19,12 @@ import { Video } from 'expo-av';
 import { useContext, useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Exchanger from '../assets/icons/Group 2686.svg';
+import BTC from '../assets/other/bitcoin.png';
 import Canada from '../assets/other/canada.png';
 import Ghana from '../assets/other/ghana.png';
 import Kenya from '../assets/other/kenya.png';
 import Nigeria from '../assets/other/nigeria.png';
+import USDT from '../assets/other/tether.png';
 import Uganda from '../assets/other/uganda.png';
 import UAE from '../assets/other/united-arab-emirates.png';
 import UK from '../assets/other/united-kingdom.png';
@@ -91,6 +93,8 @@ export default function HomeScreen() {
     { currencyName: 'CAR', currencyFlag: Canada },
     { currencyName: 'UGX', currencyFlag: Uganda },
     { currencyName: 'GHC', currencyFlag: Ghana },
+    { currencyName: 'BTC', currencyFlag: BTC },
+    { currencyName: 'USDT', currencyFlag: USDT },
   ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
   return (
     <View style={styles.document}>
