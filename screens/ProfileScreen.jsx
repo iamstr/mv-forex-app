@@ -53,7 +53,7 @@ export default function ProfileScreen() {
                 Your account is verirfied you can transfer money to your account or to a loved one
               </Text>
             </View>
-            <Pressable style={styles.infoButton} onPress={() => navigation.navigate('Exchange')}>
+            <Pressable style={styles.infoButton} onPress={() => navigation.navigate('HomeScreen')}>
               <Text style={styles.infoButtonText}>Transfer Now</Text>
             </Pressable>
           </View>
