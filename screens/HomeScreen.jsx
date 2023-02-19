@@ -152,7 +152,13 @@ export default function HomeScreen() {
                     >
                       <Image
                         source={singleCurrency.currencyFlag}
-                        style={{ width: 36, height: 36 }}
+                        style={
+                          index !== 8
+                            ? index === 7
+                              ? { width: 42, height: 42 }
+                              : { width: 36, height: 36 }
+                            : { width: 48, height: 48 }
+                        }
                       />
                       <Text style={[styles.currency, { paddingVertical: 0, paddingLeft: 20 }]}>
                         {singleCurrency.currencyName}
