@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 
 export default function CustomTab() {
   const navigation = useNavigation();
-  const { deleteToken } = useContext(AuthContext);
+  const { deleteToken, token } = useContext(AuthContext);
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('./assets/fonts/Karla/KarlaMedium.ttf'),
@@ -51,7 +51,7 @@ export default function CustomTab() {
         tabBarLabelStyle: {
           fontFamily: 'Karla-Bold',
         },
-        headerTitle: () => <Text style={styles.name}>Hello Joe Doe</Text>,
+        headerTitle: () => <Text style={styles.name}>{`Hello ${token.username}`}</Text>,
         headerRight: () => (
           <Pressable
             onPress={() => {
