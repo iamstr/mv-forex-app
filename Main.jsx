@@ -203,7 +203,7 @@ export default function Main() {
                   name="Deposit"
                   component={DepositScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -231,7 +231,7 @@ export default function Main() {
                   name="ConfirmDeposit"
                   component={ConfirmDepositScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -259,7 +259,7 @@ export default function Main() {
                   name="Recipient"
                   component={RecipientScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -287,7 +287,7 @@ export default function Main() {
                   name="ConfirmTransfer"
                   component={ConfirmTransferScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -315,7 +315,7 @@ export default function Main() {
                   name="Final"
                   component={FinalScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -345,7 +345,7 @@ export default function Main() {
                   name="Transfer"
                   component={TransferScreen}
                   options={({ navigation }) => ({
-                    title: 'Hello John Doe',
+                    title: ` Hello ${token.username}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
