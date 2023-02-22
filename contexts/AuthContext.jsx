@@ -4,13 +4,13 @@ import { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext({
   token: null,
   isLoggedIn: false,
-  saveToken: (token) => {},
-  deleteToken: () => {},
-  getToken: () => {},
-  saveSignup: () => {},
+  saveToken: (token) => { },
+  deleteToken: () => { },
+  getToken: () => { },
+  saveSignup: (info) => { },
   signup: {},
-  signedInUser:{},
-  saveSignedInUser:()=>{}
+  signedInUser: {},
+  saveSignedInUser: (info) => { },
 });
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
@@ -29,7 +29,9 @@ export default function AuthProvider({ children }) {
     mobile: '',
     password: '',
     terms: '',
-    type: '', back: '', front: '' 
+    type: '',
+    back: '',
+    front: '',
   });
 
   useEffect(() => {
@@ -51,10 +53,9 @@ export default function AuthProvider({ children }) {
   };
   const saveSignup = async (info) => {
     setSignup(info);
-    
   };
   const saveSignedInUser = async (info) => {
-      setSignedInUser(info);
+    setSignedInUser(info);
   };
 
   const deleteToken = async () => {
@@ -73,7 +74,7 @@ export default function AuthProvider({ children }) {
         saveSignup,
         signup,
         saveSignedInUser,
-signedInUser
+        signedInUser,
       }}
     >
       {children}
