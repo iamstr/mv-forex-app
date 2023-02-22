@@ -32,7 +32,7 @@ import VerifyScreen from './screens/VerifyScreen';
 const Stack = createNativeStackNavigator();
 export default function Main() {
   // const user = useContext(UserContextProvider);
-  const { token } = useContext(AuthContext);
+  const { token,signedInUser } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
@@ -203,7 +203,7 @@ export default function Main() {
                   name="Deposit"
                   component={DepositScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -231,7 +231,7 @@ export default function Main() {
                   name="ConfirmDeposit"
                   component={ConfirmDepositScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -259,7 +259,7 @@ export default function Main() {
                   name="Recipient"
                   component={RecipientScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -287,7 +287,7 @@ export default function Main() {
                   name="ConfirmTransfer"
                   component={ConfirmTransferScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -315,7 +315,7 @@ export default function Main() {
                   name="Final"
                   component={FinalScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
@@ -345,7 +345,7 @@ export default function Main() {
                   name="Transfer"
                   component={TransferScreen}
                   options={({ navigation }) => ({
-                    title: ` Hello ${token.username}`,
+                    title: ` Hello ${signedInUser.fullname}`,
                     headerStyle: {
                       backgroundColor: 'transparent',
                       fontFamily: 'Karla-Bold',
