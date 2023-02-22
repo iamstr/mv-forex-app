@@ -1,6 +1,7 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
+import jwt_decode from 'jwt-decode';
+import { useContext, useState } from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -8,15 +9,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
+import _Config from '../config.json';
 import { AuthContext } from '../contexts/AuthContext';
 import { UserContext } from '../contexts/userContext';
 import useCredential from '../hooks/useCredentials';
 
 export default function LoginScreen() {
-  const { saveToken, isLoggedIn, token } = useContext(AuthContext);
+  const {
+    saveToken, isLoggedIn, token, saveSignedInUser,
+  } = useContext(AuthContext);
   const [jwt, setJWT] = useState(null); // JWT state
   const [username, setUsername] = useState(); // JWT state
   const [password, setPassword] = useState(); // JWT state
@@ -24,23 +28,30 @@ export default function LoginScreen() {
   const user = useContext(UserContext);
 
   const navigation = useNavigation();
-  
- 
+
   const login = async () => {
-    // // Send a login request to the Node.js server
-    // fetch('https://example.com/login', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     username: 'user1',
-    //     password: 'password123',
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     // Save the JWT locally, such as in the device's local storage
-    //
-    //   });
-    saveToken({ username, password });
+    // Send a login request to the Node.js server
+    console.log(username, password);
+    fetch(`${_Config.api}/login`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: username,
+        password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Save the JWT locally, such as in the device's local storage
+        if (data.message) {
+          const decodedToken = jwt_decode(data.token);
+          saveSignedInUser(decodedToken);
+          saveToken({ username, password });
+        }
+      });
   };
 
   const getProtectedData = () => {
