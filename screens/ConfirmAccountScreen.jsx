@@ -1,12 +1,38 @@
 import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
+import { useContext, useEffect } from 'react';
 import {
-  SafeAreaView, StyleSheet, Text, TouchableOpacity, View,
+  SafeAreaView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import _themeColor from '../colorScheme.json';
+import _Config from '../config.json';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function ConfirmAcoountScreen() {
   const navigation = useNavigation();
+  const { signup } = useContext(AuthContext);
+  useEffect(() => {
+    const abortController = new AbortController();
+    console.log(`${_Config.api}/user/create`, signup);
+    fetch(`${_Config.api}/user/create`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signup),
+      signal: abortController.signal,
+    }).then((response) => response.json())
+      .then((json) => console.log(json))
+      .catch((error) => {
+        console.error(error);
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
   return (
     <SafeAreaView style={{ backgroundColor: _themeColor.white, height: '100%' }}>
       <View style={styles.container}>
