@@ -14,24 +14,18 @@ import {
 import _themeColor from '../colorScheme.json';
 import _Config from '../config.json';
 import { AuthContext } from '../contexts/AuthContext';
-import { UserContext } from '../contexts/userContext';
-import useCredential from '../hooks/useCredentials';
 
 export default function LoginScreen() {
   const {
-    saveToken, isLoggedIn, token, saveSignedInUser,
+    saveToken, saveSignedInUser,
   } = useContext(AuthContext);
-  const [jwt, setJWT] = useState(null); // JWT state
   const [username, setUsername] = useState(); // JWT state
   const [password, setPassword] = useState(); // JWT state
-  const { credential, setCredential, getCredential } = useCredential();
-  const user = useContext(UserContext);
 
   const navigation = useNavigation();
 
   const login = async () => {
     // Send a login request to the Node.js server
-    console.log(username, password);
     fetch(`${_Config.api}/login`, {
       method: 'POST',
       headers: {
