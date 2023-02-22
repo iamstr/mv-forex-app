@@ -9,6 +9,8 @@ export const AuthContext = createContext({
   getToken: () => {},
   saveSignup: () => {},
   signup: {},
+  signedInUser:{},
+  saveSignedInUser:()=>{}
 });
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
@@ -20,6 +22,14 @@ export default function AuthProvider({ children }) {
     password: '',
     terms: '',
     document: { type: '', back: '', front: '' },
+  });
+  const [signedInUser, setSignedInUser] = useState({
+    fullname: '',
+    email: '',
+    mobile: '',
+    password: '',
+    terms: '',
+    type: '', back: '', front: '' 
   });
 
   useEffect(() => {
@@ -41,7 +51,10 @@ export default function AuthProvider({ children }) {
   };
   const saveSignup = async (info) => {
     setSignup(info);
-    setIsLoggedIn(true);
+    
+  };
+  const saveSignedInUser = async (info) => {
+      setSignedInUser(info);
   };
 
   const deleteToken = async () => {
@@ -59,6 +72,8 @@ export default function AuthProvider({ children }) {
         deleteToken,
         saveSignup,
         signup,
+        saveSignedInUser,
+signedInUser
       }}
     >
       {children}
