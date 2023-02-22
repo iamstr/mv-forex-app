@@ -24,19 +24,8 @@ export default function LoginScreen() {
   const user = useContext(UserContext);
 
   const navigation = useNavigation();
-  useEffect(() => {
-    const setCredentialsFromSecure = async () => {
-      await setUsername(credential?.username);
-      await setPassword(credential?.password);
-    };
-
-    setCredentialsFromSecure();
-  }, [credential]);
-  useEffect(() => {
-    if (token) {
-      navigation.navigate('Home');
-    }
-  }, [token]);
+  
+ 
   const login = async () => {
     // // Send a login request to the Node.js server
     // fetch('https://example.com/login', {
@@ -51,7 +40,6 @@ export default function LoginScreen() {
     //     // Save the JWT locally, such as in the device's local storage
     //
     //   });
-    await setCredential({ username, password });
     saveToken({ username, password });
   };
 
