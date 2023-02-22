@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { useContext } from 'react';
 import {
-  Alert, Pressable, StyleSheet, Text,
+  Alert, Pressable, StyleSheet, Text
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from './colorScheme.json';
@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 
 export default function CustomTab() {
   const navigation = useNavigation();
-  const { deleteToken, token } = useContext(AuthContext);
+  const { deleteToken, signedInUser } = useContext(AuthContext);
   const [fontsLoaded] = useFonts({
     'Karla-Regular': require('./assets/fonts/Karla/KarlaRegular.ttf'),
     'Karla-Medium': require('./assets/fonts/Karla/KarlaMedium.ttf'),
@@ -51,7 +51,7 @@ export default function CustomTab() {
         tabBarLabelStyle: {
           fontFamily: 'Karla-Bold',
         },
-        headerTitle: () => <Text style={styles.name}>{`Hello ${token.username}`}</Text>,
+        headerTitle: () => <Text style={styles.name}>{`Hello ${signedInUser.fullname}`}</Text>,
         headerRight: () => (
           <Pressable
             onPress={() => {
@@ -70,7 +70,7 @@ export default function CustomTab() {
           <Pressable
             onPress={() => {
               Alert.alert('Logout?', 'You are about to signout?', [
-                { text: 'Cancel', style: 'cancel', onPress: () => {} },
+                { text: 'Cancel', style: 'cancel', onPress: () => { } },
                 {
                   text: 'Signout',
                   style: 'destructive',
