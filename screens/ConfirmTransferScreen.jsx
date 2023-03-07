@@ -1,22 +1,48 @@
 // In the React Native app
 import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
-  ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import Alert from '../assets/icons/Icon feather-alert-circle.svg';
 import _themeColor from '../colorScheme.json';
+import CustomActivityIndicator from '../components/ActivityIndicator';
+import _Config from '../config.json';
+import { AuthContext } from '../contexts/AuthContext';
 import { DepositContext } from '../contexts/DepositContext';
 
 export default function RecipientScreen() {
   const { deposit, recipient } = useContext(DepositContext);
-
+  const { token } = useContext(AuthContext);
   const navigation = useNavigation();
-
+  const [isLoading, setIsLoading] = useState(false);
+  const transferHandler = () => {
+    setIsLoading(true);
+    fetch(`${_Config.api}/transaction`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ deposit, recipient }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        setIsLoading(true);
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log('the error is', e);
+      });
+  };
   return (
     <View style={styles.backgroundImage}>
       <ScrollView style={styles.scrollView}>
+        <Modal animationType="fade" transparent visible={isLoading}>
+          <CustomActivityIndicator isLoading={isLoading} />
+        </Modal>
         <Text style={styles.welcome}>Confirm Transfer Details</Text>
         <View style={styles.warn}>
           <Alert style={styles.warnIcon} />
@@ -91,7 +117,8 @@ export default function RecipientScreen() {
           <TouchableOpacity
             title="Login"
             onPress={() => {
-              navigation.navigate('Final');
+              transferHandler();
+              // navigation.navigate('Final');
             }}
             style={styles.button}
             underlayColor={_themeColor.primary}
