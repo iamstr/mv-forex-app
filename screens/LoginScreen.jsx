@@ -50,7 +50,7 @@ export default function LoginScreen() {
           if (data.token) {
             const decodedToken = jwt_decode(data.token);
             saveSignedInUser(decodedToken);
-            saveToken({ username, password });
+            saveToken(data.token);
           }
           if (+data.code !== 200) setResponse(data);
         })
