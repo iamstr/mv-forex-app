@@ -4,48 +4,60 @@ import jwt_decode from 'jwt-decode';
 import { useContext, useState } from 'react';
 import {
   ImageBackground,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import _themeColor from '../colorScheme.json';
+import CustomActivityIndicator from '../components/ActivityIndicator';
 import _Config from '../config.json';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function LoginScreen() {
-  const {
-    saveToken, saveSignedInUser,
-  } = useContext(AuthContext);
+  const { saveToken, saveSignedInUser } = useContext(AuthContext);
   const [username, setUsername] = useState(); // JWT state
   const [password, setPassword] = useState(); // JWT state
-
+  const [response, setResponse] = useState({ message: 'success', code: 200 }); // JWT state
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
   const login = async () => {
+    setIsLoading(true);
     // Send a login request to the Node.js server
-    fetch(`${_Config.api}/login`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: username,
-        password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Save the JWT locally, such as in the device's local storage
-        if (data.message) {
-          const decodedToken = jwt_decode(data.token);
-          saveSignedInUser(decodedToken);
-          saveToken({ username, password });
-        }
-      });
+    setResponse({ message: 'success', code: 200 });
+    if (username && password) {
+      fetch(`${_Config.api}/login`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: username,
+          password,
+        }),
+      })
+        .then((responseOb) => responseOb.json())
+        .then((data) => {
+          // Save the JWT locally, such as in the device's local storage
+          setIsLoading(false);
+          console.log(data);
+          if (data.token) {
+            const decodedToken = jwt_decode(data.token);
+            saveSignedInUser(decodedToken);
+            saveToken({ username, password });
+          }
+          if (+data.code !== 200) setResponse(data);
+        })
+        .catch((e) => {
+          console.log('the error is', e);
+        });
+    }
   };
 
   const getProtectedData = () => {
@@ -73,20 +85,38 @@ export default function LoginScreen() {
           <Text style={styles.welcome}>Welcome Back</Text>
           <Text style={styles.label}>Email or Username</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, response.code !== 200 ? styles.error : null]}
             placeholder="useless placeholder"
             value={username}
             onChangeText={(text) => setUsername(text)}
           />
+
           <Text style={styles.label}>Password</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, response.code !== 200 ? styles.error : null]}
             placeholder="useless placeholder"
             value={password}
             secureTextEntry
             onChangeText={(text) => setPassword(text)}
           />
-
+          {response.code !== 200 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingLeft: 13,
+                paddingBottom: 10,
+              }}
+            >
+              <Ionicons
+                name="alert-circle-outline"
+                size={26}
+                color={_themeColor.danger}
+                style={styles.error}
+              />
+              <Text style={styles.erroMessage}>Incorrect username/password</Text>
+            </View>
+          )}
           <TouchableOpacity
             title="Login"
             onPress={() => {
@@ -106,6 +136,9 @@ export default function LoginScreen() {
           >
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
+          <Modal animationType="fade" transparent visible={isLoading}>
+            <CustomActivityIndicator isLoading={isLoading} />
+          </Modal>
           <TouchableOpacity
             title="Login"
             onPress={() => {
@@ -152,6 +185,10 @@ const styles = StyleSheet.create({
     marginTop: 80,
     // paddingBottom: 300,
     // paddingTop: 50,
+  },
+  erroMessage: { color: _themeColor.danger, fontFamily: 'Karla-Medium' },
+  error: {
+    borderColor: _themeColor.danger,
   },
   forgot: {
     backgroundColor: _themeColor.white,
