@@ -31,6 +31,7 @@ import UK from '../assets/other/united-kingdom.png';
 import USA from '../assets/other/united-states-of-america.png';
 import _themeColor from '../colorScheme.json';
 import Toast from '../components/Toast';
+import _Config from '../config.json';
 import { DepositContext } from '../contexts/DepositContext';
 
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
@@ -47,6 +48,28 @@ export default function HomeScreen() {
 
   const navigation = useNavigation();
   const { saveDeposit, deposit } = useContext(DepositContext);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    fetch(`${_Config.api}/forex/${currencyFrom.currencyName}/${currencyTo.currencyName}/`, {
+      signal: abortController.signal,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(typeof data.forex, data.forex);
+        if (currencyFrom.currencyName !== currencyTo.currencyName) {
+          setExchangeRate(data.forex);
+          setCurrency(+amount * data.forex.rate);
+        }
+      })
+      .catch((error) => console.error(error));
+
+    return () => {
+      console.log('the rates ', exchangeRate);
+      abortController.abort();
+    };
+  }, [currencyTo, currencyFrom]);
+
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
       setShowToast(true);
@@ -85,17 +108,19 @@ export default function HomeScreen() {
   };
 
   const filtered = [
-    { currencyName: 'KES', currencyFlag: Kenya },
-    { currencyName: 'NGN', currencyFlag: Nigeria },
-    { currencyName: 'USD', currencyFlag: USA },
-    { currencyName: 'AED', currencyFlag: UAE },
-    { currencyName: 'GBP', currencyFlag: UK },
-    { currencyName: 'CAR', currencyFlag: Canada },
-    { currencyName: 'UGX', currencyFlag: Uganda },
-    { currencyName: 'GHC', currencyFlag: Ghana },
-    { currencyName: 'BTC', currencyFlag: BTC },
-    { currencyName: 'USDT', currencyFlag: USDT },
-  ].filter((filter) => filter.currencyName !== hideCurrency.currencyName);
+    { currencyName: 'KES', currencyFlag: Kenya, status: 'active' },
+    { currencyName: 'NGN', currencyFlag: Nigeria, status: 'active' },
+    { currencyName: 'USD', currencyFlag: USA, status: 'active' },
+    { currencyName: 'AED', currencyFlag: UAE, status: 'inactive' },
+    { currencyName: 'GBP', currencyFlag: UK, status: 'inactive' },
+    { currencyName: 'CAR', currencyFlag: Canada, status: 'inactive' },
+    { currencyName: 'UGX', currencyFlag: Uganda, status: 'inactive' },
+    { currencyName: 'GHC', currencyFlag: Ghana, status: 'inactive' },
+    { currencyName: 'BTC', currencyFlag: BTC, status: 'inactive' },
+    { currencyName: 'USDT', currencyFlag: USDT, status: 'inactive' },
+  ].filter(
+    (filter) => filter.currencyName !== hideCurrency.currencyName && filter.status === 'active',
+  );
   return (
     <View style={styles.document}>
       <Toast show={showToast} message="you cant exchange the same currency" />
@@ -132,8 +157,6 @@ export default function HomeScreen() {
                   style={{
                     marginTop: 50,
                     flexDirection: 'column',
-
-                    flex: 1,
                   }}
                 >
                   {filtered.map((singleCurrency, index) => (
@@ -145,9 +168,9 @@ export default function HomeScreen() {
                       style={{
                         flex: 1,
                         flexDirection: 'row',
-                        height: 50,
                         paddingVertical: 20,
                         alignItems: 'center',
+                        marginBottom: 30,
                       }}
                     >
                       <Image
@@ -159,7 +182,6 @@ export default function HomeScreen() {
                           paddingLeft: 15,
                           paddingBottom: 20,
 
-                          height: '100%',
                           textAlignVertical: 'bottom',
                           color: _themeColor.green,
                           fontFamily: 'Karla-Regular',
