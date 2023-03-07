@@ -76,25 +76,30 @@ export default function SignupScreen() {
                 <Text style={styles.erroMessage}>The passwords are not same</Text>
               </View>
             )}
-            {fullname && email && mobile && password && confirmPassword && (
-              <TouchableOpacity
-                title="Login"
-                onPress={() => {
-                  if (password === confirmPassword) {
-                    saveSignup({
-                      fullname,
-                      email,
-                      mobile,
-                      password,
-                    });
-                    navigation.navigate('Terms');
-                  }
-                }}
-                style={styles.button}
-                underlayColor={_themeColor.primary}
-              >
-                <Text style={styles.loginText}>Create account</Text>
-              </TouchableOpacity>
+            {fullname
+              && email
+              && mobile
+              && password
+              && confirmPassword
+              && password === confirmPassword && (
+                <TouchableOpacity
+                  title="Login"
+                  onPress={() => {
+                    if (password === confirmPassword) {
+                      saveSignup({
+                        fullname,
+                        email,
+                        mobile,
+                        password,
+                      });
+                      navigation.navigate('Terms');
+                    }
+                  }}
+                  style={styles.button}
+                  underlayColor={_themeColor.primary}
+                >
+                  <Text style={styles.loginText}>Create account</Text>
+                </TouchableOpacity>
             )}
           </View>
         </ScrollView>
