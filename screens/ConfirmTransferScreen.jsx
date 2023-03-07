@@ -17,7 +17,7 @@ export default function RecipientScreen() {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const transferHandler = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     fetch(`${_Config.api}/transaction`, {
       method: 'POST',
       headers: {
@@ -30,7 +30,7 @@ export default function RecipientScreen() {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        setIsLoading(true);
+        // setIsLoading(true);
         console.log(data);
       })
       .catch((e) => {
