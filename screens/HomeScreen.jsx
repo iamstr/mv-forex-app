@@ -37,7 +37,7 @@ import { DepositContext } from '../contexts/DepositContext';
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(1000);
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState('1000');
   const [currencyFrom, setCurrencyFrom] = useState({ currencyName: 'KES', currencyFlag: Kenya });
   const [currencyTo, setCurrencyTo] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
   const [hideCurrency, setHideCurrency] = useState({ currencyName: 'NGN', currencyFlag: Nigeria });
