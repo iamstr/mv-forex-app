@@ -92,7 +92,7 @@ export default function Transaction() {
             <TouchableOpacity
               title="Login"
               onPress={() => {
-                navigation.navigate('Home');
+                navigation.navigate('HomeScreen');
               }}
               style={styles.button}
               underlayColor={_themeColor.primary}
@@ -111,7 +111,7 @@ export default function Transaction() {
               ]}
             >
               <Text style={styles.transactionHeader}> Transaction History</Text>
-              <Pressable onPress={() => navigation.navigate('Home')}>
+              <Pressable onPress={() => navigation.navigate('HomeScreen')}>
                 <Ionicons name="add-circle" size={26} color={_themeColor.secondary} />
               </Pressable>
             </View>
