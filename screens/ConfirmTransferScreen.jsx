@@ -53,10 +53,18 @@ export default function RecipientScreen() {
             { cancelable: false },
           );
         }
-        console.log(status.code);
       })
-      .catch((e) => {
-        console.log('the error is', e);
+      .catch(() => {
+        Alert.alert(
+          'Oops something went wrong',
+          'Unknown error occurred',
+          [
+            {
+              text: 'OK',
+            },
+          ],
+          { cancelable: false },
+        );
       });
   };
   return (
