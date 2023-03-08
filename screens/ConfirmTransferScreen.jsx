@@ -14,11 +14,9 @@ import { DepositContext } from '../contexts/DepositContext';
 export default function RecipientScreen() {
   const { deposit, recipient } = useContext(DepositContext);
   const { token } = useContext(AuthContext);
-  const [status, setStatus] = useState({ message: '', code: 0 });
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const transferHandler = () => {
-    setStatus({ message: '', code: 0 });
     setIsLoading(true);
     fetch(`${_Config.api}/transaction`, {
       method: 'POST',
@@ -29,14 +27,9 @@ export default function RecipientScreen() {
       },
       body: JSON.stringify({ deposit, recipient }),
     })
-      .then((response) => {
-        setStatus({ ...status, code: response.status });
-        return response;
-      })
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        setStatus({ message: data.message, ...status });
         setIsLoading(false);
         if (data.code === 200 || data.code === 201) {
           navigation.navigate('Final');
