@@ -2,9 +2,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import {
-  Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Alert, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
-import Alert from '../assets/icons/Icon feather-alert-circle.svg';
+import AlertIcon from '../assets/icons/Icon feather-alert-circle.svg';
 import _themeColor from '../colorScheme.json';
 import CustomActivityIndicator from '../components/ActivityIndicator';
 import _Config from '../config.json';
@@ -14,10 +14,12 @@ import { DepositContext } from '../contexts/DepositContext';
 export default function RecipientScreen() {
   const { deposit, recipient } = useContext(DepositContext);
   const { token } = useContext(AuthContext);
+  const [status, setStatus] = useState({ message: '', code: 0 });
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const transferHandler = () => {
-    // setIsLoading(true);
+    setStatus({ message: '', code: 0 });
+    setIsLoading(true);
     fetch(`${_Config.api}/transaction`, {
       method: 'POST',
       headers: {
@@ -27,11 +29,31 @@ export default function RecipientScreen() {
       },
       body: JSON.stringify({ deposit, recipient }),
     })
+      .then((response) => {
+        setStatus({ ...status, code: response.status });
+        return response;
+      })
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        // setIsLoading(true);
-        console.log(data);
+        setStatus({ message: data.message, ...status });
+        setIsLoading(false);
+        if (data.code === 200 || data.code === 201) {
+          navigation.navigate('Final');
+        } else {
+          const message = data.message || 'Unknown error occurred';
+          Alert.alert(
+            'Response from server',
+            message,
+            [
+              {
+                text: 'OK',
+              },
+            ],
+            { cancelable: false },
+          );
+        }
+        console.log(status.code);
       })
       .catch((e) => {
         console.log('the error is', e);
@@ -45,7 +67,7 @@ export default function RecipientScreen() {
         </Modal>
         <Text style={styles.welcome}>Confirm Transfer Details</Text>
         <View style={styles.warn}>
-          <Alert style={styles.warnIcon} />
+          <AlertIcon style={styles.warnIcon} />
           <Text style={styles.warnText}>
             {' '}
             Confirm if the details you have provided are correct details of the reciepent and that
