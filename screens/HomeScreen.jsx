@@ -95,7 +95,7 @@ export default function HomeScreen() {
   }, [currencyTo, currencyFrom]);
   useEffect(() => {
     const abortController = new AbortController();
-    fetch(`${_Config.api}/transaction/`, {
+    fetch(`${_Config.api}/transaction/limit`, {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
@@ -569,7 +569,7 @@ const styles = StyleSheet.create({
   },
   name: { color: _themeColor.green, fontFamily: 'Karla-Medium', fontSize: 24 },
   rowAround: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' },
-  rowBetween: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
+  rowBetween: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between' },
   rowBewteenWithoutAlign: { flexDirection: 'row', flex: 1, justifyContent: 'space-between' },
   textStyle: {
     color: 'white',
