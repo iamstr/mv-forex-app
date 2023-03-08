@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import BTC from '../assets/other/bitcoin.png';
 import Canada from '../assets/other/canada.png';
 import Ghana from '../assets/other/ghana.png';
@@ -102,10 +103,16 @@ export default function Transaction() {
         )}
         {!!transactions.length && (
           <View style={styles.transaction}>
-            <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
+            <View
+              style={[
+                styles.rowBetween,
+                styles.transactionHeaderContainer,
+                { alignItems: 'center' },
+              ]}
+            >
               <Text style={styles.transactionHeader}> Transaction History</Text>
               <Pressable onPress={() => navigation.navigate('Home')}>
-                <Text style={styles.transactionHeaderButton}>New Forex exchange </Text>
+                <Ionicons name="add-circle" size={26} color={_themeColor.secondary} />
               </Pressable>
             </View>
             {!!transactions.length
