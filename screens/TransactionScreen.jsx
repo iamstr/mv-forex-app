@@ -2,7 +2,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
 import { useContext, useEffect, useState } from 'react';
 import {
-  Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import BTC from '../assets/other/bitcoin.png';
 import Canada from '../assets/other/canada.png';
@@ -97,6 +104,9 @@ export default function Transaction() {
           <View style={styles.transaction}>
             <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
               <Text style={styles.transactionHeader}> Transaction History</Text>
+              <Pressable onPress={() => navigation.navigate('Home')}>
+                <Text style={styles.transactionHeaderButton}>New Forex exchange </Text>
+              </Pressable>
             </View>
             {!!transactions.length
               && transactions.map((transaction, key) => (
