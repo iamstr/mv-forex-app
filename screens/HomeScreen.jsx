@@ -32,8 +32,22 @@ import USA from '../assets/other/united-states-of-america.png';
 import _themeColor from '../colorScheme.json';
 import Toast from '../components/Toast';
 import _Config from '../config.json';
+import { AuthContext } from '../contexts/AuthContext';
 import { DepositContext } from '../contexts/DepositContext';
+import { formatDate } from '../utils';
 
+const allCurrency = [
+  { currencyName: 'KES', currencyFlag: Kenya, status: 'active' },
+  { currencyName: 'NGN', currencyFlag: Nigeria, status: 'active' },
+  { currencyName: 'USD', currencyFlag: USA, status: 'active' },
+  { currencyName: 'AED', currencyFlag: UAE, status: 'inactive' },
+  { currencyName: 'GBP', currencyFlag: UK, status: 'inactive' },
+  { currencyName: 'CAR', currencyFlag: Canada, status: 'inactive' },
+  { currencyName: 'UGX', currencyFlag: Uganda, status: 'inactive' },
+  { currencyName: 'GHC', currencyFlag: Ghana, status: 'inactive' },
+  { currencyName: 'BTC', currencyFlag: BTC, status: 'inactive' },
+  { currencyName: 'USDT', currencyFlag: USDT, status: 'inactive' },
+];
 const serverData = { from: 'KES', to: 'NGN', rate: 3.68 };
 export default function HomeScreen() {
   const [currency, setCurrency] = useState(1000);
@@ -45,9 +59,10 @@ export default function HomeScreen() {
   const [showToast, setShowToast] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [modalVisible, setModalVisible] = useState({ visible: false, hideCurrency: '' });
-
+  const [transactions, setTransactions] = useState([]);
   const navigation = useNavigation();
   const { saveDeposit, deposit } = useContext(DepositContext);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -56,19 +71,60 @@ export default function HomeScreen() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(typeof data.forex, data.forex);
         if (currencyFrom.currencyName !== currencyTo.currencyName) {
           setExchangeRate(data.forex);
           setCurrency(+amount * data.forex.rate);
         }
       })
-      .catch((error) => console.error(error));
+      .catch(() => {
+        Alert.alert(
+          'Oops something went wrong',
+          'Unknown error occurred',
+          [
+            {
+              text: 'OK',
+            },
+          ],
+          { cancelable: false },
+        );
+      });
 
     return () => {
-      console.log('the rates ', exchangeRate);
       abortController.abort();
     };
   }, [currencyTo, currencyFrom]);
+  useEffect(() => {
+    const abortController = new AbortController();
+    fetch(`${_Config.api}/transaction/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      signal: abortController.signal,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setTransactions(data);
+      })
+      .catch(() => {
+        Alert.alert(
+          'Oops something went wrong',
+          'Unknown error occurred',
+          [
+            {
+              text: 'OK',
+            },
+          ],
+          { cancelable: false },
+        );
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
 
   useEffect(() => {
     if (currencyFrom.currencyName === currencyTo.currencyName) {
@@ -107,18 +163,7 @@ export default function HomeScreen() {
     setAmount(Math.floor(parseFloat(text)));
   };
 
-  const filtered = [
-    { currencyName: 'KES', currencyFlag: Kenya, status: 'active' },
-    { currencyName: 'NGN', currencyFlag: Nigeria, status: 'active' },
-    { currencyName: 'USD', currencyFlag: USA, status: 'active' },
-    { currencyName: 'AED', currencyFlag: UAE, status: 'inactive' },
-    { currencyName: 'GBP', currencyFlag: UK, status: 'inactive' },
-    { currencyName: 'CAR', currencyFlag: Canada, status: 'inactive' },
-    { currencyName: 'UGX', currencyFlag: Uganda, status: 'inactive' },
-    { currencyName: 'GHC', currencyFlag: Ghana, status: 'inactive' },
-    { currencyName: 'BTC', currencyFlag: BTC, status: 'inactive' },
-    { currencyName: 'USDT', currencyFlag: USDT, status: 'inactive' },
-  ].filter(
+  const filtered = allCurrency.filter(
     (filter) => filter.currencyName !== hideCurrency.currencyName && filter.status === 'active',
   );
   return (
@@ -316,36 +361,33 @@ export default function HomeScreen() {
                 <Text style={styles.transactionHeaderButton}>View All </Text>
               </Pressable>
             </View>
-            <View style={[styles.transactionCard, styles.rowBetween]}>
-              <View style={styles.rowBetween}>
-                <Image source={Kenya} style={styles.transactionImg} />
-                <View style={styles.transactionDetail}>
-                  <Text style={styles.transactionName}>John Huq</Text>
-                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
+            {!!transactions.length
+              && transactions.map((transaction, key) => (
+                <View style={[styles.transactionCard, styles.rowBetween]} key={key + Math.random()}>
+                  <View style={styles.rowBetween}>
+                    <Image
+                      source={
+                        allCurrency.filter((currency) => currency.currencyName === transaction.from)
+                          .length > 0
+                          ? allCurrency.filter(
+                            (currency) => currency.currencyName === transaction.from,
+                          )[0].currencyFlag
+                          : allCurrency[0].currencyFlag
+                      }
+                      style={styles.transactionImg}
+                    />
+                    <View style={styles.transactionDetail}>
+                      <Text style={styles.transactionName}>{`${transaction.recipient}`}</Text>
+                      <Text style={styles.transactionDate}>
+                        {formatDate(transaction.transaction_date)}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text style={styles.transactionAmount}>
+                    {`${transaction.currency} ${transaction.exchanged.toLocaleString()}`}
+                  </Text>
                 </View>
-              </View>
-              <Text style={styles.transactionAmount}>Kes 2,000</Text>
-            </View>
-            <View style={[styles.transactionCard, styles.rowBetween]}>
-              <View style={styles.rowBetween}>
-                <Image source={Kenya} style={styles.transactionImg} />
-                <View style={styles.transactionDetail}>
-                  <Text style={styles.transactionName}>John Huq</Text>
-                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
-                </View>
-              </View>
-              <Text style={styles.transactionAmount}>Kes 2,000</Text>
-            </View>
-            <View style={[styles.transactionCard, styles.rowBetween]}>
-              <View style={styles.rowBetween}>
-                <Image source={Kenya} style={styles.transactionImg} />
-                <View style={styles.transactionDetail}>
-                  <Text style={styles.transactionName}>John Huq</Text>
-                  <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
-                </View>
-              </View>
-              <Text style={styles.transactionAmount}>Kes 2,000</Text>
-            </View>
+              ))}
           </View>
         </ScrollView>
       </View>
