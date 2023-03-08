@@ -1,71 +1,133 @@
+import { useNavigation } from '@react-navigation/native';
 import { Video } from 'expo-av';
+import { useContext, useEffect, useState } from 'react';
 import {
-  Image, StyleSheet, Text, TouchableOpacity, View,
+  Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
+import BTC from '../assets/other/bitcoin.png';
+import Canada from '../assets/other/canada.png';
+import Ghana from '../assets/other/ghana.png';
 import Kenya from '../assets/other/icons8-kenya-48.png';
+import Nigeria from '../assets/other/nigeria.png';
+import USDT from '../assets/other/tether.png';
+import Uganda from '../assets/other/uganda.png';
+import UAE from '../assets/other/united-arab-emirates.png';
+import UK from '../assets/other/united-kingdom.png';
+import USA from '../assets/other/united-states-of-america.png';
 import _themeColor from '../colorScheme.json';
+import _Config from '../config.json';
+import { AuthContext } from '../contexts/AuthContext';
+import { formatDate } from '../utils';
 
+const allCurrency = [
+  { currencyName: 'KES', currencyFlag: Kenya, status: 'active' },
+  { currencyName: 'NGN', currencyFlag: Nigeria, status: 'active' },
+  { currencyName: 'USD', currencyFlag: USA, status: 'active' },
+  { currencyName: 'AED', currencyFlag: UAE, status: 'inactive' },
+  { currencyName: 'GBP', currencyFlag: UK, status: 'inactive' },
+  { currencyName: 'CAR', currencyFlag: Canada, status: 'inactive' },
+  { currencyName: 'UGX', currencyFlag: Uganda, status: 'inactive' },
+  { currencyName: 'GHC', currencyFlag: Ghana, status: 'inactive' },
+  { currencyName: 'BTC', currencyFlag: BTC, status: 'inactive' },
+  { currencyName: 'USDT', currencyFlag: USDT, status: 'inactive' },
+];
 export default function Transaction() {
+  const { token } = useContext(AuthContext);
+  const navigation = useNavigation();
+  const [transactions, setTransactions] = useState([]);
+  useEffect(() => {
+    const abortController = new AbortController();
+    fetch(`${_Config.api}/transaction/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      signal: abortController.signal,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setTransactions(data);
+      })
+      .catch(() => {
+        Alert.alert(
+          'Oops something went wrong',
+          'Unknown error occurred',
+          [
+            {
+              text: 'OK',
+            },
+          ],
+          { cancelable: false },
+        );
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
   return (
     <View style={styles.document}>
-      <View style={styles.videoContainer}>
-        <Video
-          style={styles.video}
-          source={require('../assets/video/lf30_editor_8te1fuzs.mp4')}
-          useNativeControls={false}
-          resizeMode="contain"
-          isLooping
-          shouldPlay
-        />
-
-        <Text style={styles.exchange}>Transaction History empty</Text>
-        <TouchableOpacity
-          title="Login"
-          onPress={() => {
-            navigation.navigate('Home');
-          }}
-          style={styles.button}
-          underlayColor={_themeColor.primary}
-        >
-          <Text style={styles.loginText}>Go to Home Screen</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.transaction}>
-        <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
-          <Text style={styles.transactionHeader}> Transaction History</Text>
-        </View>
-        <View style={[styles.transactionCard, styles.rowBetween]}>
-          <View style={styles.rowBetween}>
-            <Image source={Kenya} style={styles.transactionImg} />
-            <View style={styles.transactionDetail}>
-              <Text style={styles.transactionName}>John Huq</Text>
-              <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
-            </View>
+      <ScrollView>
+        {!transactions.length && (
+          <View style={styles.videoContainer}>
+            <Video
+              style={styles.video}
+              source={require('../assets/video/lf30_editor_8te1fuzs.mp4')}
+              useNativeControls={false}
+              resizeMode="contain"
+              isLooping
+              shouldPlay
+            />
+            <Text style={styles.exchange}>Transaction History empty</Text>
+            <TouchableOpacity
+              title="Login"
+              onPress={() => {
+                navigation.navigate('Home');
+              }}
+              style={styles.button}
+              underlayColor={_themeColor.primary}
+            >
+              <Text style={styles.loginText}>Go to Home Screen</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.transactionAmount}>Kes 2,000</Text>
-        </View>
-        <View style={[styles.transactionCard, styles.rowBetween]}>
-          <View style={styles.rowBetween}>
-            <Image source={Kenya} style={styles.transactionImg} />
-            <View style={styles.transactionDetail}>
-              <Text style={styles.transactionName}>John Huq</Text>
-              <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
+        )}
+        {!!transactions.length && (
+          <View style={styles.transaction}>
+            <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
+              <Text style={styles.transactionHeader}> Transaction History</Text>
             </View>
+            {!!transactions.length
+              && transactions.map((transaction, key) => (
+                <View style={[styles.transactionCard, styles.rowBetween]} key={key + Math.random()}>
+                  <View style={styles.rowBetween}>
+                    <Image
+                      source={
+                        allCurrency.filter((currency) => currency.currencyName === transaction.from)
+                          .length > 0
+                          ? allCurrency.filter(
+                            (currency) => currency.currencyName === transaction.from,
+                          )[0].currencyFlag
+                          : allCurrency[0].currencyFlag
+                      }
+                      style={styles.transactionImg}
+                    />
+                    <View style={styles.transactionDetail}>
+                      <Text style={styles.transactionName}>{`${transaction.recipient}`}</Text>
+                      <Text style={styles.transactionDate}>
+                        {formatDate(transaction.transaction_date)}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text style={styles.transactionAmount}>
+                    {`${transaction.currency} ${transaction.exchanged.toLocaleString()}`}
+                  </Text>
+                </View>
+              ))}
           </View>
-          <Text style={styles.transactionAmount}>Kes 2,000</Text>
-        </View>
-        <View style={[styles.transactionCard, styles.rowBetween]}>
-          <View style={styles.rowBetween}>
-            <Image source={Kenya} style={styles.transactionImg} />
-            <View style={styles.transactionDetail}>
-              <Text style={styles.transactionName}>John Huq</Text>
-              <Text style={styles.transactionDate}>Jun 10, 12.00pm</Text>
-            </View>
-          </View>
-          <Text style={styles.transactionAmount}>Kes 2,000</Text>
-        </View>
-      </View>
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -103,7 +165,7 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
     textAlign: 'center',
   },
-  rowBetween: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
+  rowBetween: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between' },
   transaction: { marginHorizontal: 15, marginVertical: 35 },
 
   transactionAmount: { fontFamily: 'Karla-Regular', fontSize: 16 },
