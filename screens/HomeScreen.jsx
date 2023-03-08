@@ -331,64 +331,60 @@ export default function HomeScreen() {
               </View>
             </KeyboardAvoidingView>
           </Pressable>
-          <View style={styles.videoContainer}>
-            <Video
-              style={styles.video}
-              source={require('../assets/video/lf30_editor_8te1fuzs.mp4')}
-              useNativeControls={false}
-              resizeMode="contain"
-              isLooping
-              shouldPlay
-            />
-
-            <Text style={styles.exchange}>Transaction History empty</Text>
-            <TouchableOpacity
-              title="Login"
-              onPress={() => {
-                navigation.navigate('Home');
-              }}
-              style={styles.button}
-              underlayColor={_themeColor.primary}
-            >
-              <Text style={styles.loginText}>Go to Home Screen</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.transaction}>
-            <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
-              <Text style={styles.transactionHeader}> Transaction History</Text>
-              <Pressable>
-                <Text style={styles.transactionHeaderButton}>View All </Text>
-              </Pressable>
+          {!transactions.length && (
+            <View style={styles.videoContainer}>
+              <Video
+                style={styles.video}
+                source={require('../assets/video/lf30_editor_8te1fuzs.mp4')}
+                useNativeControls={false}
+                resizeMode="contain"
+                isLooping
+                shouldPlay
+              />
+              <Text style={styles.exchange}>Transaction History empty</Text>
             </View>
-            {!!transactions.length
-              && transactions.map((transaction, key) => (
-                <View style={[styles.transactionCard, styles.rowBetween]} key={key + Math.random()}>
-                  <View style={styles.rowBetween}>
-                    <Image
-                      source={
-                        allCurrency.filter((currency) => currency.currencyName === transaction.from)
-                          .length > 0
-                          ? allCurrency.filter(
+          )}
+          {!!transactions.length && (
+            <View style={styles.transaction}>
+              <View style={[styles.rowBetween, styles.transactionHeaderContainer]}>
+                <Text style={styles.transactionHeader}> Transaction History</Text>
+                <Pressable onPress={() => navigation.navigate('Transaction')}>
+                  <Text style={styles.transactionHeaderButton}>View All </Text>
+                </Pressable>
+              </View>
+              {!!transactions.length
+                && transactions.map((transaction, key) => (
+                  <View
+                    style={[styles.transactionCard, styles.rowBetween]}
+                    key={key + Math.random()}
+                  >
+                    <View style={styles.rowBetween}>
+                      <Image
+                        source={
+                          allCurrency.filter(
                             (currency) => currency.currencyName === transaction.from,
-                          )[0].currencyFlag
-                          : allCurrency[0].currencyFlag
-                      }
-                      style={styles.transactionImg}
-                    />
-                    <View style={styles.transactionDetail}>
-                      <Text style={styles.transactionName}>{`${transaction.recipient}`}</Text>
-                      <Text style={styles.transactionDate}>
-                        {formatDate(transaction.transaction_date)}
-                      </Text>
+                          ).length > 0
+                            ? allCurrency.filter(
+                              (currency) => currency.currencyName === transaction.from,
+                            )[0].currencyFlag
+                            : allCurrency[0].currencyFlag
+                        }
+                        style={styles.transactionImg}
+                      />
+                      <View style={styles.transactionDetail}>
+                        <Text style={styles.transactionName}>{`${transaction.recipient}`}</Text>
+                        <Text style={styles.transactionDate}>
+                          {formatDate(transaction.transaction_date)}
+                        </Text>
+                      </View>
                     </View>
+                    <Text style={styles.transactionAmount}>
+                      {`${transaction.currency} ${transaction.exchanged.toLocaleString()}`}
+                    </Text>
                   </View>
-                  <Text style={styles.transactionAmount}>
-                    {`${transaction.currency} ${transaction.exchanged.toLocaleString()}`}
-                  </Text>
-                </View>
-              ))}
-          </View>
+                ))}
+            </View>
+          )}
         </ScrollView>
       </View>
     </View>
